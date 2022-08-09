@@ -33,6 +33,11 @@ The resources from previous workshops and relevant publications are listed [here
 - [RMG Github Repository](https://github.com/ReactionMechanismGenerator/RMG-Py): contains the latest source code for RMG
 - [RMG-database Github Repository](https://github.com/ReactionMechanismGenerator/RMG-database): contains source code for the latest version of the database
 
+## For Questions and Feedback
+
+Please post any issues you may have to the [issues page](https://github.com/ReactionMechanismGenerator/RMG-Py/issues/)
+or drop in to the [chat room](https://gitter.im/ReactionMechanismGenerator/RMG-Py) or email [rmg_dev@mit.edu](mailto:rmg_dev@mit.edu) if you have questions.
+
 ## License Information
 
 RMG is a free, open-source software package (distributed under the [MIT/
