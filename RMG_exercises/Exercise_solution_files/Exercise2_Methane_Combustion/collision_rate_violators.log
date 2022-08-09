@@ -1,0 +1,63 @@
+*** Collision rate limit violators report ***
+"Violation factor" is the ratio of the rate coefficient to the collision limit rate at the relevant conditions
+
+! Template reaction: Disproportionation
+! Estimated using template [CO_pri_rad;XH_s_Rrad] for rate rule [CO_pri_rad;Cmethyl_COrad]
+! Euclidian distance = 2.0
+! Multiplied by reaction path degeneracy 3.0
+! family: Disproportionation
+CHO(34)+C2H3O(404)=CH2O(25)+C2H2O(282)              5.430000e+14 0.000     0.000    
+
+Direction: forward
+Violation factor: 1.49
+Violation condition: 1350.0 K, 1.0 bar
+
+
+! Template reaction: Disproportionation
+! Estimated using template [CO_rad;XH_s_Rrad] for rate rule [CO_rad/NonDe;Cmethyl_Orad]
+! Euclidian distance = 2.8284271247461903
+! Multiplied by reaction path degeneracy 3.0
+! family: Disproportionation
+CH3O(17)+C2H3O(404)=CH2O(25)+C2H4O(64)              5.430000e+14 0.000     0.000    
+
+Direction: forward
+Violation factor: 1.52
+Violation condition: 1350.0 K, 1.0 bar
+
+
+! Template reaction: Disproportionation
+! Estimated using template [CO_rad;XH_s_Rrad] for rate rule [CO_rad/NonDe;Cmethyl_Csrad]
+! Euclidian distance = 2.8284271247461903
+! Multiplied by reaction path degeneracy 3.0
+! family: Disproportionation
+C2H3O(404)+C2H5(58)=C2H4(166)+C2H4O(64)             5.430000e+14 0.000     0.000    
+
+Direction: forward
+Violation factor: 1.35
+Violation condition: 1350.0 K, 1.0 bar
+
+
+! Template reaction: Disproportionation
+! Estimated using template [CO_rad;XH_s_Rrad] for rate rule [CO_rad/NonDe;Cmethyl_COrad]
+! Euclidian distance = 2.8284271247461903
+! Multiplied by reaction path degeneracy 3.0
+! family: Disproportionation
+C2H3O(404)+C2H3O(404)=C2H2O(282)+C2H4O(64)          5.430000e+14 0.000     0.000    
+
+Direction: forward
+Violation factor: 1.53
+Violation condition: 1350.0 K, 1.0 bar
+
+
+! Template reaction: Disproportionation
+! Estimated using template [CO_rad;XH_s_Rrad] for rate rule [CO_rad/NonDe;Cmethyl_Csrad]
+! Euclidian distance = 2.8284271247461903
+! Multiplied by reaction path degeneracy 6.0
+! family: Disproportionation
+C2H3O(404)+C3H7(212)=C2H4O(64)+C3H6(209)            1.086000e+15 0.000     0.000    
+
+Direction: forward
+Violation factor: 2.56
+Violation condition: 1350.0 K, 1.0 bar
+
+

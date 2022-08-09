@@ -1,0 +1,1080 @@
+units(length='cm', time='s', quantity='mol', act_energy='kcal/mol')
+
+ideal_gas(name='gas',
+          elements="H D T C Ci O Oi N Ne Ar He Si S F Cl Br I X",
+          species="""Ar         He         Ne         N2         ethane(1)
+                     CH4(3)     CH3(4)     C2H5(5)    H(6)       C2H4(9)
+                     H2(11)     C2H3(14)   C3H7(16)   C#C(26)    C4H7(28)
+                     C2H2(30)   C3H5(31)   C4H7(32)   C4H5(34)   C4H7(40)
+                     C4H6(41)   C4H6(42)   C4H7(44)   C4H6(69)   C4H6(88)
+                     C4H5(183)""",
+          reactions='all',
+          transport='Mix',
+          initial_state=state(temperature=300.0, pressure=OneAtm))
+
+#-------------------------------------------------------------------------------
+# Element data
+#-------------------------------------------------------------------------------
+
+element(symbol='Ci', atomic_mass=13.003)
+element(symbol='D', atomic_mass=2.014)
+element(symbol='Oi', atomic_mass=17.999)
+element(symbol='T', atomic_mass=3.016)
+element(symbol='X', atomic_mass=195.083)
+#-------------------------------------------------------------------------------
+# Species data
+#-------------------------------------------------------------------------------
+
+species(name='Ar',
+        atoms='Ar:1',
+        thermo=(NASA([200.00, 1000.00],
+                     [ 2.50000000E+00,  0.00000000E+00,  0.00000000E+00,
+                       0.00000000E+00,  0.00000000E+00, -7.45375000E+02,
+                       4.37967000E+00]),
+                NASA([1000.00, 6000.00],
+                     [ 2.50000000E+00,  0.00000000E+00,  0.00000000E+00,
+                       0.00000000E+00,  0.00000000E+00, -7.45375000E+02,
+                       4.37967000E+00])),
+        transport=gas_transport(geom='atom',
+                                diam=3.33,
+                                well_depth=136.501))
+
+species(name='He',
+        atoms='He:1',
+        thermo=(NASA([200.00, 1000.00],
+                     [ 2.50000000E+00,  0.00000000E+00,  0.00000000E+00,
+                       0.00000000E+00,  0.00000000E+00, -7.45375000E+02,
+                       9.28724000E-01]),
+                NASA([1000.00, 6000.00],
+                     [ 2.50000000E+00,  0.00000000E+00,  0.00000000E+00,
+                       0.00000000E+00,  0.00000000E+00, -7.45375000E+02,
+                       9.28724000E-01])),
+        transport=gas_transport(geom='atom',
+                                diam=2.576,
+                                well_depth=10.2))
+
+species(name='Ne',
+        atoms='Ne:1',
+        thermo=(NASA([200.00, 1000.00],
+                     [ 2.50000000E+00,  0.00000000E+00,  0.00000000E+00,
+                       0.00000000E+00,  0.00000000E+00, -7.45375000E+02,
+                       3.35532000E+00]),
+                NASA([1000.00, 6000.00],
+                     [ 2.50000000E+00,  0.00000000E+00,  0.00000000E+00,
+                       0.00000000E+00,  0.00000000E+00, -7.45375000E+02,
+                       3.35532000E+00])),
+        transport=gas_transport(geom='atom',
+                                diam=3.758,
+                                well_depth=148.6))
+
+species(name='N2',
+        atoms='N:2',
+        thermo=(NASA([200.00, 1000.00],
+                     [ 3.53101000E+00, -1.23661000E-04, -5.02999000E-07,
+                       2.43531000E-09, -1.40881000E-12, -1.04698000E+03,
+                       2.96747000E+00]),
+                NASA([1000.00, 6000.00],
+                     [ 2.95258000E+00,  1.39690000E-03, -4.92632000E-07,
+                       7.86010000E-11, -4.60755000E-15, -9.23949000E+02,
+                       5.87189000E+00])),
+        transport=gas_transport(geom='linear',
+                                diam=3.621,
+                                well_depth=97.53,
+                                polar=1.76,
+                                rot_relax=4.0))
+
+species(name='ethane(1)',
+        atoms='C:2 H:6',
+        thermo=(NASA([100.00, 954.52],
+                     [ 3.78030569E+00, -3.24227067E-03,  5.52367429E-05,
+                      -6.38563333E-08,  2.28629119E-11, -1.16203396E+04,
+                       5.21043985E+00]),
+                NASA([954.52, 5000.00],
+                     [ 4.58993077E+00,  1.41506029E-02, -4.75952181E-06,
+                       8.60270541E-10, -6.21696851E-14, -1.27218065E+04,
+                      -3.61794972E+00])),
+        transport=gas_transport(geom='nonlinear',
+                                diam=4.302,
+                                well_depth=252.301,
+                                rot_relax=1.5))
+
+species(name='CH4(3)',
+        atoms='C:1 H:4',
+        thermo=(NASA([100.00, 1084.12],
+                     [ 4.20541332E+00, -5.35555155E-03,  2.51122522E-05,
+                      -2.13761927E-08,  5.97520268E-12, -1.01619432E+04,
+                      -9.21272374E-01]),
+                NASA([1084.12, 5000.00],
+                     [ 9.08276768E-01,  1.14540676E-02, -4.57172801E-06,
+                       8.29189287E-10, -5.66312942E-14, -9.71997928E+03,
+                       1.39930319E+01])),
+        transport=gas_transport(geom='nonlinear',
+                                diam=3.746,
+                                well_depth=141.4,
+                                polar=2.6,
+                                rot_relax=13.0))
+
+species(name='CH3(4)',
+        atoms='C:1 H:3',
+        thermo=(NASA([100.00, 1337.62],
+                     [ 3.91546920E+00,  1.84152670E-03,  3.48746596E-06,
+                      -3.32752678E-09,  8.49973974E-13,  1.62856393E+04,
+                       3.51735644E-01]),
+                NASA([1337.62, 5000.00],
+                     [ 3.54143432E+00,  4.76790359E-03, -1.82150298E-06,
+                       3.28880743E-10, -2.22548881E-14,  1.62239692E+04,
+                       1.66048292E+00])),
+        transport=gas_transport(geom='nonlinear',
+                                diam=3.8,
+                                well_depth=144.001))
+
+species(name='C2H5(5)',
+        atoms='C:2 H:5',
+        thermo=(NASA([100.00, 900.31],
+                     [ 3.82186524E+00, -3.43397318E-03,  5.09271333E-05,
+                      -6.20231584E-08,  2.37082690E-11,  1.30660117E+04,
+                       7.61633014E+00]),
+                NASA([900.31, 5000.00],
+                     [ 5.15613144E+00,  9.43136163E-03, -1.81954032E-06,
+                       2.21215092E-10, -1.43497537E-14,  1.20641136E+04,
+                      -2.91055397E+00])),
+        transport=gas_transport(geom='nonlinear',
+                                diam=4.302,
+                                well_depth=252.301,
+                                rot_relax=1.5))
+
+species(name='H(6)',
+        atoms='H:1',
+        thermo=(NASA([100.00, 3459.60],
+                     [ 2.50000000E+00,  9.24384602E-15, -1.36779837E-17,
+                       6.66184769E-21, -1.00106912E-24,  2.54742178E+04,
+                      -4.44972896E-01]),
+                NASA([3459.60, 5000.00],
+                     [ 2.49999999E+00,  9.20455546E-12, -3.58608293E-15,
+                       6.15198922E-19, -3.92041801E-23,  2.54742178E+04,
+                      -4.44972842E-01])),
+        transport=gas_transport(geom='atom',
+                                diam=2.05,
+                                well_depth=145.0))
+
+species(name='C2H4(9)',
+        atoms='C:2 H:4',
+        thermo=(NASA([100.00, 940.43],
+                     [ 3.97979217E+00, -7.57618761E-03,  5.52995005E-05,
+                      -6.36251584E-08,  2.31780686E-11,  5.07745882E+03,
+                       4.04605801E+00]),
+                NASA([940.43, 5000.00],
+                     [ 5.20284221E+00,  7.82468769E-03, -2.12698788E-06,
+                       3.79727251E-10, -2.94701383E-14,  3.93634342E+03,
+                      -6.62325847E+00])),
+        transport=gas_transport(geom='nonlinear',
+                                diam=3.971,
+                                well_depth=280.801,
+                                rot_relax=1.5))
+
+species(name='H2(11)',
+        atoms='H:2',
+        thermo=(NASA([100.00, 1959.08],
+                     [ 3.43536422E+00,  2.12709424E-04, -2.78622934E-07,
+                       3.40265512E-10, -7.76027902E-14, -1.03135985E+03,
+                      -3.90841773E+00]),
+                NASA([1959.08, 5000.00],
+                     [ 2.78815464E+00,  5.87655486E-04,  1.59003608E-07,
+                      -5.52725361E-11,  4.34301024E-15, -5.96137665E+02,
+                       1.12799013E-01])),
+        transport=gas_transport(geom='linear',
+                                diam=2.92,
+                                well_depth=38.0,
+                                polar=0.79,
+                                rot_relax=280.0))
+
+species(name='C2H3(14)',
+        atoms='C:2 H:3',
+        thermo=(NASA([100.00, 931.96],
+                     [ 3.90670569E+00, -4.06241335E-03,  3.86780140E-05,
+                      -4.62976545E-08,  1.72900448E-11,  3.47971782E+04,
+                       6.09788890E+00]),
+                NASA([931.96, 5000.00],
+                     [ 5.44796482E+00,  4.98356256E-03, -1.08820845E-06,
+                       1.79837474E-10, -1.45096423E-14,  3.38297749E+04,
+                      -4.87807845E+00])),
+        transport=gas_transport(geom='nonlinear',
+                                diam=4.1,
+                                well_depth=209.001,
+                                rot_relax=1.0))
+
+species(name='C3H7(16)',
+        atoms='C:3 H:7',
+        thermo=(NASA([100.00, 995.41],
+                     [ 3.09192721E+00,  1.32170772E-02,  2.75853631E-05,
+                      -3.90856815E-08,  1.43316733E-11,  1.02284112E+04,
+                       1.24057366E+01]),
+                NASA([995.41, 5000.00],
+                     [ 5.69425276E+00,  1.96034371E-02, -7.42055236E-06,
+                       1.35884276E-09, -9.56225833E-14,  8.87587225E+03,
+                      -4.32857776E+00])),
+        transport=gas_transport(geom='nonlinear',
+                                diam=4.982,
+                                well_depth=266.801,
+                                rot_relax=1.0))
+
+species(name='C#C(26)',
+        atoms='C:2 H:2',
+        thermo=(NASA([100.00, 888.63],
+                     [ 3.03573735E+00,  7.71251694E-03,  2.53444361E-06,
+                      -1.08126150E-08,  5.50724052E-12,  2.58526448E+04,
+                       4.54464830E+00]),
+                NASA([888.63, 5000.00],
+                     [ 5.76207029E+00,  2.37154328E-03, -1.49556282E-07,
+                      -2.19218338E-11,  2.21832824E-15,  2.50944400E+04,
+                      -9.82622560E+00])),
+        transport=gas_transport(geom='linear',
+                                diam=4.1,
+                                well_depth=209.001,
+                                rot_relax=2.5))
+
+species(name='C4H7(28)',
+        atoms='C:4 H:7',
+        thermo=(NASA([100.00, 1000.94],
+                     [ 2.68063606E+00,  2.10823104E-02,  2.02132551E-05,
+                      -3.64255762E-08,  1.41450257E-11,  2.27528002E+04,
+                       1.66007778E+01]),
+                NASA([1000.94, 5000.00],
+                     [ 7.59462930E+00,  2.06427480E-02, -7.89799149E-06,
+                       1.45968192E-09, -1.03416603E-13,  2.08073776E+04,
+                      -1.19150081E+01])),
+        transport=gas_transport(geom='nonlinear',
+                                diam=5.213,
+                                well_depth=348.453))
+
+species(name='C2H2(30)',
+        atoms='C:2 H:2',
+        thermo=(NASA([100.00, 1423.25],
+                     [ 3.69251746E+00,  6.06583748E-03, -2.11274859E-06,
+                       1.63259537E-11,  1.07674348E-13,  4.81741496E+04,
+                       3.96841997E+00]),
+                NASA([1423.25, 5000.00],
+                     [ 4.43040104E+00,  4.87760214E-03, -1.79375916E-06,
+                       3.04088597E-10, -1.96654654E-14,  4.78744198E+04,
+                      -1.66966491E-01])),
+        transport=gas_transport(geom='nonlinear',
+                                diam=4.1,
+                                well_depth=209.0,
+                                rot_relax=2.5))
+
+species(name='C3H5(31)',
+        atoms='C:3 H:5',
+        thermo=(NASA([100.00, 997.87],
+                     [ 3.23408410E+00,  1.18207986E-02,  1.70306926E-05,
+                      -2.64367981E-08,  9.91225660E-12,  3.04873064E+04,
+                       1.03182692E+01]),
+                NASA([997.87, 5000.00],
+                     [ 5.66470094E+00,  1.44326271E-02, -5.46738948E-06,
+                       1.00158131E-09, -7.04861696E-14,  2.93870897E+04,
+                      -4.48506534E+00])),
+        transport=gas_transport(geom='nonlinear',
+                                diam=4.85,
+                                well_depth=260.001,
+                                rot_relax=1.0))
+
+species(name='C4H7(32)',
+        atoms='C:4 H:7',
+        thermo=(NASA([100.00, 999.92],
+                     [ 2.56532828E+00,  2.39244851E-02,  1.38116351E-05,
+                      -3.10269885E-08,  1.25444656E-11,  2.77900539E+04,
+                       1.56311150E+01]),
+                NASA([999.92, 5000.00],
+                     [ 8.06557085E+00,  2.00625268E-02, -7.60832849E-06,
+                       1.39784361E-09, -9.86871926E-14,  2.57832009E+04,
+                      -1.54387638E+01])),
+        transport=gas_transport(geom='nonlinear',
+                                diam=5.213,
+                                well_depth=348.453))
+
+species(name='C4H5(34)',
+        atoms='C:4 H:5',
+        thermo=(NASA([100.00, 935.58],
+                     [ 2.61014897E+00,  2.04316725E-02,  2.07954603E-05,
+                      -4.53901377E-08,  2.00570444E-11,  4.10742707E+04,
+                       1.33868907E+01]),
+                NASA([935.58, 5000.00],
+                     [ 1.13228142E+01,  8.94041499E-03, -2.08002398E-06,
+                       3.38963405E-10, -2.61940961E-14,  3.83166369E+04,
+                      -3.40914261E+01])),
+        transport=gas_transport(geom='nonlinear',
+                                diam=5.18,
+                                well_depth=357.002,
+                                rot_relax=1.0))
+
+species(name='C4H7(40)',
+        atoms='C:4 H:7',
+        thermo=(NASA([100.00, 926.06],
+                     [ 3.04739345E+00,  5.45536731E-03,  7.53321160E-05,
+                      -1.02228398E-07,  4.01836243E-11,  2.58269376E+04,
+                       1.40790083E+01]),
+                NASA([926.06, 5000.00],
+                     [ 1.02345592E+01,  1.41133094E-02, -2.99933886E-06,
+                       4.56640898E-10, -3.49816728E-14,  2.27933836E+04,
+                      -2.92344527E+01])),
+        transport=gas_transport(geom='nonlinear',
+                                diam=5.509,
+                                well_depth=366.039))
+
+species(name='C4H6(41)',
+        atoms='C:4 H:6',
+        thermo=(NASA([100.00, 940.95],
+                     [ 2.68203470E+00,  1.69324988E-02,  3.73640480E-05,
+                      -6.26468990E-08,  2.59141562E-11,  1.13546025E+04,
+                       1.20324825E+01]),
+                NASA([940.95, 5000.00],
+                     [ 1.10824023E+01,  1.17734335E-02, -3.11408810E-06,
+                       5.37732314E-10, -4.10611842E-14,  8.42125662E+03,
+                      -3.51699172E+01])),
+        transport=gas_transport(geom='nonlinear',
+                                diam=5.18,
+                                well_depth=357.002,
+                                rot_relax=1.0))
+
+species(name='C4H6(42)',
+        atoms='C:4 H:6',
+        thermo=(NASA([100.00, 961.82],
+                     [ 2.65641623E+00,  1.89333184E-02,  3.01002979E-05,
+                      -5.20365570E-08,  2.11241562E-11,  3.29038784E+04,
+                       1.36623433E+01]),
+                NASA([961.82, 5000.00],
+                     [ 9.92836650E+00,  1.51090334E-02, -5.13572571E-06,
+                       9.43599193E-10, -6.92759035E-14,  3.02830437E+04,
+                      -2.74899224E+01])),
+        transport=gas_transport(geom='nonlinear',
+                                diam=5.289,
+                                well_depth=359.053))
+
+species(name='C4H7(44)',
+        atoms='C:4 H:7',
+        thermo=(NASA([100.00, 998.56],
+                     [ 2.64214264E+00,  2.15952738E-02,  2.09688258E-05,
+                      -3.79215850E-08,  1.47847460E-11,  1.46809427E+04,
+                       1.41266171E+01]),
+                NASA([998.56, 5000.00],
+                     [ 7.82801250E+00,  2.08400788E-02, -7.96753994E-06,
+                       1.47337738E-09, -1.04525551E-13,  1.26472393E+04,
+                      -1.58820612E+01])),
+        transport=gas_transport(geom='nonlinear',
+                                diam=5.289,
+                                well_depth=359.053))
+
+species(name='C4H6(69)',
+        atoms='C:4 H:6',
+        thermo=(NASA([100.00, 1063.04],
+                     [ 2.67092810E+00,  2.38370440E-02,  3.12317139E-06,
+                      -1.59980668E-08,  6.48421912E-12,  1.76966508E+04,
+                       1.27978180E+01]),
+                NASA([1063.04, 5000.00],
+                     [ 6.93536091E+00,  1.97137772E-02, -7.88239234E-06,
+                       1.45448721E-09, -1.01397637E-13,  1.61163171E+04,
+                      -1.12049453E+01])),
+        transport=gas_transport(geom='nonlinear',
+                                diam=5.186,
+                                well_depth=360.421))
+
+species(name='C4H6(88)',
+        atoms='C:4 H:6',
+        thermo=(NASA([100.00, 950.25],
+                     [ 3.39611223E+00, -3.43601186E-03,  9.09419463E-05,
+                      -1.13268308E-07,  4.24082944E-11,  1.74123989E+04,
+                       1.07747589E+01]),
+                NASA([950.25, 5000.00],
+                     [ 9.42775378E+00,  1.39638497E-02, -4.06858235E-06,
+                       7.74952990E-10, -6.20354057E-14,  1.43341783E+04,
+                      -2.81818560E+01])),
+        transport=gas_transport(geom='nonlinear',
+                                diam=5.503,
+                                well_depth=381.31))
+
+species(name='C4H5(183)',
+        atoms='C:4 H:5',
+        thermo=(NASA([100.00, 922.39],
+                     [ 2.73381995E+00,  2.27303356E-02,  3.27358411E-06,
+                      -2.03257145E-08,  9.85283303E-12,  5.37114181E+04,
+                       1.19746506E+01]),
+                NASA([922.39, 5000.00],
+                     [ 7.72012502E+00,  1.42822805E-02, -4.41415375E-06,
+                       7.16677829E-10, -4.76707425E-14,  5.22310765E+04,
+                      -1.47167537E+01])),
+        transport=gas_transport(geom='nonlinear',
+                                diam=5.294,
+                                well_depth=366.854))
+
+#-------------------------------------------------------------------------------
+# Reaction data
+#-------------------------------------------------------------------------------
+#  Reaction index: Chemkin #1; RMG #2
+#  Template reaction: R_Recombination
+#  Flux pairs: CH3(4), ethane(1); CH3(4), ethane(1);
+#  Matched reaction 9 CH3 + CH3 <=> C2H6 in R_Recombination/training
+#  This reaction matched rate rule [Root_N-1R->H_N-1CNOS->N_N-1COS->O_1CS->C_N-1C-inRing]
+#  family: R_Recombination
+
+# Reaction 1
+reaction('CH3(4) + CH3(4) <=> ethane(1)', [9.450000e+14, -0.538, 0.135])
+#  Reaction index: Chemkin #2; RMG #5
+#  Template reaction: H_Abstraction
+#  Flux pairs: CH3(4), CH4(3); ethane(1), C2H5(5);
+#  Matched reaction 215 C2H6 + CH3_r3 <=> C2H5b + CH4 in H_Abstraction/training
+#  This reaction matched rate rule [C/H3/Cs\H3;C_methyl]
+#  family: H_Abstraction
+
+# Reaction 2
+reaction('CH3(4) + ethane(1) <=> CH4(3) + C2H5(5)', [3.500000e+01, 3.44, 10.384])
+#  Reaction index: Chemkin #3; RMG #3
+#  Template reaction: R_Recombination
+#  Flux pairs: C2H5(5), ethane(1); H(6), ethane(1);
+#  Matched reaction 58 H + C2H5 <=> C2H6-2 in R_Recombination/training
+#  This reaction matched rate rule [Root_1R->H_N-2R->S_N-2CHNO->H_N-2CNO-inRing_Ext-2CNO-R_N-Sp-3R!H=2CCNNOO_N-2CNO->O_3R!H->C_Sp-3C-2CN]
+#  family: R_Recombination
+
+# Reaction 3
+reaction('H(6) + C2H5(5) <=> ethane(1)', [1.000000e+14, 0.0, 0.0],
+         options='duplicate')
+#  Reaction index: Chemkin #4; RMG #12
+#  Template reaction: R_Recombination
+#  Flux pairs: CH3(4), CH4(3); H(6), CH4(3);
+#  Matched reaction 57 H + CH3 <=> CH4 in R_Recombination/training
+#  This reaction matched rate rule [Root_1R->H_N-2R->S_N-2CHNO->H_N-2CNO-inRing_N-2CNO->O]
+#  family: R_Recombination
+
+# Reaction 4
+reaction('H(6) + CH3(4) <=> CH4(3)', [1.930000e+14, 0.0, 0.27])
+#  Reaction index: Chemkin #5; RMG #24
+#  Template reaction: R_Recombination
+#  Flux pairs: H(6), ethane(1); C2H5(5), ethane(1);
+#  Matched reaction 58 H + C2H5 <=> C2H6-2 in R_Recombination/training
+#  This reaction matched rate rule [Root_1R->H_N-2R->S_N-2CHNO->H_N-2CNO-inRing_Ext-2CNO-R_N-Sp-3R!H=2CCNNOO_N-2CNO->O_3R!H->C_Sp-3C-2CN]
+#  family: R_Recombination
+
+# Reaction 5
+reaction('H(6) + C2H5(5) <=> ethane(1)', [1.000000e+14, 0.0, 0.0],
+         options='duplicate')
+#  Reaction index: Chemkin #6; RMG #9
+#  Template reaction: R_Addition_MultipleBond
+#  Flux pairs: C2H4(9), C2H5(5); H(6), C2H5(5);
+#  Matched reaction 2541 H + C2H4 <=> C2H5-2 in R_Addition_MultipleBond/training
+#  This reaction matched rate rule [Cds-HH_Cds-HH;HJ]
+#  family: R_Addition_MultipleBond
+
+# Reaction 6
+reaction('H(6) + C2H4(9) <=> C2H5(5)', [4.620000e+08, 1.64, 1.01])
+#  Reaction index: Chemkin #7; RMG #13
+#  Template reaction: Disproportionation
+#  Flux pairs: C2H5(5), C2H4(9); CH3(4), CH4(3);
+#  Matched reaction 5 CH3 + C2H5 <=> CH4 + C2H4 in Disproportionation/training
+#  This reaction matched rate rule [C_methyl;Cmethyl_Csrad]
+#  family: Disproportionation
+
+# Reaction 7
+reaction('CH3(4) + C2H5(5) <=> CH4(3) + C2H4(9)', [6.570000e+14, -0.68, 0.0])
+#  Reaction index: Chemkin #8; RMG #17
+#  Template reaction: Disproportionation
+#  Flux pairs: C2H5(5), C2H4(9); C2H5(5), ethane(1);
+#  Matched reaction 6 C2H5 + C2H5-2 <=> C2H6 + C2H4 in Disproportionation/training
+#  This reaction matched rate rule [C_rad/H2/Cs;Cmethyl_Csrad]
+#  family: Disproportionation
+
+# Reaction 8
+reaction('C2H5(5) + C2H5(5) <=> C2H4(9) + ethane(1)', [6.900000e+13, -0.35, 0.0])
+#  Reaction index: Chemkin #9; RMG #20
+#  Template reaction: H_Abstraction
+#  Flux pairs: H(6), H2(11); ethane(1), C2H5(5);
+#  Matched reaction 210 C2H6 + H <=> C2H5b + H2_p in H_Abstraction/training
+#  This reaction matched rate rule [C/H3/Cs\H3;H_rad]
+#  family: H_Abstraction
+
+# Reaction 9
+reaction('H(6) + ethane(1) <=> H2(11) + C2H5(5)', [1.150000e+08, 1.9, 7.53])
+#  Reaction index: Chemkin #10; RMG #22
+#  Template reaction: Disproportionation
+#  Flux pairs: C2H5(5), C2H4(9); H(6), H2(11);
+#  Matched reaction 4 H + C2H5 <=> H2 + C2H4 in Disproportionation/training
+#  This reaction matched rate rule [H_rad;Cmethyl_Csrad]
+#  family: Disproportionation
+
+# Reaction 10
+reaction('H(6) + C2H5(5) <=> H2(11) + C2H4(9)', [1.083000e+13, 0.0, 0.0])
+#  Reaction index: Chemkin #11; RMG #25
+#  Template reaction: H_Abstraction
+#  Flux pairs: H(6), H2(11); CH4(3), CH3(4);
+#  Matched reaction 186 CH4b + H <=> CH3_p1 + H2_p in H_Abstraction/training
+#  This reaction matched rate rule [C_methane;H_rad]
+#  family: H_Abstraction
+
+# Reaction 11
+reaction('H(6) + CH4(3) <=> H2(11) + CH3(4)', [4.100000e+03, 3.156, 8.755])
+#  Reaction index: Chemkin #12; RMG #26
+#  Template reaction: R_Recombination
+#  Flux pairs: H(6), H2(11); H(6), H2(11);
+#  Matched reaction 56 H + H <=> H2 in R_Recombination/training
+#  This reaction matched rate rule [Root_1R->H_N-2R->S_2CHNO->H]
+#  family: R_Recombination
+
+# Reaction 12
+reaction('H(6) + H(6) <=> H2(11)', [5.450000e+10, 0.0, 1.5])
+#  Reaction index: Chemkin #13; RMG #31
+#  Template reaction: R_Addition_MultipleBond
+#  Flux pairs: CH3(4), C3H7(16); C2H4(9), C3H7(16);
+#  Matched reaction 219 CH3 + C2H4 <=> C3H7 in R_Addition_MultipleBond/training
+#  This reaction matched rate rule [Cds-HH_Cds-HH;CsJ-HHH]
+#  family: R_Addition_MultipleBond
+
+# Reaction 13
+reaction('CH3(4) + C2H4(9) <=> C3H7(16)', [4.180000e+04, 2.41, 5.63])
+#  Reaction index: Chemkin #14; RMG #27
+#  Template reaction: R_Recombination
+#  Flux pairs: C2H3(14), C2H4(9); H(6), C2H4(9);
+#  Matched reaction 60 H + C2H3 <=> C2H4 in R_Recombination/training
+#  This reaction matched rate rule [Root_1R->H_N-2R->S_N-2CHNO->H_N-2CNO-inRing_Ext-2CNO-R_Sp-3R!H=2CCNNOO_N-3R!H->O]
+#  family: R_Recombination
+
+# Reaction 14
+reaction('H(6) + C2H3(14) <=> C2H4(9)', [1.210000e+14, 0.0, 0.0])
+#  Reaction index: Chemkin #15; RMG #30
+#  Template reaction: H_Abstraction
+#  Flux pairs: CH4(3), CH3(4); C2H3(14), C2H4(9);
+#  Matched reaction 842 C2H3 + CH4b <=> C2H4 + CH3_p23 in H_Abstraction/training
+#  This reaction matched rate rule [Cd/H2/NonDeC;C_methyl]
+#  family: H_Abstraction
+
+# Reaction 15
+reaction('CH4(3) + C2H3(14) <=> CH3(4) + C2H4(9)', [2.236000e-02, 4.34, 5.7])
+#  Reaction index: Chemkin #16; RMG #34
+#  Template reaction: H_Abstraction
+#  Flux pairs: ethane(1), C2H5(5); C2H3(14), C2H4(9);
+#  Matched reaction 774 C2H3 + C2H6 <=> C2H4 + C2H5 in H_Abstraction/training
+#  This reaction matched rate rule [Cd/H2/NonDeC;C_rad/H2/Cs\H3]
+#  family: H_Abstraction
+
+# Reaction 16
+reaction('C2H3(14) + ethane(1) <=> C2H4(9) + C2H5(5)', [1.080000e-03, 4.55, 3.5])
+#  Reaction index: Chemkin #17; RMG #36
+#  Template reaction: H_Abstraction
+#  Flux pairs: H(6), H2(11); C2H4(9), C2H3(14);
+#  Matched reaction 217 C2H4 + H <=> C2H3_p + H2_p in H_Abstraction/training
+#  This reaction matched rate rule [Cd/H2/NonDeC;H_rad]
+#  family: H_Abstraction
+
+# Reaction 17
+reaction('H(6) + C2H4(9) <=> H2(11) + C2H3(14)', [2.400000e+02, 3.62, 11.266])
+#  Reaction index: Chemkin #18; RMG #38
+#  Template reaction: Disproportionation
+#  Flux pairs: C2H3(14), C2H4(9); C2H5(5), C2H4(9);
+#  Matched reaction 11 C2H3-2 + C2H5 <=> C2H4-2 + C2H4 in Disproportionation/training
+#  This reaction matched rate rule [Cd_pri_rad;Cmethyl_Csrad]
+#  family: Disproportionation
+
+# Reaction 18
+reaction('C2H3(14) + C2H5(5) <=> C2H4(9) + C2H4(9)', [4.560000e+14, -0.7, 0.0])
+#  Reaction index: Chemkin #19; RMG #54
+#  Template reaction: R_Addition_MultipleBond
+#  Flux pairs: C#C(26), C2H3(14); H(6), C2H3(14);
+#  Matched reaction 2697 H + C2H2 <=> C2H3-2 in R_Addition_MultipleBond/training
+#  This reaction matched rate rule [Ct-H_Ct-H;HJ]
+#  family: R_Addition_MultipleBond
+
+# Reaction 19
+reaction('H(6) + C#C(26) <=> C2H3(14)', [1.030000e+09, 1.64, 2.11])
+#  Reaction index: Chemkin #20; RMG #65
+#  Template reaction: Disproportionation
+#  Flux pairs: C2H5(5), ethane(1); C2H3(14), C#C(26);
+#  Estimated using template [Y_rad;Cds/H2_d_Rrad] for rate rule [C_rad/H2/Cs;Cds/H2_d_Crad]
+#  Euclidian distance = 3.1622776601683795
+#  Multiplied by reaction path degeneracy 2.0
+#  family: Disproportionation
+
+# Reaction 20
+reaction('C2H3(14) + C2H5(5) <=> C#C(26) + ethane(1)', [8.204641e+06, 1.877, -1.115])
+#  Reaction index: Chemkin #21; RMG #73
+#  Template reaction: Disproportionation
+#  Flux pairs: CH3(4), CH4(3); C2H3(14), C#C(26);
+#  Estimated using template [Y_rad;Cds/H2_d_Rrad] for rate rule [C_methyl;Cds/H2_d_Crad]
+#  Euclidian distance = 2.23606797749979
+#  Multiplied by reaction path degeneracy 2.0
+#  family: Disproportionation
+
+# Reaction 21
+reaction('CH3(4) + C2H3(14) <=> CH4(3) + C#C(26)', [8.204641e+06, 1.877, -1.115])
+#  Reaction index: Chemkin #22; RMG #76
+#  Template reaction: Disproportionation
+#  Flux pairs: C2H3(14), C#C(26); C2H3(14), C2H4(9);
+#  Estimated using template [Y_rad;Cds/H2_d_Rrad] for rate rule [Cd_pri_rad;Cds/H2_d_Crad]
+#  Euclidian distance = 2.23606797749979
+#  Multiplied by reaction path degeneracy 2.0
+#  family: Disproportionation
+
+# Reaction 22
+reaction('C2H3(14) + C2H3(14) <=> C#C(26) + C2H4(9)', [8.204641e+06, 1.877, -1.115])
+#  Reaction index: Chemkin #23; RMG #78
+#  Template reaction: Disproportionation
+#  Flux pairs: H(6), H2(11); C2H3(14), C#C(26);
+#  Estimated using template [H_rad;Cds/H2_d_Rrad] for rate rule [H_rad;Cds/H2_d_Crad]
+#  Euclidian distance = 1.0
+#  Multiplied by reaction path degeneracy 2.0
+#  family: Disproportionation
+
+# Reaction 23
+reaction('H(6) + C2H3(14) <=> H2(11) + C#C(26)', [6.788225e+08, 1.5, -0.89])
+#  Reaction index: Chemkin #24; RMG #64
+#  Template reaction: Singlet_Carbene_Intra_Disproportionation
+#  Flux pairs: C2H2(30), C#C(26);
+#  Estimated using template [singletcarbene_CH;singletcarbene;CH] for rate rule [CdJ2=C;CdJ2;CdH2]
+#  Euclidian distance = 1.7320508075688772
+#  Multiplied by reaction path degeneracy 2.0
+#  family: Singlet_Carbene_Intra_Disproportionation
+
+# Reaction 24
+reaction('C2H2(30) <=> C#C(26)', [1.599708e+13, -0.202, 8.145])
+#  Reaction index: Chemkin #25; RMG #61
+#  Template reaction: R_Addition_MultipleBond
+#  Flux pairs: C2H3(14), C4H7(28); C2H4(9), C4H7(28);
+#  Matched reaction 234 C2H3 + C2H4 <=> C4H7-3 in R_Addition_MultipleBond/training
+#  This reaction matched rate rule [Cds-HH_Cds-HH;CdsJ-H]
+#  family: R_Addition_MultipleBond
+
+# Reaction 25
+reaction('C2H3(14) + C2H4(9) <=> C4H7(28)', [2.860000e+04, 2.41, 1.8])
+#  Reaction index: Chemkin #26; RMG #90
+#  Template reaction: Intra_R_Add_Exocyclic
+#  Flux pairs: C4H7(28), C4H7(40);
+#  Matched reaction 335 C4H7 <=> C4H7-2 in Intra_R_Add_Exocyclic/training
+#  This reaction matched rate rule [R4_S_D;doublebond_intra_2H_pri;radadd_intra_cs2H]
+#  family: Intra_R_Add_Exocyclic
+
+# Reaction 26
+reaction('C4H7(28) <=> C4H7(40)', [6.320000e+08, 0.97, 8.9])
+#  Reaction index: Chemkin #27; RMG #72
+#  Template reaction: R_Addition_MultipleBond
+#  Flux pairs: C2H5(5), C4H7(32); C#C(26), C4H7(32);
+#  Matched reaction 2254 C2H2 + C2H5 <=> C4H7-6 in R_Addition_MultipleBond/training
+#  This reaction matched rate rule [Ct-H_Ct-H;CsJ-CsHH]
+#  family: R_Addition_MultipleBond
+
+# Reaction 27
+reaction('C#C(26) + C2H5(5) <=> C4H7(32)', [1.360000e+04, 2.41, 6.2])
+#  Reaction index: Chemkin #28; RMG #98
+#  Template reaction: intra_H_migration
+#  Flux pairs: C4H7(32), C4H7(28);
+#  Estimated using template [R4H_DSS;Cd_rad_out_singleH;Cs_H_out] for rate rule [R4H_DSS;Cd_rad_out_singleH;Cs_H_out_2H]
+#  Euclidian distance = 1.0
+#  Multiplied by reaction path degeneracy 3.0
+#  family: intra_H_migration
+
+# Reaction 28
+reaction('C4H7(32) <=> C4H7(28)', [1.113000e+05, 2.23, 10.59])
+#  Reaction index: Chemkin #29; RMG #96
+#  Template reaction: intra_H_migration
+#  Flux pairs: C4H7(28), C4H7(44);
+#  Matched reaction 84 C:CC[CH2] <=> C:C[CH]C in intra_H_migration/training
+#  This reaction matched rate rule [R2H_S;C_rad_out_2H;Cs_H_out_H/Cd]
+#  family: intra_H_migration
+
+# Reaction 29
+reaction('C4H7(28) <=> C4H7(44)', [1.720000e+06, 1.99, 27.2])
+#  Reaction index: Chemkin #30; RMG #145
+#  Template reaction: intra_H_migration
+#  Flux pairs: C4H7(32), C4H7(44);
+#  Matched reaction 194 C4H7-4 <=> C4H7-5 in intra_H_migration/training
+#  This reaction matched rate rule [R3H_DS;Cd_rad_out_singleH;Cs_H_out_H/NonDeC]
+#  family: intra_H_migration
+
+# Reaction 30
+reaction('C4H7(32) <=> C4H7(44)', [1.846000e+10, 0.74, 34.7])
+#  Reaction index: Chemkin #31; RMG #91
+#  Template reaction: R_Addition_MultipleBond
+#  Flux pairs: C4H6(41), C4H7(28); H(6), C4H7(28);
+#  Matched reaction 2580 H + C4H6-2 <=> C4H7-11 in R_Addition_MultipleBond/training
+#  This reaction matched rate rule [Cds-CdH_Cds-HH;HJ]
+#  family: R_Addition_MultipleBond
+
+# Reaction 31
+reaction('H(6) + C4H6(41) <=> C4H7(28)', [3.240000e+08, 1.64, 2.4])
+#  Reaction index: Chemkin #32; RMG #159
+#  Template reaction: R_Addition_MultipleBond
+#  Flux pairs: C4H6(41), C4H7(44); H(6), C4H7(44);
+#  Matched reaction 2544 H + C4H6 <=> C4H7-9 in R_Addition_MultipleBond/training
+#  This reaction matched rate rule [Cds-HH_Cds-CdH;HJ]
+#  family: R_Addition_MultipleBond
+
+# Reaction 32
+reaction('H(6) + C4H6(41) <=> C4H7(44)', [4.620000e+08, 1.64, -0.47])
+#  Reaction index: Chemkin #33; RMG #210
+#  Template reaction: R_Recombination
+#  Flux pairs: C2H3(14), C4H6(41); C2H3(14), C4H6(41);
+#  Matched reaction 89 C2H3 + C2H3 <=> C4H6-4 in R_Recombination/training
+#  This reaction matched rate rule [Root_N-1R->H_N-1CNOS->N_N-1COS->O_1CS->C_N-1C-inRing_Ext-2R-R_N-Sp-3R!H-2R_N-3R!H->O_N-Sp-3CCSS#2R_Ext-1C-R]
+#  family: R_Recombination
+
+# Reaction 33
+reaction('C2H3(14) + C2H3(14) <=> C4H6(41)', [3.615000e+13, 0.0, 0.0])
+#  Reaction index: Chemkin #34; RMG #215
+#  Template reaction: Disproportionation
+#  Flux pairs: C2H5(5), ethane(1); C4H7(28), C4H6(41);
+#  Estimated using template [C_rad/H2/Cs;Cpri_Rrad] for rate rule [C_rad/H2/Cs;C/H2/Cd_Csrad]
+#  Euclidian distance = 3.0
+#  Multiplied by reaction path degeneracy 2.0
+#  family: Disproportionation
+
+# Reaction 34
+reaction('C2H5(5) + C4H7(28) <=> ethane(1) + C4H6(41)', [2.900000e+12, 0.0, 0.0])
+#  Reaction index: Chemkin #35; RMG #216
+#  Template reaction: Disproportionation
+#  Estimated using template [C_rad/H2/Cs;Cmethyl_Csrad] for rate rule [C_rad/H2/Cs;Cmethyl_Csrad/H/Cd]
+#  Euclidian distance = 1.0
+#  Multiplied by reaction path degeneracy 3.0
+#  family: Disproportionation
+
+# Reaction 35
+reaction('C2H5(5) + C4H7(44) <=> ethane(1) + C4H6(41)', [6.900000e+13, -0.35, 0.0])
+#  Reaction index: Chemkin #36; RMG #231
+#  Template reaction: Disproportionation
+#  Flux pairs: CH3(4), CH4(3); C4H7(28), C4H6(41);
+#  Estimated using template [Y_rad_birad_trirad_quadrad;C/H2/Cd_Csrad] for rate rule [C_methyl;C/H2/Cd_Csrad]
+#  Euclidian distance = 3.0
+#  Multiplied by reaction path degeneracy 2.0
+#  family: Disproportionation
+
+# Reaction 36
+reaction('CH3(4) + C4H7(28) <=> CH4(3) + C4H6(41)', [2.000000e+10, 0.0, 0.0])
+#  Reaction index: Chemkin #37; RMG #232
+#  Template reaction: Disproportionation
+#  Estimated using template [Cs_rad;Cmethyl_Csrad/H/Cd] for rate rule [C_methyl;Cmethyl_Csrad/H/Cd]
+#  Euclidian distance = 1.0
+#  Multiplied by reaction path degeneracy 3.0
+#  family: Disproportionation
+
+# Reaction 37
+reaction('CH3(4) + C4H7(44) <=> CH4(3) + C4H6(41)', [1.500000e+11, 0.0, 0.0])
+#  Reaction index: Chemkin #38; RMG #238
+#  Template reaction: Disproportionation
+#  Flux pairs: C2H3(14), C4H6(41); C4H7(28), C2H4(9);
+#  Estimated using average of templates [Y_rad_birad_trirad_quadrad;C/H2/Cd_Csrad] + [Cd_pri_rad;Cpri_Rrad] for rate rule [Cd_pri_rad;C/H2/Cd_Csrad]
+#  Euclidian distance = 3.0
+#  Multiplied by reaction path degeneracy 2.0
+#  family: Disproportionation
+
+# Reaction 38
+reaction('C2H3(14) + C4H7(28) <=> C2H4(9) + C4H6(41)', [2.200000e+11, 0.0, 0.0])
+#  Reaction index: Chemkin #39; RMG #239
+#  Template reaction: Disproportionation
+#  Estimated using template [Cd_pri_rad;Cmethyl_Csrad] for rate rule [Cd_pri_rad;Cmethyl_Csrad/H/Cd]
+#  Euclidian distance = 1.0
+#  Multiplied by reaction path degeneracy 3.0
+#  family: Disproportionation
+
+# Reaction 39
+reaction('C2H3(14) + C4H7(44) <=> C2H4(9) + C4H6(41)', [4.560000e+14, -0.7, 0.0])
+#  Reaction index: Chemkin #40; RMG #243
+#  Template reaction: Disproportionation
+#  Flux pairs: H(6), H2(11); C4H7(28), C4H6(41);
+#  Estimated using template [Y_rad_birad_trirad_quadrad;C/H2/Cd_Csrad] for rate rule [H_rad;C/H2/Cd_Csrad]
+#  Euclidian distance = 2.0
+#  Multiplied by reaction path degeneracy 2.0
+#  family: Disproportionation
+
+# Reaction 40
+reaction('H(6) + C4H7(28) <=> H2(11) + C4H6(41)', [2.000000e+10, 0.0, 0.0])
+#  Reaction index: Chemkin #41; RMG #244
+#  Template reaction: Disproportionation
+#  Estimated using average of templates [Y_rad;Cmethyl_Csrad/H/Cd] + [H_rad;Cmethyl_Csrad] for rate rule [H_rad;Cmethyl_Csrad/H/Cd]
+#  Euclidian distance = 1.0
+#  Multiplied by reaction path degeneracy 3.0
+#  family: Disproportionation
+
+# Reaction 41
+reaction('H(6) + C4H7(44) <=> H2(11) + C4H6(41)', [1.274559e+12, 0.0, 0.0])
+#  Reaction index: Chemkin #42; RMG #206
+#  Template reaction: Intra_2+2_cycloaddition_Cd
+#  Flux pairs: C4H6(41), C4H6(88);
+#  Estimated using template [1,3-butadiene_backbone;C=C_1;C=C_2] for rate rule [1,3-butadiene_backbone;CdH2_1;CdH2_2]
+#  Euclidian distance = 1.4142135623730951
+#  family: Intra_2+2_cycloaddition_Cd
+
+# Reaction 42
+reaction('C4H6(41) <=> C4H6(88)', [4.999980e+11, 0.056, 29.257])
+#  Reaction index: Chemkin #43; RMG #93
+#  Template reaction: R_Recombination
+#  Flux pairs: C4H6(42), C4H7(28); H(6), C4H7(28);
+#  BM rule fitted to 2 training reactions at node Root_1R->H_N-2R->S_N-2CHNO->H_N-2CNO-inRing_Ext-2CNO-R_N-Sp-3R!H=2CCNNOO_N-2CNO->O_Ext-2CN-R
+#      Total Standard Deviation in ln(k): 2.14551182899
+#  Exact match found for rate rule [Root_1R->H_N-2R->S_N-2CHNO->H_N-2CNO-inRing_Ext-2CNO-R_N-Sp-3R!H=2CCNNOO_N-2CNO->O_Ext-2CN-R]
+#  Euclidian distance = 0
+#  Multiplied by reaction path degeneracy 2.0
+#  family: R_Recombination
+
+# Reaction 43
+reaction('H(6) + C4H6(42) <=> C4H7(28)', [3.532740e+13, 0.153, 0.0])
+#  Reaction index: Chemkin #44; RMG #104
+#  Template reaction: Disproportionation
+#  From training reaction 5 used for Y_rad;Cmethyl_Csrad
+#  Exact match found for rate rule [Y_rad;Cmethyl_Csrad]
+#  Euclidian distance = 0
+#  Multiplied by reaction path degeneracy 6.0
+#  family: Disproportionation
+
+# Reaction 44
+reaction('C2H5(5) + C4H6(42) <=> C2H4(9) + C4H7(28)', [1.314000e+15, -0.68, 0.0])
+#  Reaction index: Chemkin #45; RMG #118
+#  Template reaction: Disproportionation
+#  Estimated using average of templates [Y_rad_birad_trirad_quadrad;Cds/H2_d_Crad] + [Y_rad;Cds/H2_d_Rrad] for rate rule [Y_rad;Cds/H2_d_Crad]
+#  Euclidian distance = 1.0
+#  Multiplied by reaction path degeneracy 4.0
+#  family: Disproportionation
+
+# Reaction 45
+reaction('C2H3(14) + C4H6(42) <=> C#C(26) + C4H7(28)', [4.131060e+11, 0.309, 1.097])
+#  Reaction index: Chemkin #46; RMG #153
+#  Template reaction: R_Recombination
+#  Flux pairs: C4H6(42), C4H7(44); H(6), C4H7(44);
+#  BM rule fitted to 2 training reactions at node Root_1R->H_N-2R->S_N-2CHNO->H_N-2CNO-inRing_Ext-2CNO-R_N-
+#  Sp-3R!H=2CCNNOO_N-2CNO->O_3R!H->C_Sp-3C-2CN_Ext-3C-R_Sp-4R!H=3C_N-3C-inRing
+#      Total Standard Deviation in ln(k): 11.5401827615
+#  Exact match found for rate rule [Root_1R->H_N-2R->S_N-2CHNO->H_N-2CNO-inRing_Ext-2CNO-R_N-
+#  Sp-3R!H=2CCNNOO_N-2CNO->O_3R!H->C_Sp-3C-2CN_Ext-3C-R_Sp-4R!H=3C_N-3C-inRing]
+#  Euclidian distance = 0
+#  Multiplied by reaction path degeneracy 2.0
+#  family: R_Recombination
+
+# Reaction 46
+reaction('H(6) + C4H6(42) <=> C4H7(44)', [3.251960e+13, 0.255, 0.0])
+#  Reaction index: Chemkin #47; RMG #176
+#  Template reaction: Disproportionation
+#  From training reaction 7 used for C_rad/H2/Cd;Cmethyl_Csrad
+#  Exact match found for rate rule [C_rad/H2/Cd;Cmethyl_Csrad]
+#  Euclidian distance = 0
+#  Multiplied by reaction path degeneracy 6.0
+#  family: Disproportionation
+
+# Reaction 47
+reaction('C2H5(5) + C4H6(42) <=> C2H4(9) + C4H7(44)', [1.374000e+14, -0.35, -0.13])
+#  Reaction index: Chemkin #48; RMG #196
+#  Template reaction: Disproportionation
+#  Estimated using template [Y_rad;Cds/H2_d_Rrad] for rate rule [C_rad/H2/Cd;Cds/H2_d_Crad]
+#  Euclidian distance = 3.1622776601683795
+#  Multiplied by reaction path degeneracy 4.0
+#  family: Disproportionation
+
+# Reaction 48
+reaction('C2H3(14) + C4H6(42) <=> C#C(26) + C4H7(44)', [1.640928e+07, 1.877, -1.115])
+#  Reaction index: Chemkin #49; RMG #270
+#  Template reaction: Disproportionation
+#  Estimated using template [C_rad/H2/Cd;Cpri_Rrad] for rate rule [C_rad/H2/Cd;C/H2/Cd_Csrad]
+#  Euclidian distance = 3.0
+#  Multiplied by reaction path degeneracy 4.0
+#  family: Disproportionation
+
+# Reaction 49
+reaction('C4H6(42) + C4H7(28) <=> C4H6(41) + C4H7(44)', [5.800000e+12, 0.0, -0.13])
+#  Reaction index: Chemkin #50; RMG #271
+#  Template reaction: Disproportionation
+#  Estimated using template [C_rad/H2/Cd;Cmethyl_Csrad] for rate rule [C_rad/H2/Cd;Cmethyl_Csrad/H/Cd]
+#  Euclidian distance = 1.0
+#  Multiplied by reaction path degeneracy 6.0
+#  family: Disproportionation
+
+# Reaction 50
+reaction('C4H6(42) + C4H7(44) <=> C4H6(41) + C4H7(44)', [1.374000e+14, -0.35, -0.13])
+#  Reaction index: Chemkin #51; RMG #311
+#  Template reaction: Birad_recombination
+#  Flux pairs: C4H6(42), C4H6(88);
+#  Estimated using template [R4;C_rad_out_2H;Cpri_rad_out_2H] for rate rule [R4_SDS;C_rad_out_2H;Cpri_rad_out_2H]
+#  Euclidian distance = 1.0
+#  family: Birad_recombination
+
+# Reaction 51
+reaction('C4H6(42) <=> C4H6(88)', [1.620000e+12, -0.305, 1.98])
+#  Reaction index: Chemkin #52; RMG #350
+#  Template reaction: 1,2-Birad_to_alkene
+#  Flux pairs: C4H6(42), C4H6(41);
+#  Matched reaction 5 C4H6 => C4H6-2 in 1,2-Birad_to_alkene/training
+#  This reaction matched rate rule [Y_12_01]
+#  family: 1,2-Birad_to_alkene
+
+# Reaction 52
+reaction('C4H6(42) => C4H6(41)', [5.010000e+07, 0.0, 0.0])
+#  Reaction index: Chemkin #53; RMG #151
+#  Template reaction: R_Addition_MultipleBond
+#  Flux pairs: C4H6(69), C4H7(44); H(6), C4H7(44);
+#  Matched reaction 2714 H + C4H6-4 <=> C4H7-13 in R_Addition_MultipleBond/training
+#  This reaction matched rate rule [Ca_Cds-HH;HJ]
+#  family: R_Addition_MultipleBond
+
+# Reaction 53
+reaction('H(6) + C4H6(69) <=> C4H7(44)', [5.460000e+08, 1.64, 3.78])
+#  Reaction index: Chemkin #54; RMG #344
+#  Template reaction: Intra_Disproportionation
+#  Flux pairs: C4H6(42), C4H6(69);
+#  Estimated using an average for rate rule [R3radExo;Y_rad;XH_Rrad]
+#  Euclidian distance = 0
+#  Multiplied by reaction path degeneracy 2.0
+#  family: Intra_Disproportionation
+
+# Reaction 54
+reaction('C4H6(42) <=> C4H6(69)', [1.487400e+09, 1.045, 15.153])
+#  Reaction index: Chemkin #55; RMG #369
+#  Template reaction: Disproportionation
+#  From training reaction 47 used for C_rad/H2/Cs;Cdpri_Csrad
+#  Exact match found for rate rule [C_rad/H2/Cs;Cdpri_Csrad]
+#  Euclidian distance = 0
+#  family: Disproportionation
+
+# Reaction 55
+reaction('C2H5(5) + C4H7(44) <=> ethane(1) + C4H6(69)', [9.640000e+11, 0.0, 6.0])
+#  Reaction index: Chemkin #56; RMG #372
+#  Template reaction: Disproportionation
+#  Estimated using template [Cs_rad;Cdpri_Csrad] for rate rule [C_methyl;Cdpri_Csrad]
+#  Euclidian distance = 1.0
+#  family: Disproportionation
+
+# Reaction 56
+reaction('CH3(4) + C4H7(44) <=> CH4(3) + C4H6(69)', [3.354068e+12, 0.0, 6.0])
+#  Reaction index: Chemkin #57; RMG #378
+#  Template reaction: Disproportionation
+#  From training reaction 51 used for Cd_pri_rad;Cdpri_Csrad
+#  Exact match found for rate rule [Cd_pri_rad;Cdpri_Csrad]
+#  Euclidian distance = 0
+#  family: Disproportionation
+
+# Reaction 57
+reaction('C2H3(14) + C4H7(44) <=> C2H4(9) + C4H6(69)', [2.410000e+12, 0.0, 6.0])
+#  Reaction index: Chemkin #58; RMG #387
+#  Template reaction: Disproportionation
+#  Estimated using template [Y_rad;Cdpri_Csrad] for rate rule [H_rad;Cdpri_Csrad]
+#  Euclidian distance = 1.0
+#  family: Disproportionation
+
+# Reaction 58
+reaction('H(6) + C4H7(44) <=> H2(11) + C4H6(69)', [3.010000e+12, 0.0, 6.0])
+#  Reaction index: Chemkin #59; RMG #68
+#  Template reaction: R_Addition_MultipleBond
+#  Flux pairs: CH3(4), C3H5(31); C#C(26), C3H5(31);
+#  Matched reaction 2253 C2H2 + CH3 <=> C3H5-2 in R_Addition_MultipleBond/training
+#  This reaction matched rate rule [Ct-H_Ct-H;CsJ-HHH]
+#  family: R_Addition_MultipleBond
+
+# Reaction 59
+reaction('CH3(4) + C#C(26) <=> C3H5(31)', [1.338000e+05, 2.41, 6.77])
+#  Reaction index: Chemkin #60; RMG #83
+#  Template reaction: R_Addition_MultipleBond
+#  Flux pairs: C2H3(14), C4H5(34); C#C(26), C4H5(34);
+#  Matched reaction 196 C2H2 + C2H3 <=> C4H5-8 in R_Addition_MultipleBond/training
+#  This reaction matched rate rule [Ct-H_Ct-H;CdsJ-H]
+#  family: R_Addition_MultipleBond
+
+# Reaction 60
+reaction('C#C(26) + C2H3(14) <=> C4H5(34)', [1.168000e+07, 1.997, 5.452])
+#  Reaction index: Chemkin #61; RMG #212
+#  Template reaction: R_Recombination
+#  Flux pairs: C4H5(34), C4H6(41); H(6), C4H6(41);
+#  BM rule fitted to 2 training reactions at node Root_1R->H_N-2R->S_N-2CHNO->H_N-2CNO-inRing_Ext-2CNO-R_Sp-3R!H=2CCNNOO_N-3R!H->O
+#      Total Standard Deviation in ln(k): 7.13613102162
+#  Exact match found for rate rule [Root_1R->H_N-2R->S_N-2CHNO->H_N-2CNO-inRing_Ext-2CNO-R_Sp-3R!H=2CCNNOO_N-3R!H->O]
+#  Euclidian distance = 0
+#  family: R_Recombination
+
+# Reaction 61
+reaction('H(6) + C4H5(34) <=> C4H6(41)', [8.156660e+18, -1.493, 0.0])
+#  Reaction index: Chemkin #62; RMG #220
+#  Template reaction: H_Abstraction
+#  Flux pairs: CH3(4), CH4(3); C4H6(41), C4H5(34);
+#  From training reaction 1566 used for Cd/H2/NonDeC;C_methyl
+#  Exact match found for rate rule [Cd/H2/NonDeC;C_methyl]
+#  Euclidian distance = 0
+#  Multiplied by reaction path degeneracy 4.0
+#  family: H_Abstraction
+
+# Reaction 62
+reaction('CH3(4) + C4H6(41) <=> CH4(3) + C4H5(34)', [3.432000e-02, 4.34, 20.71])
+#  Reaction index: Chemkin #63; RMG #228
+#  Template reaction: H_Abstraction
+#  Flux pairs: C2H5(5), ethane(1); C4H6(41), C4H5(34);
+#  From training reaction 343 used for Cd/H2/NonDeC;C_rad/H2/Cs\H3
+#  Exact match found for rate rule [Cd/H2/NonDeC;C_rad/H2/Cs\H3]
+#  Euclidian distance = 0
+#  Multiplied by reaction path degeneracy 4.0
+#  family: H_Abstraction
+
+# Reaction 63
+reaction('C2H5(5) + C4H6(41) <=> ethane(1) + C4H5(34)', [6.320000e+02, 3.13, 18.0])
+#  Reaction index: Chemkin #64; RMG #234
+#  Template reaction: H_Abstraction
+#  Flux pairs: H(6), H2(11); C4H6(41), C4H5(34);
+#  From training reaction 217 used for Cd/H2/NonDeC;H_rad
+#  Exact match found for rate rule [Cd/H2/NonDeC;H_rad]
+#  Euclidian distance = 0
+#  Multiplied by reaction path degeneracy 4.0
+#  family: H_Abstraction
+
+# Reaction 64
+reaction('H(6) + C4H6(41) <=> H2(11) + C4H5(34)', [2.400000e+02, 3.62, 11.266])
+#  Reaction index: Chemkin #65; RMG #241
+#  Template reaction: Disproportionation
+#  From training reaction 11 used for Cd_pri_rad;Cmethyl_Csrad
+#  Exact match found for rate rule [Cd_pri_rad;Cmethyl_Csrad]
+#  Euclidian distance = 0
+#  Multiplied by reaction path degeneracy 3.0
+#  family: Disproportionation
+
+# Reaction 65
+reaction('C2H5(5) + C4H5(34) <=> C2H4(9) + C4H6(41)', [4.560000e+14, -0.7, 0.0])
+#  Reaction index: Chemkin #66; RMG #252
+#  Template reaction: H_Abstraction
+#  Flux pairs: C2H3(14), C2H4(9); C4H6(41), C4H5(34);
+#  Matched reaction 177 C4H6-3 + C2H3 <=> C2H4 + C4H5 in H_Abstraction/training
+#  This reaction matched rate rule [Cd/H2/NonDeC;Cd_Cd\H2_pri_rad]
+#  family: H_Abstraction
+
+# Reaction 66
+reaction('C2H3(14) + C4H6(41) <=> C2H4(9) + C4H5(34)', [3.437000e-04, 4.732, 6.579])
+#  Reaction index: Chemkin #67; RMG #261
+#  Template reaction: Disproportionation
+#  Estimated using template [Y_rad;Cds/H2_d_Rrad] for rate rule [Cd_pri_rad;Cds/H2_d_Crad]
+#  Euclidian distance = 2.23606797749979
+#  Multiplied by reaction path degeneracy 2.0
+#  family: Disproportionation
+
+# Reaction 67
+reaction('C2H3(14) + C4H5(34) <=> C#C(26) + C4H6(41)', [8.204641e+06, 1.877, -1.115])
+#  Reaction index: Chemkin #68; RMG #306
+#  Template reaction: Disproportionation
+#  Estimated using average of templates [Y_rad_birad_trirad_quadrad;C/H2/Cd_Csrad] + [Cd_pri_rad;Cpri_Rrad] for rate rule [Cd_pri_rad;C/H2/Cd_Csrad]
+#  Euclidian distance = 3.0
+#  Multiplied by reaction path degeneracy 2.0
+#  family: Disproportionation
+
+# Reaction 68
+reaction('C4H5(34) + C4H7(28) <=> C4H6(41) + C4H6(41)', [2.200000e+11, 0.0, 0.0])
+#  Reaction index: Chemkin #69; RMG #307
+#  Template reaction: Disproportionation
+#  Estimated using template [Cd_pri_rad;Cmethyl_Csrad] for rate rule [Cd_pri_rad;Cmethyl_Csrad/H/Cd]
+#  Euclidian distance = 1.0
+#  Multiplied by reaction path degeneracy 3.0
+#  family: Disproportionation
+
+# Reaction 69
+reaction('C4H5(34) + C4H7(44) <=> C4H6(41) + C4H6(41)', [4.560000e+14, -0.7, 0.0])
+#  Reaction index: Chemkin #70; RMG #413
+#  Template reaction: Disproportionation
+#  From training reaction 51 used for Cd_pri_rad;Cdpri_Csrad
+#  Exact match found for rate rule [Cd_pri_rad;Cdpri_Csrad]
+#  Euclidian distance = 0
+#  family: Disproportionation
+
+# Reaction 70
+reaction('C4H5(34) + C4H7(44) <=> C4H6(69) + C4H6(41)', [2.410000e+12, 0.0, 6.0])
+#  Reaction index: Chemkin #71; RMG #441
+#  Template reaction: Intra_R_Add_Exocyclic
+#  Flux pairs: C4H5(34), C4H5(183);
+#  From training reaction 14 used for R4_D_D;doublebond_intra_2H_pri;radadd_intra_cdsingleH
+#  Exact match found for rate rule [R4_D_D;doublebond_intra_2H_pri;radadd_intra_cdsingleH]
+#  Euclidian distance = 0
+#  family: Intra_R_Add_Exocyclic
+
+# Reaction 71
+reaction('C4H5(34) <=> C4H5(183)', [2.540000e+10, 0.69, 25.17])

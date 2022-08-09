@@ -1,0 +1,425 @@
+Phases:
+- Species:
+  - name: Ar
+    radicalelectrons: 0
+    smiles: '[Ar]'
+    thermo:
+      polys:
+      - Tmax: 1000.0
+        Tmin: 200.0
+        coefs:
+        - 2.5
+        - 0.0
+        - 0.0
+        - 0.0
+        - 0.0
+        - -745.375
+        - 4.37967
+        type: NASApolynomial
+      - Tmax: 6000.0
+        Tmin: 1000.0
+        coefs:
+        - 2.5
+        - 0.0
+        - 0.0
+        - 0.0
+        - 0.0
+        - -745.375
+        - 4.37967
+        type: NASApolynomial
+      type: NASA
+    type: Species
+  - name: He
+    radicalelectrons: 0
+    smiles: '[He]'
+    thermo:
+      polys:
+      - Tmax: 1000.0
+        Tmin: 200.0
+        coefs:
+        - 2.5
+        - 0.0
+        - 0.0
+        - 0.0
+        - 0.0
+        - -745.375
+        - 0.928724
+        type: NASApolynomial
+      - Tmax: 6000.0
+        Tmin: 1000.0
+        coefs:
+        - 2.5
+        - 0.0
+        - 0.0
+        - 0.0
+        - 0.0
+        - -745.375
+        - 0.928724
+        type: NASApolynomial
+      type: NASA
+    type: Species
+  - name: Ne
+    radicalelectrons: 0
+    smiles: '[Ne]'
+    thermo:
+      polys:
+      - Tmax: 1000.0
+        Tmin: 200.0
+        coefs:
+        - 2.5
+        - 0.0
+        - 0.0
+        - 0.0
+        - 0.0
+        - -745.375
+        - 3.35532
+        type: NASApolynomial
+      - Tmax: 6000.0
+        Tmin: 1000.0
+        coefs:
+        - 2.5
+        - 0.0
+        - 0.0
+        - 0.0
+        - 0.0
+        - -745.375
+        - 3.35532
+        type: NASApolynomial
+      type: NASA
+    type: Species
+  - name: N2
+    radicalelectrons: 0
+    smiles: N#N
+    thermo:
+      polys:
+      - Tmax: 1000.0
+        Tmin: 200.0
+        coefs:
+        - 3.53101
+        - -0.000123661
+        - -5.02999e-07
+        - 2.43531e-09
+        - -1.40881e-12
+        - -1046.98
+        - 2.96747
+        type: NASApolynomial
+      - Tmax: 6000.0
+        Tmin: 1000.0
+        coefs:
+        - 2.95258
+        - 0.0013969
+        - -4.92632e-07
+        - 7.8601e-11
+        - -4.60755e-15
+        - -923.949
+        - 5.87189
+        type: NASApolynomial
+      type: NASA
+    type: Species
+  - name: methane
+    radicalelectrons: 0
+    smiles: C
+    thermo:
+      polys:
+      - Tmax: 1084.123700185527
+        Tmin: 100.0
+        coefs:
+        - 4.205413322988508
+        - -0.005355551545943684
+        - 2.5112252204160787e-05
+        - -2.1376192736338192e-08
+        - 5.975202681276544e-12
+        - -10161.943221753361
+        - -0.9212723739491704
+        type: NASApolynomial
+      - Tmax: 5000.0
+        Tmin: 1084.123700185527
+        coefs:
+        - 0.9082767679615414
+        - 0.011454067608683829
+        - -4.571728011460009e-06
+        - 8.291892867916972e-10
+        - -5.663129423391795e-14
+        - -9719.979275927131
+        - 13.993031856113944
+        type: NASApolynomial
+      type: NASA
+    type: Species
+  - name: oxygen
+    radicalelectrons: 0
+    smiles: '[O][O]'
+    thermo:
+      polys:
+      - Tmax: 1074.555480759996
+        Tmin: 100.0
+        coefs:
+        - 3.5373218056799023
+        - -0.0012157092771756602
+        - 5.316178167855713e-06
+        - -4.894434121491901e-09
+        - 1.4584503783965081e-12
+        - -1038.5884609527654
+        - 4.683684068052523
+        type: NASApolynomial
+      - Tmax: 5000.0
+        Tmin: 1074.555480759996
+        coefs:
+        - 3.153824261740061
+        - 0.001678037995944779
+        - -7.699710093654396e-07
+        - 1.5127471125660246e-10
+        - -1.0878179817168341e-14
+        - -1040.818789006774
+        - 6.167538765669039
+        type: NASApolynomial
+      type: NASA
+    type: Species
+  - name: '[CH3]'
+    radicalelectrons: 1
+    smiles: '[CH3]'
+    thermo:
+      polys:
+      - Tmax: 1337.6162282056564
+        Tmin: 100.0
+        coefs:
+        - 3.9154691958576837
+        - 0.0018415267031467663
+        - 3.487465961923377e-06
+        - -3.327526775099472e-09
+        - 8.499739742282943e-13
+        - 16285.639298943654
+        - 0.35173564446733013
+        type: NASApolynomial
+      - Tmax: 5000.0
+        Tmin: 1337.6162282056564
+        coefs:
+        - 3.5414343239861776
+        - 0.0047679035884635994
+        - -1.821502978213279e-06
+        - 3.288807434443799e-10
+        - -2.2254888143961953e-14
+        - 16223.969155721416
+        - 1.6604829233258518
+        type: NASApolynomial
+      type: NASA
+    type: Species
+  - name: '[O]O'
+    radicalelectrons: 1
+    smiles: '[O]O'
+    thermo:
+      polys:
+      - Tmax: 932.1404814227943
+        Tmin: 100.0
+        coefs:
+        - 4.045948860155201
+        - -0.0017346971083294002
+        - 1.0376835268459469e-05
+        - -1.0220505880576051e-08
+        - 3.3492011103734703e-12
+        - -986.7544142030515
+        - 4.635798805276788
+        type: NASApolynomial
+      - Tmax: 5000.0
+        Tmin: 932.1404814227943
+        coefs:
+        - 3.2102263718732416
+        - 0.003679441130527646
+        - -1.2770281564989273e-06
+        - 2.180482317799649e-10
+        - -1.4634042212378273e-14
+        - -910.363521800277
+        - 8.182987173202019
+        type: NASApolynomial
+      type: NASA
+    type: Species
+  - name: CO[O]
+    radicalelectrons: 1
+    smiles: CO[O]
+    thermo:
+      polys:
+      - Tmax: 2096.199851476573
+        Tmin: 100.0
+        coefs:
+        - 3.665902422632227
+        - 0.010479400782011343
+        - -2.303818790922989e-06
+        - -5.386918628834922e-10
+        - 1.8690612822249987e-13
+        - 548.7166069665193
+        - 8.70200151630583
+        type: NASApolynomial
+      - Tmax: 5000.0
+        Tmin: 2096.199851476573
+        coefs:
+        - 6.4762342124002705
+        - 0.008477525342226823
+        - -3.276268814885511e-06
+        - 5.354434186570961e-10
+        - -3.2418928976576264e-14
+        - -1367.8728042578853
+        - -8.697473822586373
+        type: NASApolynomial
+      type: NASA
+    type: Species
+  - name: H
+    radicalelectrons: 1
+    smiles: '[H]'
+    thermo:
+      polys:
+      - Tmax: 3459.6003738367535
+        Tmin: 100.0
+        coefs:
+        - 2.4999999999985736
+        - 9.243846020396786e-15
+        - -1.3677983665251473e-17
+        - 6.6618476899264674e-21
+        - -1.0010691239894123e-24
+        - 25474.217768729155
+        - -0.44497289632819503
+        type: NASApolynomial
+      - Tmax: 5000.0
+        Tmin: 3459.6003738367535
+        coefs:
+        - 2.4999999912187763
+        - 9.204555459946046e-12
+        - -3.586082925321867e-15
+        - 6.151989221655697e-19
+        - -3.920418005700823e-23
+        - 25474.21777537613
+        - -0.4449728422468991
+        type: NASApolynomial
+      type: NASA
+    type: Species
+  - name: '[CH2]OO'
+    radicalelectrons: 1
+    smiles: '[CH2]OO'
+    thermo:
+      polys:
+      - Tmax: 1601.6983150098529
+        Tmin: 100.0
+        coefs:
+        - 3.1532699323934947
+        - 0.018056360235275886
+        - -1.1979387173567622e-05
+        - 4.0176622379514856e-09
+        - -5.597977320810891e-13
+        - 5831.242094085382
+        - 9.285341171593094
+        type: NASApolynomial
+      - Tmax: 5000.0
+        Tmin: 1601.6983150098529
+        coefs:
+        - 6.497547031036194
+        - 0.009704498173606305
+        - -4.157786513859272e-06
+        - 7.621041665398625e-10
+        - -5.165405964434835e-14
+        - 4759.941899735072
+        - -8.42421916967558
+        type: NASApolynomial
+      type: NASA
+    type: Species
+  - name: OH(D)
+    radicalelectrons: 1
+    smiles: '[OH]'
+    thermo:
+      polys:
+      - Tmax: 1145.755412751851
+        Tmin: 100.0
+        coefs:
+        - 3.514568394422237
+        - 2.9273417696776536e-05
+        - -5.321505601625439e-07
+        - 1.019475162804457e-09
+        - -3.859393882299758e-13
+        - 3414.2541815911313
+        - 2.104347558667683
+        type: NASApolynomial
+      - Tmax: 5000.0
+        Tmin: 1145.755412751851
+        coefs:
+        - 3.0719372343209215
+        - 0.0006040198516534006
+        - -1.3980599871817666e-08
+        - -2.1344079726574463e-11
+        - 2.4806135366366963e-15
+        - 3579.3879244738932
+        - 4.57801473276709
+        type: NASApolynomial
+      type: NASA
+    type: Species
+  name: phase
+Reactions:
+- kinetics:
+    A: 0.2030000000000001
+    Ea: 220247.32772113685
+    n: 2.745
+    type: Arrhenius
+  products:
+  - '[O]O'
+  - '[CH3]'
+  radicalchange: 2
+  reactants:
+  - oxygen
+  - methane
+  type: ElementaryReaction
+- kinetics:
+    A: 109000000000000.0
+    Ea: 139327.19999999998
+    n: 0.25
+    type: Arrhenius
+  products:
+  - oxygen
+  - '[CH3]'
+  radicalchange: 0
+  reactants:
+  - CO[O]
+  type: ElementaryReaction
+- kinetics:
+    A: 193000000.00000003
+    Ea: 1129.68
+    n: 0.0
+    type: Arrhenius
+  products:
+  - methane
+  radicalchange: -2
+  reactants:
+  - H
+  - '[CH3]'
+  type: ElementaryReaction
+- kinetics:
+    A: 87900.00000000001
+    Ea: 1882.8
+    n: 1.0
+    type: Arrhenius
+  products:
+  - '[O]O'
+  radicalchange: 0
+  reactants:
+  - oxygen
+  - H
+  type: ElementaryReaction
+- kinetics:
+    A: 193000000.00000003
+    Ea: 1129.68
+    n: 0.0
+    type: Arrhenius
+  products:
+  - methane
+  radicalchange: -2
+  reactants:
+  - H
+  - '[CH3]'
+  type: ElementaryReaction
+- kinetics:
+    A: 471000000.0
+    Ea: 176858.0
+    n: 1.45
+    type: Arrhenius
+  products:
+  - '[CH2]OO'
+  radicalchange: 0
+  reactants:
+  - CO[O]
+  type: ElementaryReaction
+Units: {}
