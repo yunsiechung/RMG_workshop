@@ -21,9 +21,18 @@ RMG is installed properly.
 ## How to Download the Workshop Materials
 Click the green button located at the top of this repository and click "Download ZIP" as shown below:
 
-![Download a Zip of the repository](./images/dummy.png)
+![Download a Zip of the repository](./images/downlad_zip.png)
+
+Unzip the downloaded file and remember where the files are.
+
+## Useful Resources and References
+
+The resources from previous workshops and relevant publications are listed [here](https://rmg.mit.edu/resources) on the RMG-website.
 
 ## Source Code Repository
 - [RMG Github Repository](https://github.com/ReactionMechanismGenerator/RMG-Py): contains the latest source code for RMG
 - [RMG-database Github Repository](https://github.com/ReactionMechanismGenerator/RMG-database): contains source code for the latest version of the database
 
+## License Information
+
+RMG is a free, open-source software package (distributed under the [MIT/
