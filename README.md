@@ -9,12 +9,12 @@ The workshop slides will be uploaded on the day of the workshop on Thursday, Aug
 **Please make sure that you install RMG and download the materials BEFORE attending the workshop.**
 
 ## How to Install
-RMG is currently supported only on Linux OS. If you do not have a Linux computer, please install Ubuntu
+RMG binary is currently supported only on Linux and Mac OSX. If you have Windows OS, please install Ubuntu
 either using Virtual Machine or Linux Subsystem. To set up a Linux Virtual Machine from Windows, see this [page](http://reactionmechanismgenerator.github.io/RMG-Py/users/rmg/installation/virtualMachineSetup.html)
 for detailed instruction. To set up the Linux Subsystem on Windows 10, see this [page](http://reactionmechanismgenerator.github.io/RMG-Py/users/rmg/installation/linuxSubsystem.html)
 for instruction.
 
-Once you have Linux (Ubuntu) set up, follow the instruction on the [Download and Install](http://reactionmechanismgenerator.github.io/RMG-Py/users/rmg/installation/anacondaUser.html) 
+Once you have Linux (or Mac) set up, follow the instruction on the [Download and Install](http://reactionmechanismgenerator.github.io/RMG-Py/users/rmg/installation/anacondaUser.html) 
 to install RMG binary using Anaconda. Try running the RMG test job by following Step 4 of the installation guide to make sure
 RMG is installed properly.
 
