@@ -1,0 +1,1703 @@
+Global RMG Settings:
+   database.directory   = /home/bkr/anaconda3/envs/rmg_test_env/share/rmgdatabase (from /home/bkr/anaconda3/envs/rmg_test_env/lib/python3.7/site-packages/rmgpy/rmgrc)
+   test_data.directory  = /home/bkr/anaconda3/envs/rmg_test_env/lib/python3.7/site-packages/rmgpy/test_data (Default, relative to RMG-Py source code)
+RMG execution initiated at Tue Aug  9 21:24:30 2022
+
+#########################################################
+# RMG-Py - Reaction Mechanism Generator in Python       #
+# Version: 3.1.0                                        #
+# Authors: RMG Developers (rmg_dev@mit.edu)             #
+# P.I.s:   William H. Green (whgreen@mit.edu)           #
+#          Richard H. West (r.west@neu.edu)             #
+# Website: http://reactionmechanismgenerator.github.io/ #
+#########################################################
+
+Reading input file "/home/bkr/rmg-workshop/methane-oxidation/input.py"...
+# Data sources
+database(
+    thermoLibraries=['surfaceThermoPt111', 'primaryThermoLibrary', 'DFT_QCI_thermo', 'thermo_DFT_CCSDTF12_BAC'], 
+    reactionLibraries = [('Surface/CPOX_Pt/Deutschmann2006', True)],
+    seedMechanisms = [],
+    kineticsDepositories = ['!training'],
+    kineticsFamilies = ['surface'],
+    kineticsEstimator = 'rate rules',
+)
+
+catalystProperties(
+   metal='Pt111'
+)
+
+# List of species
+
+species(
+    label='CH4',
+    reactive=True,
+    structure=SMILES("[CH4]"),
+)
+
+species(
+    label='CO2',
+    reactive=True,
+    structure=SMILES("O=C=O"),
+)
+
+species(
+    label='H2O',
+    reactive=True,
+    structure=SMILES("O"),
+)
+
+species(
+    label='H2',
+    reactive=True,
+    structure=SMILES("[H][H]"),
+)
+
+species(
+    label='CO',
+    reactive=True,
+    structure=SMILES("[C-]#[O+]"),
+)
+
+species(
+    label='O2',
+    reactive=True,
+    structure=adjacencyList(
+"""
+multiplicity 3
+1 O u1 p2 c0 {2,S}
+2 O u1 p2 c0 {1,S}
+"""),
+)
+
+species(
+    label='N2',
+    reactive=False,
+    structure=SMILES("N#N"),
+)
+
+
+#-------
+species(
+    label='Pt',
+    reactive=True,
+    structure=adjacencyList("1 X u0"),
+)
+#----------
+# Reaction systems
+surfaceReactor(
+    temperature=[(523,'K'),(873,'K')],
+    initialPressure=(1.0, 'bar'),
+    nSims=3,
+    initialGasMoleFractions={
+        "O2": 0.9335,
+        "CO2": 12,
+        "H2O": 12,
+        "H2": 0.167,
+	"CH4": 0.3,
+	"CO": 0.5,
+	"N2": 74.0995,
+    },
+    initialSurfaceCoverages={
+        "Pt": 1.0,
+    },
+    surfaceVolumeRatio=(1.e5, 'm^-1'),
+    terminationRateRatio=(1e-10),
+)
+
+simulator(
+    atol=1e-18,
+    rtol=1e-12,
+)
+
+model(
+    toleranceKeepInEdge=1e-8,
+    toleranceMoveToCore=1e-2,
+    toleranceInterruptSimulation=1e-2,
+    maximumEdgeSpecies=10000
+)
+
+generatedSpeciesConstraints(maximumSurfaceSites=1)
+
+options(
+    units='si',
+    saveRestartPeriod=None,
+    generateOutputHTML=True,
+    generatePlots=False, # Enable to make plots of core and edge size etc.. But takes a lot of the total runtime!
+    saveEdgeSpecies=True,
+    saveSimulationProfiles=True,
+    verboseComments=True,
+)
+
+
+Using catalyst surface properties from metal 'Pt111'.
+Using binding energies:
+{'H': (-2.75368,'eV/molecule'), 'C': (-7.02516,'eV/molecule'), 'N': (-4.63225,'eV/molecule'), 'O': (-3.81153,'eV/molecule')}
+Using surface site density: (2.483e-09,'mol/cm^2')
+Warning: Initial gas mole fractions do not sum to one; renormalizing.
+
+
+Surface reaction system 1
+Gas phase mole fractions:
+  O2                   0.009335
+  CO2                  0.12
+  H2O                  0.12
+  H2                   0.00167
+  CH4                  0.003
+  CO                   0.005
+  N2                   0.74099
+Total gas phase:          1 moles
+Pressure:                 1e+05 Pa
+Temperature:              0.0 K
+Reactor volume:           0 m3
+Surface/volume ratio:     1e+05 m2/m3
+Surface site density:     2.48e-05 mol/m2
+Surface sites in reactor: 0 moles
+Initial surface coverages (and amounts):
+  Pt                 1 = 0 moles
+Warning: Generate Output HTML option was turned on. Note that this will slow down model generation.
+Warning: Edge species saving was turned on. This will slow down model generation for large simulations.
+
+Loading transport library from OneDMinN2.py in /home/bkr/anaconda3/envs/rmg_test_env/share/rmgdatabase/transport/libraries...
+Loading transport library from PrimaryTransportLibrary.py in /home/bkr/anaconda3/envs/rmg_test_env/share/rmgdatabase/transport/libraries...
+Loading transport library from NOx2018.py in /home/bkr/anaconda3/envs/rmg_test_env/share/rmgdatabase/transport/libraries...
+Loading transport library from GRI-Mech.py in /home/bkr/anaconda3/envs/rmg_test_env/share/rmgdatabase/transport/libraries...
+Loading transport group database from /home/bkr/anaconda3/envs/rmg_test_env/share/rmgdatabase/transport/groups...
+Loading kinetics library Surface/CPOX_Pt/Deutschmann2006 from /home/bkr/anaconda3/envs/rmg_test_env/share/rmgdatabase/kinetics/libraries/Surface/CPOX_Pt/Deutschmann2006/reactions.py...
+Loading frequencies group database from /home/bkr/anaconda3/envs/rmg_test_env/share/rmgdatabase/statmech/groups...
+Loading Platts additivity group database from /home/bkr/anaconda3/envs/rmg_test_env/share/rmgdatabase/solvation/groups...
+Loading thermodynamics library from surfaceThermoPt111.py in /home/bkr/anaconda3/envs/rmg_test_env/share/rmgdatabase/thermo/libraries...
+Loading thermodynamics library from primaryThermoLibrary.py in /home/bkr/anaconda3/envs/rmg_test_env/share/rmgdatabase/thermo/libraries...
+Loading thermodynamics library from DFT_QCI_thermo.py in /home/bkr/anaconda3/envs/rmg_test_env/share/rmgdatabase/thermo/libraries...
+Loading thermodynamics library from thermo_DFT_CCSDTF12_BAC.py in /home/bkr/anaconda3/envs/rmg_test_env/share/rmgdatabase/thermo/libraries...
+Loading thermodynamics group database from /home/bkr/anaconda3/envs/rmg_test_env/share/rmgdatabase/thermo/groups...
+Trimolecular reactions are turned on
+Training set explicitly not added to rate rules in kinetics families...
+Filling in rate rules in kinetics families by averaging...
+Adding reaction library Surface/CPOX_Pt/Deutschmann2006 to model edge...
+
+Summary of Model Enlargement
+---------------------------------
+Added 0 new core species
+Created 10 new edge species
+    HX(8)
+    OX(9)
+    CH3X(10)
+    HOX(11)
+    H2OX(12)
+    CO2X(13)
+    OCX(14)
+    CX(15)
+    CH2X(16)
+    CHX(17)
+Added 0 new core reactions
+Created 18 new edge reactions
+    Pt(7) + Pt(7) + H2(4) <=> HX(8) + HX(8)
+    Pt(7) + Pt(7) + O2(6) <=> OX(9) + OX(9)
+    Pt(7) + Pt(7) + CH4(1) <=> HX(8) + CH3X(10)
+    Pt(7) + OX(9) + CH4(1) <=> HOX(11) + CH3X(10)
+    Pt(7) + HOX(11) + CH4(1) <=> H2OX(12) + CH3X(10)
+    Pt(7) + H2O(3) <=> H2OX(12)
+    Pt(7) + CO2(2) <=> CO2X(13)
+    Pt(7) + CO(5) <=> OCX(14)
+    OX(9) + CX(15) <=> Pt(7) + OCX(14)
+    OX(9) + OCX(14) <=> Pt(7) + CO2X(13)
+    HX(8) + CO2X(13) <=> HOX(11) + OCX(14)
+    HX(8) + CH2X(16) <=> Pt(7) + CH3X(10)
+    HX(8) + CHX(17) <=> Pt(7) + CH2X(16)
+    Pt(7) + CHX(17) <=> HX(8) + CX(15)
+    OX(9) + HX(8) <=> Pt(7) + HOX(11)
+    OX(9) + H2OX(12) <=> HOX(11) + HOX(11)
+    H2(4) + CX(15) <=> CH2X(16)
+    HX(8) + HOX(11) <=> Pt(7) + H2OX(12)
+
+After model enlargement:
+    The model core has 0 species and 0 reactions
+    The model edge has 18 species and 18 reactions
+
+NOT generating reactions for unreactive species N2
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    N2
+Created 0 new edge species
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 1 species and 0 reactions
+    The model edge has 17 species and 18 reactions
+
+
+NOT generating reactions for unreactive species Ar
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    Ar
+Created 0 new edge species
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 2 species and 0 reactions
+    The model edge has 17 species and 18 reactions
+
+
+NOT generating reactions for unreactive species He
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    He
+Created 0 new edge species
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 3 species and 0 reactions
+    The model edge has 17 species and 18 reactions
+
+
+NOT generating reactions for unreactive species Ne
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    Ne
+Created 0 new edge species
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 4 species and 0 reactions
+    The model edge has 17 species and 18 reactions
+
+
+Adding species CH4(1) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    CH4(1)
+Created 0 new edge species
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 5 species and 0 reactions
+    The model edge has 16 species and 18 reactions
+
+
+Adding species CO2(2) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    CO2(2)
+Created 0 new edge species
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 6 species and 0 reactions
+    The model edge has 15 species and 18 reactions
+
+
+Adding species H2O(3) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    H2O(3)
+Created 0 new edge species
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 7 species and 0 reactions
+    The model edge has 14 species and 18 reactions
+
+
+Adding species H2(4) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    H2(4)
+Created 0 new edge species
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 8 species and 0 reactions
+    The model edge has 13 species and 18 reactions
+
+
+Adding species CO(5) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    CO(5)
+Created 0 new edge species
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 9 species and 0 reactions
+    The model edge has 12 species and 18 reactions
+
+
+Adding species O2(6) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    O2(6)
+Created 0 new edge species
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 10 species and 0 reactions
+    The model edge has 11 species and 18 reactions
+
+
+Adding species Pt(7) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    Pt(7)
+Created 0 new edge species
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 11 species and 0 reactions
+    The model edge has 10 species and 18 reactions
+
+
+Initialization complete. Starting model generation.
+
+conditions choosen for reactor 0 were: T = 523.0 K, 
+Generating initial reactions...
+For reaction generation 1 process is used.
+Generating thermo for new species...
+Species C.[Pt] renamed CH4_ads based on thermo library name
+Species [H][H].[Pt] renamed H2_ads based on thermo library name
+Generating kinetics for new reactions...
+For reaction Pt(7) + Pt(7) + H2O(3) <=> HX(8) + HOX(11), Ea raised from 0.0 to 61.9 kJ/mol to match endothermicity of reaction.
+
+Summary of Secondary Model Edge Enlargement
+---------------------------------
+Added 0 new core species
+Created 2 new edge species
+    CH4_ads(18)
+    H2_ads(19)
+Added 0 new core reactions
+Created 4 new edge reactions
+    Pt(7) + CH4(1) <=> CH4_ads(18)
+    Pt(7) + Pt(7) + CO2(2) <=> OX(9) + OCX(14)
+    Pt(7) + Pt(7) + H2O(3) <=> HX(8) + HOX(11)
+    Pt(7) + H2(4) <=> H2_ads(19)
+
+After model enlargement:
+    The model core has 11 species and 0 reactions
+    The model edge has 12 species and 22 reactions
+
+
+Completed initial enlarge edge step.
+
+Adding reaction library Surface/CPOX_Pt/Deutschmann2006 to output file...
+Saving current model core to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 18 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 18 reactions.
+Saving current model core and edge to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 22 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 22 reactions.
+Saving current model core to HTML file...
+Saving current model edge to HTML file...
+Updating RMG execution statistics...
+    Execution time (DD:HH:MM:SS): 00:00:00:13
+    Memory used: 500.04 MB
+
+Making seed mechanism...
+Beginning model generation stage 1...
+
+Making seed mechanism...
+Conducting simulation of reaction system 1...
+At time 0.0000e+00 s, species H2OX(12) was added to model core to avoid singularity
+conditions choosen for reactor 0 were: T = 578.2645732108933 K, 
+
+
+Adding species H2OX(12) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    H2OX(12)
+Created 0 new edge species
+Moved 1 reactions from edge to core
+    Pt(7) + H2O(3) <=> H2OX(12)
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 12 species and 1 reactions
+    The model edge has 11 species and 21 reactions
+
+
+For reaction generation 1 process is used.
+
+Summary of Secondary Model Edge Enlargement
+---------------------------------
+Added 0 new core species
+Created 0 new edge species
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 12 species and 1 reactions
+    The model edge has 11 species and 21 reactions
+
+
+Adding reaction library Surface/CPOX_Pt/Deutschmann2006 to output file...
+Saving current model core to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 18 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 18 reactions.
+Saving current model core and edge to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 22 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 22 reactions.
+Saving current model core to HTML file...
+Saving current model edge to HTML file...
+Updating RMG execution statistics...
+    Execution time (DD:HH:MM:SS): 00:00:00:14
+    Memory used: 503.01 MB
+
+Conducting simulation of reaction system 1...
+At time 0.0000e+00 s, species OCX(14) at 0.02160943659862021 exceeded the minimum rate for simulation interruption of 0.01
+Reached max number of objects...preparing to terminate
+At time 0.0000e+00 s, species OCX(14) at rate ratio 0.02160943659862021 exceeded the minimum rate for moving to model core of 0.01
+terminating simulation due to interrupt...
+conditions choosen for reactor 0 were: T = 579.4057897089463 K, 
+
+
+Adding species OCX(14) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    OCX(14)
+Created 0 new edge species
+Moved 1 reactions from edge to core
+    Pt(7) + CO(5) <=> OCX(14)
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 13 species and 2 reactions
+    The model edge has 10 species and 20 reactions
+
+
+For reaction generation 1 process is used.
+Generating thermo for new species...
+Species O=C[Pt] renamed HCO_ads based on thermo library name
+Species O=C(O)[Pt] renamed HOCOX based on thermo library name
+Species O=C=C=O renamed OCCO(S) based on thermo library name
+Species O=C=C=O.[Pt] renamed OCCO(S) based on thermo library name
+Generating kinetics for new reactions...
+For reaction H2OX(12) + OCX(14) <=> HOX(11) + HCO_ads(20), Ea raised from 82.3 to 165.3 kJ/mol to match endothermicity of reaction.
+For reaction H2OX(12) + OCX(14) <=> HX(8) + HOCOX(21), Ea raised from 80.5 to 162.1 kJ/mol to match endothermicity of reaction.
+For reaction Pt(7) + OCCO(S)(23) <=> OCX(14) + OCX(14) Ea raised from -293.3 to 0.0 kJ/mol.
+
+Summary of Secondary Model Edge Enlargement
+---------------------------------
+Added 0 new core species
+Created 4 new edge species
+    HCO_ads(20)
+    HOCOX(21)
+    OCCO(S)(22)
+    OCCO(S)(23)
+Added 0 new core reactions
+Created 4 new edge reactions
+    H2OX(12) + OCX(14) <=> HOX(11) + HCO_ads(20)
+    H2OX(12) + OCX(14) <=> HX(8) + HOCOX(21)
+    Pt(7) + Pt(7) + OCCO(S)(22) <=> OCX(14) + OCX(14)
+    Pt(7) + OCCO(S)(23) <=> OCX(14) + OCX(14)
+
+After model enlargement:
+    The model core has 13 species and 2 reactions
+    The model edge has 14 species and 24 reactions
+
+
+Adding reaction library Surface/CPOX_Pt/Deutschmann2006 to output file...
+Saving current model core to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 18 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 18 reactions.
+Saving current model core and edge to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 26 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 26 reactions.
+Saving current model core to HTML file...
+Saving current model edge to HTML file...
+Updating RMG execution statistics...
+    Execution time (DD:HH:MM:SS): 00:00:00:15
+    Memory used: 503.87 MB
+
+Conducting simulation of reaction system 1...
+At time 1.1099e-11 s, species H2_ads(19) at 0.010085939350728247 exceeded the minimum rate for simulation interruption of 0.01
+Reached max number of objects...preparing to terminate
+At time 1.1099e-11 s, species H2_ads(19) at rate ratio 0.010085939350728247 exceeded the minimum rate for moving to model core of 0.01
+terminating simulation due to interrupt...
+conditions choosen for reactor 0 were: T = 564.7518522658563 K, 
+
+
+Adding species H2_ads(19) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    H2_ads(19)
+Created 0 new edge species
+Moved 1 reactions from edge to core
+    Pt(7) + H2(4) <=> H2_ads(19)
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 14 species and 3 reactions
+    The model edge has 13 species and 23 reactions
+
+
+For reaction generation 1 process is used.
+Generating kinetics for new reactions...
+For reaction H2_ads(19) + OCX(14) <=> HX(8) + HCO_ads(20), Ea raised from 18.0 to 41.0 kJ/mol to match endothermicity of reaction.
+
+Summary of Secondary Model Edge Enlargement
+---------------------------------
+Added 0 new core species
+Created 0 new edge species
+Added 0 new core reactions
+Created 1 new edge reactions
+    H2_ads(19) + OCX(14) <=> HX(8) + HCO_ads(20)
+
+After model enlargement:
+    The model core has 14 species and 3 reactions
+    The model edge has 13 species and 24 reactions
+
+
+Adding reaction library Surface/CPOX_Pt/Deutschmann2006 to output file...
+Saving current model core to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 19 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 19 reactions.
+Saving current model core and edge to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 27 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 27 reactions.
+Saving current model core to HTML file...
+Saving current model edge to HTML file...
+Updating RMG execution statistics...
+    Execution time (DD:HH:MM:SS): 00:00:00:16
+    Memory used: 505.16 MB
+
+Making seed mechanism...
+Conducting simulation of reaction system 1...
+At time 1.3179e-11 s, species HX(8) at 0.010069220152468417 exceeded the minimum rate for simulation interruption of 0.01
+Reached max number of objects...preparing to terminate
+At time 1.3179e-11 s, species HX(8) at rate ratio 0.010069220152468417 exceeded the minimum rate for moving to model core of 0.01
+terminating simulation due to interrupt...
+conditions choosen for reactor 0 were: T = 623.5844218762013 K, 
+
+
+Adding species HX(8) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    HX(8)
+Created 0 new edge species
+Moved 1 reactions from edge to core
+    Pt(7) + Pt(7) + H2(4) <=> HX(8) + HX(8)
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 15 species and 4 reactions
+    The model edge has 12 species and 23 reactions
+
+
+For reaction generation 1 process is used.
+Generating thermo for new species...
+Species [H] renamed H based on thermo library name
+Species O=CO[Pt] renamed formyloxyX based on thermo library name
+Species OC#[Pt] renamed COH_ads based on thermo library name
+Generating kinetics for new reactions...
+For reaction HOX(11) + H2_ads(19) <=> HX(8) + H2OX(12) Ea raised from -64.3 to 0.0 kJ/mol.
+
+Summary of Secondary Model Edge Enlargement
+---------------------------------
+Added 0 new core species
+Created 3 new edge species
+    H(24)
+    formyloxyX(25)
+    COH_ads(26)
+Added 0 new core reactions
+Created 6 new edge reactions
+    Pt(7) + H(24) <=> HX(8)
+    HX(8) + CO2(2) <=> formyloxyX(25)
+    HX(8) + CO2(2) <=> HOCOX(21)
+    HOX(11) + H2_ads(19) <=> HX(8) + H2OX(12)
+    Pt(7) + HCO_ads(20) <=> HX(8) + OCX(14)
+    HX(8) + OCX(14) <=> Pt(7) + COH_ads(26)
+
+After model enlargement:
+    The model core has 15 species and 4 reactions
+    The model edge has 15 species and 29 reactions
+
+
+Adding reaction library Surface/CPOX_Pt/Deutschmann2006 to output file...
+Saving current model core to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 19 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 19 reactions.
+Saving current model core and edge to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 33 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 33 reactions.
+Saving current model core to HTML file...
+Saving current model edge to HTML file...
+Updating RMG execution statistics...
+    Execution time (DD:HH:MM:SS): 00:00:00:17
+    Memory used: 510.13 MB
+
+Conducting simulation of reaction system 1...
+At time 1.0198e-11 s, species OX(9) at 0.010021272054915879 exceeded the minimum rate for simulation interruption of 0.01
+Reached max number of objects...preparing to terminate
+At time 1.0198e-11 s, species OX(9) at rate ratio 0.010021272054915879 exceeded the minimum rate for moving to model core of 0.01
+terminating simulation due to interrupt...
+conditions choosen for reactor 0 were: T = 560.181009438394 K, 
+
+
+Adding species OX(9) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    OX(9)
+Created 0 new edge species
+Moved 2 reactions from edge to core
+    Pt(7) + Pt(7) + O2(6) <=> OX(9) + OX(9)
+    Pt(7) + Pt(7) + CO2(2) <=> OX(9) + OCX(14)
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 16 species and 6 reactions
+    The model edge has 14 species and 27 reactions
+
+
+For reaction generation 1 process is used.
+Generating thermo for new species...
+Species OO[Pt] renamed OOH_ads based on thermo library name
+Species O=O.[Pt] renamed O2(S) based on thermo library name
+Generating kinetics for new reactions...
+For reaction OX(9) + H2OX(12) <=> HX(8) + OOH_ads(27), Ea raised from 126.0 to 250.8 kJ/mol to match endothermicity of reaction.
+For reaction OX(9) + H2_ads(19) <=> HX(8) + HOX(11) Ea raised from -18.2 to 0.0 kJ/mol.
+For reaction Pt(7) + O2(S)(28) <=> OX(9) + OX(9) Ea raised from -177.0 to 0.0 kJ/mol.
+
+Summary of Secondary Model Edge Enlargement
+---------------------------------
+Added 0 new core species
+Created 2 new edge species
+    OOH_ads(27)
+    O2(S)(28)
+Added 0 new core reactions
+Created 3 new edge reactions
+    OX(9) + H2OX(12) <=> HX(8) + OOH_ads(27)
+    OX(9) + H2_ads(19) <=> HX(8) + HOX(11)
+    Pt(7) + O2(S)(28) <=> OX(9) + OX(9)
+
+After model enlargement:
+    The model core has 16 species and 6 reactions
+    The model edge has 16 species and 30 reactions
+
+
+Adding reaction library Surface/CPOX_Pt/Deutschmann2006 to output file...
+Saving current model core to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 20 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 20 reactions.
+Saving current model core and edge to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 36 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 36 reactions.
+Saving current model core to HTML file...
+Saving current model edge to HTML file...
+Updating RMG execution statistics...
+    Execution time (DD:HH:MM:SS): 00:00:00:18
+    Memory used: 512.54 MB
+
+Conducting simulation of reaction system 1...
+At time 1.5780e-11 s, species CO2X(13) at 0.010037831161707266 exceeded the minimum rate for simulation interruption of 0.01
+Reached max number of objects...preparing to terminate
+At time 1.5780e-11 s, species CO2X(13) at rate ratio 0.010037831161707266 exceeded the minimum rate for moving to model core of 0.01
+terminating simulation due to interrupt...
+conditions choosen for reactor 0 were: T = 658.8608023308466 K, 
+
+
+Adding species CO2X(13) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    CO2X(13)
+Created 0 new edge species
+Moved 2 reactions from edge to core
+    Pt(7) + CO2(2) <=> CO2X(13)
+    OX(9) + OCX(14) <=> Pt(7) + CO2X(13)
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 17 species and 8 reactions
+    The model edge has 15 species and 28 reactions
+
+
+For reaction generation 1 process is used.
+Generating thermo for new species...
+Generating kinetics for new reactions...
+For reaction H2OX(12) + CO2X(13) <=> HOX(11) + formyloxyX(25), Ea raised from 0.0 to 200.2 kJ/mol to match endothermicity of reaction.
+For reaction H2OX(12) + CO2X(13) <=> HOX(11) + HOCOX(21), Ea raised from 0.0 to 117.7 kJ/mol to match endothermicity of reaction.
+For reaction H2OX(12) + CO2X(13) <=> HX(8) + O=C(O)O[Pt](29), Ea raised from 0.0 to 90.8 kJ/mol to match endothermicity of reaction.
+For reaction H2OX(12) + CO2X(13) <=> HX(8) + O=C([Pt])OO(30), Ea raised from 0.0 to 337.3 kJ/mol to match endothermicity of reaction.
+For reaction H2_ads(19) + CO2X(13) <=> HX(8) + formyloxyX(25), Ea raised from 0.0 to 75.9 kJ/mol to match endothermicity of reaction.
+
+Summary of Secondary Model Edge Enlargement
+---------------------------------
+Added 0 new core species
+Created 2 new edge species
+    O=C(O)O[Pt](29)
+    O=C([Pt])OO(30)
+Added 0 new core reactions
+Created 8 new edge reactions
+    H2OX(12) + CO2X(13) <=> HOX(11) + formyloxyX(25)
+    H2OX(12) + CO2X(13) <=> HOX(11) + HOCOX(21)
+    H2OX(12) + CO2X(13) <=> HX(8) + O=C(O)O[Pt](29)
+    H2OX(12) + CO2X(13) <=> HX(8) + O=C([Pt])OO(30)
+    H2_ads(19) + CO2X(13) <=> HX(8) + formyloxyX(25)
+    H2_ads(19) + CO2X(13) <=> HX(8) + HOCOX(21)
+    HX(8) + CO2X(13) <=> Pt(7) + formyloxyX(25)
+    HX(8) + CO2X(13) <=> Pt(7) + HOCOX(21)
+
+After model enlargement:
+    The model core has 17 species and 8 reactions
+    The model edge has 17 species and 36 reactions
+
+
+Adding reaction library Surface/CPOX_Pt/Deutschmann2006 to output file...
+Saving current model core to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 20 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 20 reactions.
+Saving current model core and edge to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 44 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 44 reactions.
+Saving current model core to HTML file...
+Saving current model edge to HTML file...
+Updating RMG execution statistics...
+    Execution time (DD:HH:MM:SS): 00:00:00:19
+    Memory used: 516.64 MB
+
+Making seed mechanism...
+Conducting simulation of reaction system 1...
+At time 1.0284e-11 s, species CH4_ads(18) at 0.010051895957357967 exceeded the minimum rate for simulation interruption of 0.01
+Reached max number of objects...preparing to terminate
+At time 1.0284e-11 s, species CH4_ads(18) at rate ratio 0.010051895957357967 exceeded the minimum rate for moving to model core of 0.01
+terminating simulation due to interrupt...
+conditions choosen for reactor 0 were: T = 569.7508137670613 K, 
+
+
+Adding species CH4_ads(18) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    CH4_ads(18)
+Created 0 new edge species
+Moved 1 reactions from edge to core
+    Pt(7) + CH4(1) <=> CH4_ads(18)
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 18 species and 9 reactions
+    The model edge has 16 species and 35 reactions
+
+
+For reaction generation 1 process is used.
+Generating thermo for new species...
+Species CC(=O)[Pt] renamed acetylX based on thermo library name
+Species CO[Pt] renamed O-CH3_ads based on thermo library name
+Species CC(=O)O[Pt] renamed acetyloxyX based on thermo library name
+Species COC(=O)[Pt] renamed CH3OCOX based on thermo library name
+Generating kinetics for new reactions...
+For reaction OCX(14) + CH4_ads(18) <=> HCO_ads(20) + CH3X(10), Ea raised from 47.7 to 97.9 kJ/mol to match endothermicity of reaction.
+For reaction OCX(14) + CH4_ads(18) <=> HX(8) + acetylX(31), Ea raised from 80.9 to 162.9 kJ/mol to match endothermicity of reaction.
+For reaction H2_ads(19) + CH3X(10) <=> HX(8) + CH4_ads(18) Ea raised from -29.7 to 0.0 kJ/mol.
+For reaction OX(9) + CH4_ads(18) <=> HOX(11) + CH3X(10), Ea raised from 11.5 to 23.1 kJ/mol to match endothermicity of reaction.
+For reaction OX(9) + CH4_ads(18) <=> HX(8) + O-CH3_ads(32), Ea raised from 19.3 to 39.8 kJ/mol to match endothermicity of reaction.
+For reaction CO2X(13) + CH4_ads(18) <=> formyloxyX(25) + CH3X(10), Ea raised from 0.0 to 132.8 kJ/mol to match endothermicity of reaction.
+For reaction CO2X(13) + CH4_ads(18) <=> HX(8) + acetyloxyX(33), Ea raised from 0.0 to 93.8 kJ/mol to match endothermicity of reaction.
+For reaction CO2X(13) + CH4_ads(18) <=> HOCOX(21) + CH3X(10), Ea raised from 0.0 to 50.3 kJ/mol to match endothermicity of reaction.
+For reaction CO2X(13) + CH4_ads(18) <=> HX(8) + CH3OCOX(34), Ea raised from 0.0 to 96.4 kJ/mol to match endothermicity of reaction.
+
+Summary of Secondary Model Edge Enlargement
+---------------------------------
+Added 0 new core species
+Created 4 new edge species
+    acetylX(31)
+    O-CH3_ads(32)
+    acetyloxyX(33)
+    CH3OCOX(34)
+Added 0 new core reactions
+Created 10 new edge reactions
+    Pt(7) + CH4_ads(18) <=> HX(8) + CH3X(10)
+    OCX(14) + CH4_ads(18) <=> HCO_ads(20) + CH3X(10)
+    OCX(14) + CH4_ads(18) <=> HX(8) + acetylX(31)
+    H2_ads(19) + CH3X(10) <=> HX(8) + CH4_ads(18)
+    OX(9) + CH4_ads(18) <=> HOX(11) + CH3X(10)
+    OX(9) + CH4_ads(18) <=> HX(8) + O-CH3_ads(32)
+    CO2X(13) + CH4_ads(18) <=> formyloxyX(25) + CH3X(10)
+    CO2X(13) + CH4_ads(18) <=> HX(8) + acetyloxyX(33)
+    CO2X(13) + CH4_ads(18) <=> HOCOX(21) + CH3X(10)
+    CO2X(13) + CH4_ads(18) <=> HX(8) + CH3OCOX(34)
+
+After model enlargement:
+    The model core has 18 species and 9 reactions
+    The model edge has 20 species and 45 reactions
+
+
+Adding reaction library Surface/CPOX_Pt/Deutschmann2006 to output file...
+Saving current model core to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 21 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 21 reactions.
+Saving current model core and edge to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 54 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 54 reactions.
+Saving current model core to HTML file...
+Saving current model edge to HTML file...
+Updating RMG execution statistics...
+    Execution time (DD:HH:MM:SS): 00:00:00:20
+    Memory used: 519.28 MB
+
+Conducting simulation of reaction system 1...
+At time 2.4845e-09 s, species HOX(11) at 0.01001281799843741 exceeded the minimum rate for simulation interruption of 0.01
+Reached max number of objects...preparing to terminate
+At time 2.4845e-09 s, species HOX(11) at rate ratio 0.01001281799843741 exceeded the minimum rate for moving to model core of 0.01
+terminating simulation due to interrupt...
+conditions choosen for reactor 0 were: T = 807.8828447590844 K, 
+
+
+Adding species HOX(11) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    HOX(11)
+Created 0 new edge species
+Moved 7 reactions from edge to core
+    HX(8) + CO2X(13) <=> HOX(11) + OCX(14)
+    OX(9) + HX(8) <=> Pt(7) + HOX(11)
+    OX(9) + H2OX(12) <=> HOX(11) + HOX(11)
+    HX(8) + HOX(11) <=> Pt(7) + H2OX(12)
+    Pt(7) + Pt(7) + H2O(3) <=> HX(8) + HOX(11)
+    HOX(11) + H2_ads(19) <=> HX(8) + H2OX(12)
+    OX(9) + H2_ads(19) <=> HX(8) + HOX(11)
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 19 species and 16 reactions
+    The model edge has 19 species and 38 reactions
+
+
+For reaction generation 1 process is used.
+Generating thermo for new species...
+Species [OH] renamed OH(D) based on thermo library name
+Species OO.[Pt] renamed HO-OH_ads based on thermo library name
+Species CO.[Pt] renamed H3C-OH_ads based on thermo library name
+Species OO renamed HOOH based on thermo library name
+Generating kinetics for new reactions...
+For reaction HOX(11) + CO2(2) <=> O=C([Pt])OO(30), Ea raised from 283.7 to 283.7 kJ/mol to match endothermicity of reaction.
+For reaction HX(8) + HO-OH_ads(36) <=> HOX(11) + H2OX(12) Ea raised from -96.8 to 0.0 kJ/mol.
+For reaction HOX(11) + OCX(14) <=> Pt(7) + OOC#[Pt](37), Ea raised from 261.5 to 263.2 kJ/mol to match endothermicity of reaction.
+For reaction HOX(11) + CO2X(13) <=> Pt(7) + O=C([Pt])OO(30), Ea raised from 256.6 to 257.2 kJ/mol to match endothermicity of reaction.
+For reaction HOX(11) + CH4_ads(18) <=> H2OX(12) + CH3X(10) Ea raised from -34.6 to 0.0 kJ/mol.
+For reaction HOX(11) + CH4_ads(18) <=> HX(8) + H3C-OH_ads(38) Ea raised from -16.7 to 0.0 kJ/mol.
+
+Summary of Secondary Model Edge Enlargement
+---------------------------------
+Added 0 new core species
+Created 5 new edge species
+    OH(D)(35)
+    HO-OH_ads(36)
+    OOC#[Pt](37)
+    H3C-OH_ads(38)
+    HOOH(39)
+Added 0 new core reactions
+Created 16 new edge reactions
+    Pt(7) + OH(D)(35) <=> HOX(11)
+    HOX(11) + CO2(2) <=> O=C(O)O[Pt](29)
+    HOX(11) + CO2(2) <=> O=C([Pt])OO(30)
+    HX(8) + HO-OH_ads(36) <=> HOX(11) + H2OX(12)
+    OX(9) + HCO_ads(20) <=> HOX(11) + OCX(14)
+    Pt(7) + HOCOX(21) <=> HOX(11) + OCX(14)
+    HOX(11) + OCX(14) <=> Pt(7) + OOC#[Pt](37)
+    Pt(7) + OOH_ads(27) <=> OX(9) + HOX(11)
+    HOX(11) + CO2X(13) <=> Pt(7) + O=C(O)O[Pt](29)
+    HOX(11) + CO2X(13) <=> Pt(7) + O=C([Pt])OO(30)
+    HOX(11) + CO2X(13) <=> OX(9) + formyloxyX(25)
+    HOX(11) + CO2X(13) <=> OX(9) + HOCOX(21)
+    HOX(11) + CH4_ads(18) <=> H2OX(12) + CH3X(10)
+    HOX(11) + CH4_ads(18) <=> HX(8) + H3C-OH_ads(38)
+    Pt(7) + Pt(7) + HOOH(39) <=> HOX(11) + HOX(11)
+    Pt(7) + HO-OH_ads(36) <=> HOX(11) + HOX(11)
+
+After model enlargement:
+    The model core has 19 species and 16 reactions
+    The model edge has 24 species and 54 reactions
+
+
+Adding reaction library Surface/CPOX_Pt/Deutschmann2006 to output file...
+Saving current model core to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 24 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 24 reactions.
+Saving current model core and edge to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 70 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 70 reactions.
+Saving current model core to HTML file...
+Saving current model edge to HTML file...
+Updating RMG execution statistics...
+    Execution time (DD:HH:MM:SS): 00:00:00:22
+    Memory used: 523.74 MB
+
+Conducting simulation of reaction system 1...
+At time 1.0707e-09 s, species CH3X(10) at 0.01002160184733583 exceeded the minimum rate for simulation interruption of 0.01
+Reached max number of objects...preparing to terminate
+At time 1.0707e-09 s, species CH3X(10) at rate ratio 0.01002160184733583 exceeded the minimum rate for moving to model core of 0.01
+terminating simulation due to interrupt...
+conditions choosen for reactor 0 were: T = 800.3681578984883 K, 
+
+
+Adding species CH3X(10) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    CH3X(10)
+Created 0 new edge species
+Moved 7 reactions from edge to core
+    Pt(7) + Pt(7) + CH4(1) <=> HX(8) + CH3X(10)
+    Pt(7) + OX(9) + CH4(1) <=> HOX(11) + CH3X(10)
+    Pt(7) + HOX(11) + CH4(1) <=> H2OX(12) + CH3X(10)
+    Pt(7) + CH4_ads(18) <=> HX(8) + CH3X(10)
+    H2_ads(19) + CH3X(10) <=> HX(8) + CH4_ads(18)
+    OX(9) + CH4_ads(18) <=> HOX(11) + CH3X(10)
+    HOX(11) + CH4_ads(18) <=> H2OX(12) + CH3X(10)
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 20 species and 23 reactions
+    The model edge has 23 species and 47 reactions
+
+
+For reaction generation 1 process is used.
+Generating thermo for new species...
+Species [CH3] renamed CH3 based on thermo library name
+Species CC.[Pt] renamed CH3-CH3_ads based on thermo library name
+Species CO renamed CH3OH based on thermo library name
+Species CC renamed C2H6 based on thermo library name
+Generating kinetics for new reactions...
+For reaction CO2(2) + CH3X(10) <=> acetyloxyX(33), Ea raised from 106.0 to 107.6 kJ/mol to match endothermicity of reaction.
+For reaction CO2(2) + CH3X(10) <=> CH3OCOX(34), Ea raised from 108.0 to 110.2 kJ/mol to match endothermicity of reaction.
+For reaction HX(8) + H3C-OH_ads(38) <=> H2OX(12) + CH3X(10) Ea raised from -17.9 to 0.0 kJ/mol.
+For reaction H2_ads(19) + CH2X(16) <=> HX(8) + CH3X(10) Ea raised from -33.8 to 0.0 kJ/mol.
+For reaction CO2X(13) + CH3X(10) <=> Pt(7) + acetyloxyX(33), Ea raised from 78.9 to 81.2 kJ/mol to match endothermicity of reaction.
+For reaction CO2X(13) + CH3X(10) <=> Pt(7) + CH3OCOX(34), Ea raised from 80.9 to 83.8 kJ/mol to match endothermicity of reaction.
+For reaction H2OX(12) + CH2X(16) <=> HOX(11) + CH3X(10), Ea raised from 30.6 to 60.2 kJ/mol to match endothermicity of reaction.
+For reaction CH2X(16) + CH4_ads(18) <=> CH3X(10) + CH3X(10) Ea raised from -4.0 to 0.0 kJ/mol.
+
+Summary of Secondary Model Edge Enlargement
+---------------------------------
+Added 0 new core species
+Created 5 new edge species
+    CH3(40)
+    COC#[Pt](41)
+    CH3-CH3_ads(42)
+    CH3OH(43)
+    C2H6(44)
+Added 0 new core reactions
+Created 21 new edge reactions
+    Pt(7) + CH3(40) <=> CH3X(10)
+    CO2(2) + CH3X(10) <=> acetyloxyX(33)
+    CO2(2) + CH3X(10) <=> CH3OCOX(34)
+    HX(8) + H3C-OH_ads(38) <=> H2OX(12) + CH3X(10)
+    HCO_ads(20) + CH2X(16) <=> OCX(14) + CH3X(10)
+    Pt(7) + acetylX(31) <=> OCX(14) + CH3X(10)
+    OCX(14) + CH3X(10) <=> Pt(7) + COC#[Pt](41)
+    H2_ads(19) + CH2X(16) <=> HX(8) + CH3X(10)
+    HOX(11) + CH2X(16) <=> OX(9) + CH3X(10)
+    Pt(7) + O-CH3_ads(32) <=> OX(9) + CH3X(10)
+    CO2X(13) + CH3X(10) <=> Pt(7) + acetyloxyX(33)
+    CO2X(13) + CH3X(10) <=> Pt(7) + CH3OCOX(34)
+    CO2X(13) + CH3X(10) <=> formyloxyX(25) + CH2X(16)
+    CO2X(13) + CH3X(10) <=> HOCOX(21) + CH2X(16)
+    HX(8) + CH3-CH3_ads(42) <=> CH3X(10) + CH4_ads(18)
+    H2OX(12) + CH2X(16) <=> HOX(11) + CH3X(10)
+    Pt(7) + Pt(7) + CH3OH(43) <=> HOX(11) + CH3X(10)
+    Pt(7) + H3C-OH_ads(38) <=> HOX(11) + CH3X(10)
+    CH2X(16) + CH4_ads(18) <=> CH3X(10) + CH3X(10)
+    Pt(7) + Pt(7) + C2H6(44) <=> CH3X(10) + CH3X(10)
+    Pt(7) + CH3-CH3_ads(42) <=> CH3X(10) + CH3X(10)
+
+After model enlargement:
+    The model core has 20 species and 23 reactions
+    The model edge has 28 species and 68 reactions
+
+
+Adding reaction library Surface/CPOX_Pt/Deutschmann2006 to output file...
+Saving current model core to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 28 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 28 reactions.
+Saving current model core and edge to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 91 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 91 reactions.
+Saving current model core to HTML file...
+Saving current model edge to HTML file...
+Updating RMG execution statistics...
+    Execution time (DD:HH:MM:SS): 00:00:00:23
+    Memory used: 527.56 MB
+
+Making seed mechanism...
+Conducting simulation of reaction system 1...
+At time 1.6175e-10 s, species CH2X(16) at 0.010194691943100779 exceeded the minimum rate for simulation interruption of 0.01
+Reached max number of objects...preparing to terminate
+At time 1.6175e-10 s, species CH2X(16) at rate ratio 0.010194691943100779 exceeded the minimum rate for moving to model core of 0.01
+terminating simulation due to interrupt...
+conditions choosen for reactor 0 were: T = 570.7085643460616 K, 
+
+
+Adding species CH2X(16) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    CH2X(16)
+Created 0 new edge species
+Moved 5 reactions from edge to core
+    HX(8) + CH2X(16) <=> Pt(7) + CH3X(10)
+    H2_ads(19) + CH2X(16) <=> HX(8) + CH3X(10)
+    HOX(11) + CH2X(16) <=> OX(9) + CH3X(10)
+    H2OX(12) + CH2X(16) <=> HOX(11) + CH3X(10)
+    CH2X(16) + CH4_ads(18) <=> CH3X(10) + CH3X(10)
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 21 species and 28 reactions
+    The model edge has 27 species and 63 reactions
+
+
+For reaction generation 1 process is used.
+Generating thermo for new species...
+Species OC[Pt] renamed H2C-OH_ads based on thermo library name
+Species C=C=O renamed ketene based on thermo library name
+Species C=C=O.[Pt] renamed ketene based on thermo library name
+Species C=O renamed CH2O based on thermo library name
+Species C=O.[Pt] renamed H2C-O_ads based on thermo library name
+Species CC[Pt] renamed H2C-CH3_ads based on thermo library name
+Species C=C renamed C2H4 based on thermo library name
+Species C=C.[Pt] renamed C2H4 based on thermo library name
+Generating kinetics for new reactions...
+For reaction H2OX(12) + CH2X(16) <=> HX(8) + H2C-OH_ads(45) Ea raised from -24.8 to 0.0 kJ/mol.
+For reaction Pt(7) + ketene(47) <=> OCX(14) + CH2X(16) Ea raised from -91.0 to 0.0 kJ/mol.
+For reaction H2_ads(19) + CHX(17) <=> HX(8) + CH2X(16), Ea raised from 2.5 to 9.1 kJ/mol to match endothermicity of reaction.
+For reaction Pt(7) + H2C-O_ads(49) <=> OX(9) + CH2X(16), Ea raised from 9.9 to 23.7 kJ/mol to match endothermicity of reaction.
+For reaction CH2X(16) + CH4_ads(18) <=> HX(8) + H2C-CH3_ads(50) Ea raised from -9.9 to 0.0 kJ/mol.
+For reaction H2OX(12) + CHX(17) <=> HOX(11) + CH2X(16), Ea raised from 66.8 to 133.4 kJ/mol to match endothermicity of reaction.
+For reaction CHX(17) + CH4_ads(18) <=> CH2X(16) + CH3X(10), Ea raised from 32.2 to 66.0 kJ/mol to match endothermicity of reaction.
+For reaction Pt(7) + C2H4(52) <=> CH2X(16) + CH2X(16) Ea raised from -11.4 to 0.0 kJ/mol.
+
+Summary of Secondary Model Edge Enlargement
+---------------------------------
+Added 0 new core species
+Created 8 new edge species
+    H2C-OH_ads(45)
+    ketene(46)
+    ketene(47)
+    CH2O(48)
+    H2C-O_ads(49)
+    H2C-CH3_ads(50)
+    C2H4(51)
+    C2H4(52)
+Added 0 new core reactions
+Created 18 new edge reactions
+    H2OX(12) + CH2X(16) <=> HX(8) + H2C-OH_ads(45)
+    CHX(17) + HCO_ads(20) <=> OCX(14) + CH2X(16)
+    Pt(7) + Pt(7) + ketene(46) <=> OCX(14) + CH2X(16)
+    Pt(7) + ketene(47) <=> OCX(14) + CH2X(16)
+    H2_ads(19) + CHX(17) <=> HX(8) + CH2X(16)
+    OX(9) + CH2X(16) <=> HOX(11) + CHX(17)
+    Pt(7) + Pt(7) + CH2O(48) <=> OX(9) + CH2X(16)
+    Pt(7) + H2C-O_ads(49) <=> OX(9) + CH2X(16)
+    CO2X(13) + CH2X(16) <=> CHX(17) + formyloxyX(25)
+    CO2X(13) + CH2X(16) <=> CHX(17) + HOCOX(21)
+    CH2X(16) + CH4_ads(18) <=> HX(8) + H2C-CH3_ads(50)
+    H2OX(12) + CHX(17) <=> HOX(11) + CH2X(16)
+    Pt(7) + H2C-OH_ads(45) <=> HOX(11) + CH2X(16)
+    CHX(17) + CH4_ads(18) <=> CH2X(16) + CH3X(10)
+    Pt(7) + H2C-CH3_ads(50) <=> CH2X(16) + CH3X(10)
+    CH2X(16) + CH2X(16) <=> CHX(17) + CH3X(10)
+    Pt(7) + Pt(7) + C2H4(51) <=> CH2X(16) + CH2X(16)
+    Pt(7) + C2H4(52) <=> CH2X(16) + CH2X(16)
+
+After model enlargement:
+    The model core has 21 species and 28 reactions
+    The model edge has 35 species and 81 reactions
+
+
+Adding reaction library Surface/CPOX_Pt/Deutschmann2006 to output file...
+Saving current model core to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 32 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 32 reactions.
+Saving current model core and edge to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 109 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 109 reactions.
+Saving current model core to HTML file...
+Saving current model edge to HTML file...
+Updating RMG execution statistics...
+    Execution time (DD:HH:MM:SS): 00:00:00:25
+    Memory used: 530.01 MB
+
+Conducting simulation of reaction system 1...
+At time 3.3154e-12 s, species CHX(17) at 0.010163892167955163 exceeded the minimum rate for simulation interruption of 0.01
+Reached max number of objects...preparing to terminate
+At time 3.3154e-12 s, species CHX(17) at rate ratio 0.010163892167955163 exceeded the minimum rate for moving to model core of 0.01
+terminating simulation due to interrupt...
+conditions choosen for reactor 0 were: T = 553.2743308235267 K, 
+
+
+Adding species CHX(17) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    CHX(17)
+Created 0 new edge species
+Moved 6 reactions from edge to core
+    HX(8) + CHX(17) <=> Pt(7) + CH2X(16)
+    H2_ads(19) + CHX(17) <=> HX(8) + CH2X(16)
+    OX(9) + CH2X(16) <=> HOX(11) + CHX(17)
+    H2OX(12) + CHX(17) <=> HOX(11) + CH2X(16)
+    CHX(17) + CH4_ads(18) <=> CH2X(16) + CH3X(10)
+    CH2X(16) + CH2X(16) <=> CHX(17) + CH3X(10)
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 22 species and 34 reactions
+    The model edge has 34 species and 75 reactions
+
+
+For reaction generation 1 process is used.
+Generating thermo for new species...
+Species OC=[Pt] renamed HCOH_ads based on thermo library name
+Species CC=[Pt] renamed HC-CH3_ads based on thermo library name
+Generating kinetics for new reactions...
+For reaction H2OX(12) + CHX(17) <=> HX(8) + HCOH_ads(53), Ea raised from 25.4 to 52.1 kJ/mol to match endothermicity of reaction.
+For reaction H2_ads(19) + CX(15) <=> HX(8) + CHX(17) Ea raised from -50.1 to 0.0 kJ/mol.
+For reaction CO2X(13) + CHX(17) <=> CX(15) + HOCOX(21), Ea raised from 88.8 to 89.3 kJ/mol to match endothermicity of reaction.
+For reaction CHX(17) + CH4_ads(18) <=> HX(8) + HC-CH3_ads(54), Ea raised from 22.1 to 46.3 kJ/mol to match endothermicity of reaction.
+For reaction H2OX(12) + CX(15) <=> HOX(11) + CHX(17), Ea raised from 14.3 to 28.3 kJ/mol to match endothermicity of reaction.
+For reaction CX(15) + CH4_ads(18) <=> CHX(17) + CH3X(10) Ea raised from -20.3 to 0.0 kJ/mol.
+
+Summary of Secondary Model Edge Enlargement
+---------------------------------
+Added 0 new core species
+Created 2 new edge species
+    HCOH_ads(53)
+    HC-CH3_ads(54)
+Added 0 new core reactions
+Created 13 new edge reactions
+    H2OX(12) + CHX(17) <=> HX(8) + HCOH_ads(53)
+    CX(15) + HCO_ads(20) <=> OCX(14) + CHX(17)
+    H2_ads(19) + CX(15) <=> HX(8) + CHX(17)
+    HOX(11) + CX(15) <=> OX(9) + CHX(17)
+    CO2X(13) + CHX(17) <=> CX(15) + formyloxyX(25)
+    CO2X(13) + CHX(17) <=> CX(15) + HOCOX(21)
+    CHX(17) + CH4_ads(18) <=> HX(8) + HC-CH3_ads(54)
+    H2OX(12) + CX(15) <=> HOX(11) + CHX(17)
+    Pt(7) + HCOH_ads(53) <=> HOX(11) + CHX(17)
+    CX(15) + CH4_ads(18) <=> CHX(17) + CH3X(10)
+    Pt(7) + HC-CH3_ads(54) <=> CHX(17) + CH3X(10)
+    CX(15) + CH3X(10) <=> CHX(17) + CH2X(16)
+    CX(15) + CH2X(16) <=> CHX(17) + CHX(17)
+
+After model enlargement:
+    The model core has 22 species and 34 reactions
+    The model edge has 36 species and 88 reactions
+
+
+Adding reaction library Surface/CPOX_Pt/Deutschmann2006 to output file...
+Saving current model core to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 37 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 37 reactions.
+Saving current model core and edge to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 122 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 122 reactions.
+Saving current model core to HTML file...
+Saving current model edge to HTML file...
+Updating RMG execution statistics...
+    Execution time (DD:HH:MM:SS): 00:00:00:26
+    Memory used: 533.37 MB
+
+Conducting simulation of reaction system 1...
+At time 5.8619e-11 s, species CX(15) at 0.0100147596526709 exceeded the minimum rate for simulation interruption of 0.01
+Reached max number of objects...preparing to terminate
+At time 5.8619e-11 s, species CX(15) at rate ratio 0.0100147596526709 exceeded the minimum rate for moving to model core of 0.01
+terminating simulation due to interrupt...
+conditions choosen for reactor 0 were: T = 619.0095698973527 K, 
+
+
+Adding species CX(15) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    CX(15)
+Created 0 new edge species
+Moved 9 reactions from edge to core
+    OX(9) + CX(15) <=> Pt(7) + OCX(14)
+    Pt(7) + CHX(17) <=> HX(8) + CX(15)
+    H2(4) + CX(15) <=> CH2X(16)
+    H2_ads(19) + CX(15) <=> HX(8) + CHX(17)
+    HOX(11) + CX(15) <=> OX(9) + CHX(17)
+    H2OX(12) + CX(15) <=> HOX(11) + CHX(17)
+    CX(15) + CH4_ads(18) <=> CHX(17) + CH3X(10)
+    CX(15) + CH3X(10) <=> CHX(17) + CH2X(16)
+    CX(15) + CH2X(16) <=> CHX(17) + CHX(17)
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 23 species and 43 reactions
+    The model edge has 35 species and 79 reactions
+
+
+For reaction generation 1 process is used.
+Generating thermo for new species...
+Species CC#[Pt] renamed C-CH3_ads based on thermo library name
+Generating kinetics for new reactions...
+For reaction H2OX(12) + CX(15) <=> HX(8) + COH_ads(26) Ea raised from -33.3 to 0.0 kJ/mol.
+For reaction CX(15) + CH4_ads(18) <=> HX(8) + C-CH3_ads(55) Ea raised from -41.1 to 0.0 kJ/mol.
+
+Summary of Secondary Model Edge Enlargement
+---------------------------------
+Added 0 new core species
+Created 1 new edge species
+    C-CH3_ads(55)
+Added 0 new core reactions
+Created 4 new edge reactions
+    H2OX(12) + CX(15) <=> HX(8) + COH_ads(26)
+    CX(15) + CH4_ads(18) <=> HX(8) + C-CH3_ads(55)
+    Pt(7) + COH_ads(26) <=> HOX(11) + CX(15)
+    Pt(7) + C-CH3_ads(55) <=> CX(15) + CH3X(10)
+
+After model enlargement:
+    The model core has 23 species and 43 reactions
+    The model edge has 36 species and 83 reactions
+
+
+Adding reaction library Surface/CPOX_Pt/Deutschmann2006 to output file...
+Saving current model core to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 43 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 43 reactions.
+Saving current model core and edge to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 126 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 126 reactions.
+Saving current model core to HTML file...
+Saving current model edge to HTML file...
+Updating RMG execution statistics...
+    Execution time (DD:HH:MM:SS): 00:00:00:28
+    Memory used: 534.84 MB
+
+Making seed mechanism...
+Conducting simulation of reaction system 1...
+At time 4.6952e-05 s, reached target termination RateRatio: 9.9774729114248e-11
+conditions choosen for reactor 0 were: T = 670.5947269388419 K, 
+
+
+For reaction generation 1 process is used.
+
+Summary of Secondary Model Edge Enlargement
+---------------------------------
+Added 0 new core species
+Created 0 new edge species
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 23 species and 43 reactions
+    The model edge has 36 species and 83 reactions
+
+
+Adding reaction library Surface/CPOX_Pt/Deutschmann2006 to output file...
+Saving current model core to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 43 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 43 reactions.
+Saving current model core and edge to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 126 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 126 reactions.
+Saving current model core to HTML file...
+Saving current model edge to HTML file...
+Updating RMG execution statistics...
+    Execution time (DD:HH:MM:SS): 00:00:00:31
+    Memory used: 548.78 MB
+
+Conducting simulation of reaction system 1...
+At time 4.0049e-05 s, reached target termination RateRatio: 9.595766411727688e-11
+conditions choosen for reactor 0 were: T = 716.4686039498895 K, 
+
+
+For reaction generation 1 process is used.
+
+Summary of Secondary Model Edge Enlargement
+---------------------------------
+Added 0 new core species
+Created 0 new edge species
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 23 species and 43 reactions
+    The model edge has 36 species and 83 reactions
+
+
+Adding reaction library Surface/CPOX_Pt/Deutschmann2006 to output file...
+Saving current model core to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 43 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 43 reactions.
+Saving current model core and edge to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 126 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 126 reactions.
+Saving current model core to HTML file...
+Saving current model edge to HTML file...
+Updating RMG execution statistics...
+    Execution time (DD:HH:MM:SS): 00:00:00:33
+    Memory used: 554.19 MB
+
+Conducting simulation of reaction system 1...
+At time 3.6510e-05 s, species COH_ads(26) at 0.010331379548703884 exceeded the minimum rate for simulation interruption of 0.01
+Reached max number of objects...preparing to terminate
+At time 3.6510e-05 s, species COH_ads(26) at rate ratio 0.010331379548703884 exceeded the minimum rate for moving to model core of 0.01
+terminating simulation due to interrupt...
+conditions choosen for reactor 0 were: T = 616.3826198196973 K, 
+
+
+Adding species COH_ads(26) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    COH_ads(26)
+Created 0 new edge species
+Moved 3 reactions from edge to core
+    HX(8) + OCX(14) <=> Pt(7) + COH_ads(26)
+    H2OX(12) + CX(15) <=> HX(8) + COH_ads(26)
+    Pt(7) + COH_ads(26) <=> HOX(11) + CX(15)
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 24 species and 46 reactions
+    The model edge has 35 species and 80 reactions
+
+
+For reaction generation 1 process is used.
+Generating thermo for new species...
+Generating kinetics for new reactions...
+For reaction H2OX(12) + COH_ads(26) <=> HOX(11) + HCOH_ads(53), Ea raised from 73.0 to 147.1 kJ/mol to match endothermicity of reaction.
+For reaction H2OX(12) + COH_ads(26) <=> HX(8) + OC(O)=[Pt](56), Ea raised from 101.2 to 201.5 kJ/mol to match endothermicity of reaction.
+For reaction H2_ads(19) + COH_ads(26) <=> HX(8) + HCOH_ads(53), Ea raised from 8.6 to 22.8 kJ/mol to match endothermicity of reaction.
+For reaction CO2X(13) + COH_ads(26) <=> CX(15) + O=C(O)O[Pt](29), Ea raised from 155.2 to 157.4 kJ/mol to match endothermicity of reaction.
+For reaction COH_ads(26) + CH4_ads(18) <=> HCOH_ads(53) + CH3X(10), Ea raised from 38.4 to 79.7 kJ/mol to match endothermicity of reaction.
+For reaction COH_ads(26) + CH4_ads(18) <=> HX(8) + CC(O)=[Pt](57), Ea raised from 146.0 to 291.2 kJ/mol to match endothermicity of reaction.
+For reaction HO-OH_ads(36) + CX(15) <=> HOX(11) + COH_ads(26) Ea raised from -130.1 to 0.0 kJ/mol.
+For reaction CX(15) + H3C-OH_ads(38) <=> COH_ads(26) + CH3X(10) Ea raised from -51.2 to 0.0 kJ/mol.
+
+Summary of Secondary Model Edge Enlargement
+---------------------------------
+Added 0 new core species
+Created 2 new edge species
+    OC(O)=[Pt](56)
+    CC(O)=[Pt](57)
+Added 0 new core reactions
+Created 21 new edge reactions
+    H2OX(12) + COH_ads(26) <=> HOX(11) + HCOH_ads(53)
+    H2OX(12) + COH_ads(26) <=> HX(8) + OC(O)=[Pt](56)
+    CX(15) + HOCOX(21) <=> OCX(14) + COH_ads(26)
+    H2_ads(19) + COH_ads(26) <=> HX(8) + HCOH_ads(53)
+    Pt(7) + HCOH_ads(53) <=> HX(8) + COH_ads(26)
+    OOH_ads(27) + CX(15) <=> OX(9) + COH_ads(26)
+    CO2X(13) + COH_ads(26) <=> CX(15) + O=C(O)O[Pt](29)
+    CO2X(13) + COH_ads(26) <=> CX(15) + O=C([Pt])OO(30)
+    COH_ads(26) + CH4_ads(18) <=> HCOH_ads(53) + CH3X(10)
+    COH_ads(26) + CH4_ads(18) <=> HX(8) + CC(O)=[Pt](57)
+    OX(9) + HCOH_ads(53) <=> HOX(11) + COH_ads(26)
+    HO-OH_ads(36) + CX(15) <=> HOX(11) + COH_ads(26)
+    Pt(7) + OC(O)=[Pt](56) <=> HOX(11) + COH_ads(26)
+    CH2X(16) + HCOH_ads(53) <=> COH_ads(26) + CH3X(10)
+    CX(15) + H3C-OH_ads(38) <=> COH_ads(26) + CH3X(10)
+    Pt(7) + CC(O)=[Pt](57) <=> COH_ads(26) + CH3X(10)
+    CX(15) + H2C-OH_ads(45) <=> COH_ads(26) + CH2X(16)
+    CHX(17) + HCOH_ads(53) <=> COH_ads(26) + CH2X(16)
+    CX(15) + HCOH_ads(53) <=> CHX(17) + COH_ads(26)
+    CX(15) + HCOH_ads(53) <=> CHX(17) + COH_ads(26)
+    CX(15) + OC(O)=[Pt](56) <=> COH_ads(26) + COH_ads(26)
+
+After model enlargement:
+    The model core has 24 species and 46 reactions
+    The model edge has 37 species and 101 reactions
+
+
+Adding reaction library Surface/CPOX_Pt/Deutschmann2006 to output file...
+Saving current model core to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 46 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 46 reactions.
+Saving current model core and edge to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 147 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 147 reactions.
+Saving current model core to HTML file...
+Saving current model edge to HTML file...
+Updating RMG execution statistics...
+    Execution time (DD:HH:MM:SS): 00:00:00:37
+    Memory used: 562.00 MB
+
+Making seed mechanism...
+Conducting simulation of reaction system 1...
+At time 4.7457e-05 s, reached target termination RateRatio: 9.981714287920129e-11
+conditions choosen for reactor 0 were: T = 637.1596055084021 K, 
+
+
+For reaction generation 1 process is used.
+
+Summary of Secondary Model Edge Enlargement
+---------------------------------
+Added 0 new core species
+Created 0 new edge species
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 24 species and 46 reactions
+    The model edge has 37 species and 101 reactions
+
+
+Adding reaction library Surface/CPOX_Pt/Deutschmann2006 to output file...
+Saving current model core to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 46 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 46 reactions.
+Saving current model core and edge to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 147 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 147 reactions.
+Saving current model core to HTML file...
+Saving current model edge to HTML file...
+Updating RMG execution statistics...
+    Execution time (DD:HH:MM:SS): 00:00:00:40
+    Memory used: 567.50 MB
+
+Conducting simulation of reaction system 1...
+At time 4.3007e-05 s, reached target termination RateRatio: 9.542188502463167e-11
+conditions choosen for reactor 0 were: T = 596.923864403034 K, 
+
+
+For reaction generation 1 process is used.
+
+Summary of Secondary Model Edge Enlargement
+---------------------------------
+Added 0 new core species
+Created 0 new edge species
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 24 species and 46 reactions
+    The model edge has 37 species and 101 reactions
+
+
+Adding reaction library Surface/CPOX_Pt/Deutschmann2006 to output file...
+Saving current model core to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 46 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 46 reactions.
+Saving current model core and edge to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 147 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 147 reactions.
+Saving current model core to HTML file...
+Saving current model edge to HTML file...
+Updating RMG execution statistics...
+    Execution time (DD:HH:MM:SS): 00:00:00:42
+    Memory used: 573.23 MB
+
+Conducting simulation of reaction system 1...
+At time 5.8130e-05 s, reached target termination RateRatio: 9.735612227649427e-11
+conditions choosen for reactor 0 were: T = 673.6543933149935 K, 
+
+
+For reaction generation 1 process is used.
+
+Summary of Secondary Model Edge Enlargement
+---------------------------------
+Added 0 new core species
+Created 0 new edge species
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 24 species and 46 reactions
+    The model edge has 37 species and 101 reactions
+
+
+Adding reaction library Surface/CPOX_Pt/Deutschmann2006 to output file...
+Saving current model core to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 46 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 46 reactions.
+Saving current model core and edge to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 147 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 147 reactions.
+Saving current model core to HTML file...
+Saving current model edge to HTML file...
+Updating RMG execution statistics...
+    Execution time (DD:HH:MM:SS): 00:00:00:46
+    Memory used: 574.02 MB
+
+Making seed mechanism...
+Performing final model checks...
+No collision rate violators found in the model's core.
+
+MODEL GENERATION COMPLETED
+
+The final model core has 24 species and 46 reactions
+The final model edge has 37 species and 101 reactions
+
+RMG execution terminated at Tue Aug  9 21:25:17 2022

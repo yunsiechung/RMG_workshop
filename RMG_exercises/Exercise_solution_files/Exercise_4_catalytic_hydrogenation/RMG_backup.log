@@ -1,0 +1,3447 @@
+Global RMG Settings:
+   database.directory   = /home/bkr/anaconda3/envs/rmg_test_env/share/rmgdatabase (from /home/bkr/anaconda3/envs/rmg_test_env/lib/python3.7/site-packages/rmgpy/rmgrc)
+   test_data.directory  = /home/bkr/anaconda3/envs/rmg_test_env/lib/python3.7/site-packages/rmgpy/test_data (Default, relative to RMG-Py source code)
+RMG execution initiated at Mon Aug  8 18:02:16 2022
+
+#########################################################
+# RMG-Py - Reaction Mechanism Generator in Python       #
+# Version: 3.1.0                                        #
+# Authors: RMG Developers (rmg_dev@mit.edu)             #
+# P.I.s:   William H. Green (whgreen@mit.edu)           #
+#          Richard H. West (r.west@neu.edu)             #
+# Website: http://reactionmechanismgenerator.github.io/ #
+#########################################################
+
+Reading input file "/home/bkr/rmg-workshop/methanation/input.py"...
+# Data sources
+database(
+    thermoLibraries=['surfaceThermoPt111', 'primaryThermoLibrary','DFT_QCI_thermo', 'thermo_DFT_CCSDTF12_BAC'], 
+    reactionLibraries = [('Surface/Deutschmann_Ni', True)], 
+    seedMechanisms = [],
+    kineticsDepositories = ['training'],
+    kineticsFamilies = ['surface'],
+    kineticsEstimator = 'rate rules',
+)
+
+#catalystProperties(
+#    bindingEnergies = {  # values for Ni(111) calculated with VASP
+#                        'H': (-2.76, 'eV/molecule'),
+#                        'O': (-4.7, 'eV/molecule'),
+#                        'C': (-6.45, 'eV/molecule'),
+#                        'N': (-4.352, 'eV/molecule'), 
+#                      },
+#    surfaceSiteDensity=(3.16e-9, 'mol/cm^2'), # values for Ni(111)
+#)
+
+catalystProperties(
+	metal='Ru0001'
+)
+
+# List of species
+
+species(
+    label='CH4',
+    reactive=True,
+    structure=SMILES("[CH4]"),
+)
+
+species(
+    label='CO2',
+    reactive=True,
+    structure=SMILES("O=C=O"),
+)
+
+species(
+    label='H2O',
+    reactive=True,
+    structure=SMILES("O"),
+)
+
+species(
+    label='H2',
+    reactive=True,
+    structure=SMILES("[H][H]"),
+)
+
+#-------
+species(
+    label='site',
+    reactive=True,
+    structure=adjacencyList("1 X u0"),
+)
+
+#----------
+# Reaction systems
+
+surfaceReactor(
+    temperature=(673,'K'),
+    initialPressure=(1.0, 'bar'),
+    initialGasMoleFractions={
+        "CH4": 0.0,
+        "CO2": 1.0,
+        "H2O": 0.0,
+        "H2": 4.0,
+    },
+    initialSurfaceCoverages={
+        "site": 1.0,
+    },
+    surfaceVolumeRatio=(1.e5, 'm^-1'),
+    terminationConversion={
+                'CO2': 0.9,
+        },
+)
+
+simulator(
+    atol=1e-18,
+    rtol=1e-12,
+)
+
+model(
+    toleranceKeepInEdge=1e-3,
+    toleranceMoveToCore=1e-1,
+    toleranceInterruptSimulation=1e-1,
+    maximumEdgeSpecies=10000
+)
+
+generatedSpeciesConstraints(maximumSurfaceSites=1)
+
+options(
+    units='si',
+    saveRestartPeriod=None,
+    generateSeedEachIteration=False,
+    saveSeedToDatabase=False,
+    generateOutputHTML=True,
+    generatePlots=False, 
+    saveEdgeSpecies=True,
+    saveSimulationProfiles=True,
+    verboseComments=False,
+    saveSeedModulus=-1
+)
+
+Using catalyst surface properties from metal 'Ru0001'.
+Using binding energies:
+{'H': (-2.85192,'eV/molecule'), 'C': (-7.5979,'eV/molecule'), 'N': (-5.969,'eV/molecule'), 'O': (-5.4492,'eV/molecule')}
+Using surface site density: (2.63e-09,'mol/cm^2')
+Warning: Initial gas mole fractions do not sum to one; renormalizing.
+
+
+Surface reaction system 1
+Gas phase mole fractions:
+  CH4                  0
+  CO2                  0.2
+  H2O                  0
+  H2                   0.8
+Total gas phase:          1 moles
+Pressure:                 1e+05 Pa
+Temperature:              673.0 K
+Reactor volume:           0.056 m3
+Surface/volume ratio:     1e+05 m2/m3
+Surface site density:     2.63e-05 mol/m2
+Surface sites in reactor: 0.147 moles
+Initial surface coverages (and amounts):
+  site               1 = 0.14717 moles
+Warning: Generate Output HTML option was turned on. Note that this will slow down model generation.
+Warning: Edge species saving was turned on. This will slow down model generation for large simulations.
+
+Loading transport library from OneDMinN2.py in /home/bkr/anaconda3/envs/rmg_test_env/share/rmgdatabase/transport/libraries...
+Loading transport library from PrimaryTransportLibrary.py in /home/bkr/anaconda3/envs/rmg_test_env/share/rmgdatabase/transport/libraries...
+Loading transport library from NOx2018.py in /home/bkr/anaconda3/envs/rmg_test_env/share/rmgdatabase/transport/libraries...
+Loading transport library from GRI-Mech.py in /home/bkr/anaconda3/envs/rmg_test_env/share/rmgdatabase/transport/libraries...
+Loading transport group database from /home/bkr/anaconda3/envs/rmg_test_env/share/rmgdatabase/transport/groups...
+Loading kinetics library Surface/Deutschmann_Ni from /home/bkr/anaconda3/envs/rmg_test_env/share/rmgdatabase/kinetics/libraries/Surface/Deutschmann_Ni/reactions.py...
+Loading frequencies group database from /home/bkr/anaconda3/envs/rmg_test_env/share/rmgdatabase/statmech/groups...
+Loading Platts additivity group database from /home/bkr/anaconda3/envs/rmg_test_env/share/rmgdatabase/solvation/groups...
+Loading thermodynamics library from surfaceThermoPt111.py in /home/bkr/anaconda3/envs/rmg_test_env/share/rmgdatabase/thermo/libraries...
+Loading thermodynamics library from primaryThermoLibrary.py in /home/bkr/anaconda3/envs/rmg_test_env/share/rmgdatabase/thermo/libraries...
+Loading thermodynamics library from DFT_QCI_thermo.py in /home/bkr/anaconda3/envs/rmg_test_env/share/rmgdatabase/thermo/libraries...
+Loading thermodynamics library from thermo_DFT_CCSDTF12_BAC.py in /home/bkr/anaconda3/envs/rmg_test_env/share/rmgdatabase/thermo/libraries...
+Loading thermodynamics group database from /home/bkr/anaconda3/envs/rmg_test_env/share/rmgdatabase/thermo/groups...
+Trimolecular reactions are turned on
+Adding rate rules from training set in kinetics families...
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Cphigh is above the theoretical CpInf value for ThermoData object
+ThermoData(Tdata=([300,400,500,600,800,1000,1500],'K'), Cpdata=([13.33,15.23,16.577,17.616,19.112,20.086,21.384],'cal/(mol*K)','+|-',[0.4,0.5,0.5,0.5,0.5,0.4,0.2]), H298=(-69.6343,'kcal/mol','+|-',0.5), S298=(26.455,'cal/(mol*K)','+|-',0.5), Cp0=(33.2579,'J/(mol*K)'), CpInf=(83.1447,'J/(mol*K)'), label="""formyloxyX""", comment="""Gas phase thermo for formyloxy from Thermo library: DFT_QCI_thermo. Adsorption correction: + Thermo group additivity estimation: adsorptionPt111(O-*R) Binding energy corrected by LSR (0.50O) from Pt111""").
+The thermo for this species is probably wrong! Setting CpInf = Cphigh for Entropy calculationat T = 2000.0 K...
+Warning: Cphigh is above the theoretical CpInf value for ThermoData object
+ThermoData(Tdata=([300,400,500,600,800,1000,1500],'K'), Cpdata=([11.517,14.517,16.949,18.869,21.563,23.27,25.398],'cal/(mol*K)','+|-',[0.7,0.9,1.1,1.1,0.9,0.7,0.2]), H298=(-96.446,'kcal/mol','+|-',0.1), S298=(26.324,'cal/(mol*K)','+|-',0.5), Cp0=(33.2579,'J/(mol*K)'), CpInf=(103.931,'J/(mol*K)'), label="""formic_acid""", comment="""Gas phase thermo for formic_acid from Thermo library: DFT_QCI_thermo. Adsorption correction: + Thermo group additivity estimation: adsorptionPt111((CR2NR)*) Binding energy corrected by LSR () from Pt111""").
+The thermo for this species is probably wrong! Setting CpInf = Cphigh for Entropy calculationat T = 2000.0 K...
+Warning: Cphigh is above the theoretical CpInf value for ThermoData object
+ThermoData(Tdata=([300,400,500,600,800,1000,1500],'K'), Cpdata=([13.33,15.23,16.577,17.616,19.112,20.086,21.384],'cal/(mol*K)','+|-',[0.4,0.5,0.5,0.5,0.5,0.4,0.2]), H298=(-69.6343,'kcal/mol','+|-',0.5), S298=(26.455,'cal/(mol*K)','+|-',0.5), Cp0=(33.2579,'J/(mol*K)'), CpInf=(83.1447,'J/(mol*K)'), label="""formyloxyX""", comment="""Gas phase thermo for formyloxy from Thermo library: DFT_QCI_thermo. Adsorption correction: + Thermo group additivity estimation: adsorptionPt111(O-*R) Binding energy corrected by LSR (0.50O) from Pt111""").
+The thermo for this species is probably wrong! Setting CpInf = Cphigh for Entropy calculationat T = 1666.6666666666665 K...
+Warning: Cphigh is above the theoretical CpInf value for ThermoData object
+ThermoData(Tdata=([300,400,500,600,800,1000,1500],'K'), Cpdata=([11.517,14.517,16.949,18.869,21.563,23.27,25.398],'cal/(mol*K)','+|-',[0.7,0.9,1.1,1.1,0.9,0.7,0.2]), H298=(-96.446,'kcal/mol','+|-',0.1), S298=(26.324,'cal/(mol*K)','+|-',0.5), Cp0=(33.2579,'J/(mol*K)'), CpInf=(103.931,'J/(mol*K)'), label="""formic_acid""", comment="""Gas phase thermo for formic_acid from Thermo library: DFT_QCI_thermo. Adsorption correction: + Thermo group additivity estimation: adsorptionPt111((CR2NR)*) Binding energy corrected by LSR () from Pt111""").
+The thermo for this species is probably wrong! Setting CpInf = Cphigh for Entropy calculationat T = 1666.6666666666665 K...
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Cphigh is above the theoretical CpInf value for ThermoData object
+ThermoData(Tdata=([300,400,500,600,800,1000,1500],'K'), Cpdata=([13.33,15.23,16.577,17.616,19.112,20.086,21.384],'cal/(mol*K)','+|-',[0.4,0.5,0.5,0.5,0.5,0.4,0.2]), H298=(-69.6343,'kcal/mol','+|-',0.5), S298=(26.455,'cal/(mol*K)','+|-',0.5), Cp0=(33.2579,'J/(mol*K)'), CpInf=(83.1447,'J/(mol*K)'), label="""formyloxyX""", comment="""Gas phase thermo for formyloxy from Thermo library: DFT_QCI_thermo. Adsorption correction: + Thermo group additivity estimation: adsorptionPt111(O-*R) Binding energy corrected by LSR (0.50O) from Pt111""").
+The thermo for this species is probably wrong! Setting CpInf = Cphigh for Entropy calculationat T = 2000.0 K...
+Warning: Cphigh is above the theoretical CpInf value for ThermoData object
+ThermoData(Tdata=([300,400,500,600,800,1000,1500],'K'), Cpdata=([13.33,15.23,16.577,17.616,19.112,20.086,21.384],'cal/(mol*K)','+|-',[0.4,0.5,0.5,0.5,0.5,0.4,0.2]), H298=(-69.6343,'kcal/mol','+|-',0.5), S298=(26.455,'cal/(mol*K)','+|-',0.5), Cp0=(33.2579,'J/(mol*K)'), CpInf=(83.1447,'J/(mol*K)'), label="""formyloxyX""", comment="""Gas phase thermo for formyloxy from Thermo library: DFT_QCI_thermo. Adsorption correction: + Thermo group additivity estimation: adsorptionPt111(O-*R) Binding energy corrected by LSR (0.50O) from Pt111""").
+The thermo for this species is probably wrong! Setting CpInf = Cphigh for Entropy calculationat T = 1666.6666666666665 K...
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Cphigh is above the theoretical CpInf value for ThermoData object
+ThermoData(Tdata=([300,400,500,600,800,1000,1500],'K'), Cpdata=([10.803,13.412,15.376,16.857,18.888,20.14,21.638],'cal/(mol*K)','+|-',[0.6,0.6,0.5,0.4,0.3,0.2,0.1]), H298=(-73.417,'kcal/mol','+|-',0.5), S298=(27.463,'cal/(mol*K)','+|-',0.6), Cp0=(33.2579,'J/(mol*K)'), CpInf=(78.9875,'J/(mol*K)'), label="""HOCOX""", comment="""Gas phase thermo for HOCO from Thermo library: DFT_QCI_thermo. Adsorption correction: + Thermo group additivity estimation: adsorptionPt111(C-*R3) Binding energy corrected by LSR (0.25C) from Pt111""").
+The thermo for this species is probably wrong! Setting CpInf = Cphigh for Entropy calculationat T = 2000.0 K...
+Warning: Cphigh is above the theoretical CpInf value for ThermoData object
+ThermoData(Tdata=([300,400,500,600,800,1000,1500],'K'), Cpdata=([10.099,11.555,12.626,13.454,14.619,15.398,16.432],'cal/(mol*K)','+|-',[0.3,0.3,0.4,0.3,0.3,0.3,0.2]), H298=(-87.655,'kcal/mol','+|-',0.1), S298=(28.462,'cal/(mol*K)','+|-',0.3), Cp0=(29.1007,'J/(mol*K)'), CpInf=(62.3585,'J/(mol*K)'), label="""CO2""", comment="""Gas phase thermo for CO2 from Thermo library: DFT_QCI_thermo. Adsorption correction: + Thermo group additivity estimation: adsorptionPt111(R*vdW) Binding energy corrected by LSR () from Pt111""").
+The thermo for this species is probably wrong! Setting CpInf = Cphigh for Entropy calculationat T = 2000.0 K...
+Warning: Cphigh is above the theoretical CpInf value for ThermoData object
+ThermoData(Tdata=([300,400,500,600,800,1000,1500],'K'), Cpdata=([10.803,13.412,15.376,16.857,18.888,20.14,21.638],'cal/(mol*K)','+|-',[0.6,0.6,0.5,0.4,0.3,0.2,0.1]), H298=(-73.417,'kcal/mol','+|-',0.5), S298=(27.463,'cal/(mol*K)','+|-',0.6), Cp0=(33.2579,'J/(mol*K)'), CpInf=(78.9875,'J/(mol*K)'), label="""HOCOX""", comment="""Gas phase thermo for HOCO from Thermo library: DFT_QCI_thermo. Adsorption correction: + Thermo group additivity estimation: adsorptionPt111(C-*R3) Binding energy corrected by LSR (0.25C) from Pt111""").
+The thermo for this species is probably wrong! Setting CpInf = Cphigh for Entropy calculationat T = 1666.6666666666665 K...
+Warning: Cphigh is above the theoretical CpInf value for ThermoData object
+ThermoData(Tdata=([300,400,500,600,800,1000,1500],'K'), Cpdata=([10.099,11.555,12.626,13.454,14.619,15.398,16.432],'cal/(mol*K)','+|-',[0.3,0.3,0.4,0.3,0.3,0.3,0.2]), H298=(-87.655,'kcal/mol','+|-',0.1), S298=(28.462,'cal/(mol*K)','+|-',0.3), Cp0=(29.1007,'J/(mol*K)'), CpInf=(62.3585,'J/(mol*K)'), label="""CO2""", comment="""Gas phase thermo for CO2 from Thermo library: DFT_QCI_thermo. Adsorption correction: + Thermo group additivity estimation: adsorptionPt111(R*vdW) Binding energy corrected by LSR () from Pt111""").
+The thermo for this species is probably wrong! Setting CpInf = Cphigh for Entropy calculationat T = 1666.6666666666665 K...
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Pt'. Using 'Pt111'.
+Warning: Found multiple binding energies for 'Pt'. Using 'Pt111'.
+Warning: Found multiple binding energies for 'Pt'. Using 'Pt111'.
+Warning: Found multiple binding energies for 'Pt'. Using 'Pt111'.
+Warning: Cphigh is above the theoretical CpInf value for ThermoData object
+ThermoData(Tdata=([300,400,500,600,800,1000,1500],'K'), Cpdata=([10.803,13.412,15.376,16.857,18.888,20.14,21.638],'cal/(mol*K)','+|-',[0.6,0.6,0.5,0.4,0.3,0.2,0.1]), H298=(-85.321,'kcal/mol','+|-',0.5), S298=(27.463,'cal/(mol*K)','+|-',0.6), Cp0=(33.2579,'J/(mol*K)'), CpInf=(78.9875,'J/(mol*K)'), label="""HOCOX""", comment="""Gas phase thermo for HOCO from Thermo library: DFT_QCI_thermo. Adsorption correction: + Thermo group additivity estimation: adsorptionPt111(C-*R3)""").
+The thermo for this species is probably wrong! Setting CpInf = Cphigh for Entropy calculationat T = 2000.0 K...
+Warning: Cphigh is above the theoretical CpInf value for ThermoData object
+ThermoData(Tdata=([300,400,500,600,800,1000,1500],'K'), Cpdata=([10.803,13.412,15.376,16.857,18.888,20.14,21.638],'cal/(mol*K)','+|-',[0.6,0.6,0.5,0.4,0.3,0.2,0.1]), H298=(-85.321,'kcal/mol','+|-',0.5), S298=(27.463,'cal/(mol*K)','+|-',0.6), Cp0=(33.2579,'J/(mol*K)'), CpInf=(78.9875,'J/(mol*K)'), label="""HOCOX""", comment="""Gas phase thermo for HOCO from Thermo library: DFT_QCI_thermo. Adsorption correction: + Thermo group additivity estimation: adsorptionPt111(C-*R3)""").
+The thermo for this species is probably wrong! Setting CpInf = Cphigh for Entropy calculationat T = 1666.6666666666665 K...
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Cphigh is above the theoretical CpInf value for ThermoData object
+ThermoData(Tdata=([300,400,500,600,800,1000,1500],'K'), Cpdata=([10.803,13.412,15.376,16.857,18.888,20.14,21.638],'cal/(mol*K)','+|-',[0.6,0.6,0.5,0.4,0.3,0.2,0.1]), H298=(-73.417,'kcal/mol','+|-',0.5), S298=(27.463,'cal/(mol*K)','+|-',0.6), Cp0=(33.2579,'J/(mol*K)'), CpInf=(78.9875,'J/(mol*K)'), label="""HOCOX""", comment="""Gas phase thermo for HOCO from Thermo library: DFT_QCI_thermo. Adsorption correction: + Thermo group additivity estimation: adsorptionPt111(C-*R3) Binding energy corrected by LSR (0.25C) from Pt111""").
+The thermo for this species is probably wrong! Setting CpInf = Cphigh for Entropy calculationat T = 2000.0 K...
+Warning: Cphigh is above the theoretical CpInf value for ThermoData object
+ThermoData(Tdata=([300,400,500,600,800,1000,1500],'K'), Cpdata=([10.803,13.412,15.376,16.857,18.888,20.14,21.638],'cal/(mol*K)','+|-',[0.6,0.6,0.5,0.4,0.3,0.2,0.1]), H298=(-73.417,'kcal/mol','+|-',0.5), S298=(27.463,'cal/(mol*K)','+|-',0.6), Cp0=(33.2579,'J/(mol*K)'), CpInf=(78.9875,'J/(mol*K)'), label="""HOCOX""", comment="""Gas phase thermo for HOCO from Thermo library: DFT_QCI_thermo. Adsorption correction: + Thermo group additivity estimation: adsorptionPt111(C-*R3) Binding energy corrected by LSR (0.25C) from Pt111""").
+The thermo for this species is probably wrong! Setting CpInf = Cphigh for Entropy calculationat T = 1666.6666666666665 K...
+Warning: Found multiple binding energies for 'Ni'. Using 'Ni111'.
+Warning: Found multiple binding energies for 'Ni'. Using 'Ni111'.
+Warning: Found multiple binding energies for 'Ni'. Using 'Ni111'.
+Warning: Found multiple binding energies for 'Ni'. Using 'Ni111'.
+Warning: Found multiple binding energies for 'Ni'. Using 'Ni111'.
+Warning: Found multiple binding energies for 'Ni'. Using 'Ni111'.
+Warning: Found multiple binding energies for 'Ni'. Using 'Ni111'.
+Warning: Found multiple binding energies for 'Ni'. Using 'Ni111'.
+Warning: Found multiple binding energies for 'Ni'. Using 'Ni111'.
+Warning: Found multiple binding energies for 'Ni'. Using 'Ni111'.
+Warning: Found multiple binding energies for 'Ni'. Using 'Ni111'.
+Warning: Found multiple binding energies for 'Ni'. Using 'Ni111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Cphigh is above the theoretical CpInf value for ThermoData object
+ThermoData(Tdata=([300,400,500,600,800,1000,1500],'K'), Cpdata=([10.099,11.555,12.626,13.454,14.619,15.398,16.432],'cal/(mol*K)','+|-',[0.3,0.3,0.4,0.3,0.3,0.3,0.2]), H298=(-87.655,'kcal/mol','+|-',0.1), S298=(28.462,'cal/(mol*K)','+|-',0.3), Cp0=(29.1007,'J/(mol*K)'), CpInf=(62.3585,'J/(mol*K)'), label="""CO2""", comment="""Gas phase thermo for CO2 from Thermo library: DFT_QCI_thermo. Adsorption correction: + Thermo group additivity estimation: adsorptionPt111(R*vdW) Binding energy corrected by LSR () from Pt111""").
+The thermo for this species is probably wrong! Setting CpInf = Cphigh for Entropy calculationat T = 2000.0 K...
+Warning: Cphigh is above the theoretical CpInf value for ThermoData object
+ThermoData(Tdata=([300,400,500,600,800,1000,1500],'K'), Cpdata=([10.099,11.555,12.626,13.454,14.619,15.398,16.432],'cal/(mol*K)','+|-',[0.3,0.3,0.4,0.3,0.3,0.3,0.2]), H298=(-87.655,'kcal/mol','+|-',0.1), S298=(28.462,'cal/(mol*K)','+|-',0.3), Cp0=(29.1007,'J/(mol*K)'), CpInf=(62.3585,'J/(mol*K)'), label="""CO2""", comment="""Gas phase thermo for CO2 from Thermo library: DFT_QCI_thermo. Adsorption correction: + Thermo group additivity estimation: adsorptionPt111(R*vdW) Binding energy corrected by LSR () from Pt111""").
+The thermo for this species is probably wrong! Setting CpInf = Cphigh for Entropy calculationat T = 1666.6666666666665 K...
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Cphigh is above the theoretical CpInf value for ThermoData object
+ThermoData(Tdata=([300,400,500,600,800,1000,1500],'K'), Cpdata=([10.803,13.412,15.376,16.857,18.888,20.14,21.638],'cal/(mol*K)','+|-',[0.6,0.6,0.5,0.4,0.3,0.2,0.1]), H298=(-73.417,'kcal/mol','+|-',0.5), S298=(27.463,'cal/(mol*K)','+|-',0.6), Cp0=(33.2579,'J/(mol*K)'), CpInf=(78.9875,'J/(mol*K)'), label="""HOCOX""", comment="""Gas phase thermo for HOCO from Thermo library: DFT_QCI_thermo. Adsorption correction: + Thermo group additivity estimation: adsorptionPt111(C-*R3) Binding energy corrected by LSR (0.25C) from Pt111""").
+The thermo for this species is probably wrong! Setting CpInf = Cphigh for Entropy calculationat T = 2000.0 K...
+Warning: Cphigh is above the theoretical CpInf value for ThermoData object
+ThermoData(Tdata=([300,400,500,600,800,1000,1500],'K'), Cpdata=([11.517,14.517,16.949,18.869,21.563,23.27,25.398],'cal/(mol*K)','+|-',[0.7,0.9,1.1,1.1,0.9,0.7,0.2]), H298=(-96.446,'kcal/mol','+|-',0.1), S298=(26.324,'cal/(mol*K)','+|-',0.5), Cp0=(33.2579,'J/(mol*K)'), CpInf=(103.931,'J/(mol*K)'), label="""formic_acid""", comment="""Gas phase thermo for formic_acid from Thermo library: DFT_QCI_thermo. Adsorption correction: + Thermo group additivity estimation: adsorptionPt111((CR2NR)*) Binding energy corrected by LSR () from Pt111""").
+The thermo for this species is probably wrong! Setting CpInf = Cphigh for Entropy calculationat T = 2000.0 K...
+Warning: Cphigh is above the theoretical CpInf value for ThermoData object
+ThermoData(Tdata=([300,400,500,600,800,1000,1500],'K'), Cpdata=([10.803,13.412,15.376,16.857,18.888,20.14,21.638],'cal/(mol*K)','+|-',[0.6,0.6,0.5,0.4,0.3,0.2,0.1]), H298=(-73.417,'kcal/mol','+|-',0.5), S298=(27.463,'cal/(mol*K)','+|-',0.6), Cp0=(33.2579,'J/(mol*K)'), CpInf=(78.9875,'J/(mol*K)'), label="""HOCOX""", comment="""Gas phase thermo for HOCO from Thermo library: DFT_QCI_thermo. Adsorption correction: + Thermo group additivity estimation: adsorptionPt111(C-*R3) Binding energy corrected by LSR (0.25C) from Pt111""").
+The thermo for this species is probably wrong! Setting CpInf = Cphigh for Entropy calculationat T = 1666.6666666666665 K...
+Warning: Cphigh is above the theoretical CpInf value for ThermoData object
+ThermoData(Tdata=([300,400,500,600,800,1000,1500],'K'), Cpdata=([11.517,14.517,16.949,18.869,21.563,23.27,25.398],'cal/(mol*K)','+|-',[0.7,0.9,1.1,1.1,0.9,0.7,0.2]), H298=(-96.446,'kcal/mol','+|-',0.1), S298=(26.324,'cal/(mol*K)','+|-',0.5), Cp0=(33.2579,'J/(mol*K)'), CpInf=(103.931,'J/(mol*K)'), label="""formic_acid""", comment="""Gas phase thermo for formic_acid from Thermo library: DFT_QCI_thermo. Adsorption correction: + Thermo group additivity estimation: adsorptionPt111((CR2NR)*) Binding energy corrected by LSR () from Pt111""").
+The thermo for this species is probably wrong! Setting CpInf = Cphigh for Entropy calculationat T = 1666.6666666666665 K...
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Cphigh is above the theoretical CpInf value for ThermoData object
+ThermoData(Tdata=([300,400,500,600,800,1000,1500],'K'), Cpdata=([13.33,15.23,16.577,17.616,19.112,20.086,21.384],'cal/(mol*K)','+|-',[0.4,0.5,0.5,0.5,0.5,0.4,0.2]), H298=(-69.6343,'kcal/mol','+|-',0.5), S298=(26.455,'cal/(mol*K)','+|-',0.5), Cp0=(33.2579,'J/(mol*K)'), CpInf=(83.1447,'J/(mol*K)'), label="""formyloxyX""", comment="""Gas phase thermo for formyloxy from Thermo library: DFT_QCI_thermo. Adsorption correction: + Thermo group additivity estimation: adsorptionPt111(O-*R) Binding energy corrected by LSR (0.50O) from Pt111""").
+The thermo for this species is probably wrong! Setting CpInf = Cphigh for Entropy calculationat T = 2000.0 K...
+Warning: Cphigh is above the theoretical CpInf value for ThermoData object
+ThermoData(Tdata=([300,400,500,600,800,1000,1500],'K'), Cpdata=([11.517,14.517,16.949,18.869,21.563,23.27,25.398],'cal/(mol*K)','+|-',[0.7,0.9,1.1,1.1,0.9,0.7,0.2]), H298=(-96.446,'kcal/mol','+|-',0.1), S298=(26.324,'cal/(mol*K)','+|-',0.5), Cp0=(33.2579,'J/(mol*K)'), CpInf=(103.931,'J/(mol*K)'), label="""formic_acid""", comment="""Gas phase thermo for formic_acid from Thermo library: DFT_QCI_thermo. Adsorption correction: + Thermo group additivity estimation: adsorptionPt111((CR2NR)*) Binding energy corrected by LSR () from Pt111""").
+The thermo for this species is probably wrong! Setting CpInf = Cphigh for Entropy calculationat T = 2000.0 K...
+Warning: Cphigh is above the theoretical CpInf value for ThermoData object
+ThermoData(Tdata=([300,400,500,600,800,1000,1500],'K'), Cpdata=([13.33,15.23,16.577,17.616,19.112,20.086,21.384],'cal/(mol*K)','+|-',[0.4,0.5,0.5,0.5,0.5,0.4,0.2]), H298=(-69.6343,'kcal/mol','+|-',0.5), S298=(26.455,'cal/(mol*K)','+|-',0.5), Cp0=(33.2579,'J/(mol*K)'), CpInf=(83.1447,'J/(mol*K)'), label="""formyloxyX""", comment="""Gas phase thermo for formyloxy from Thermo library: DFT_QCI_thermo. Adsorption correction: + Thermo group additivity estimation: adsorptionPt111(O-*R) Binding energy corrected by LSR (0.50O) from Pt111""").
+The thermo for this species is probably wrong! Setting CpInf = Cphigh for Entropy calculationat T = 1666.6666666666665 K...
+Warning: Cphigh is above the theoretical CpInf value for ThermoData object
+ThermoData(Tdata=([300,400,500,600,800,1000,1500],'K'), Cpdata=([11.517,14.517,16.949,18.869,21.563,23.27,25.398],'cal/(mol*K)','+|-',[0.7,0.9,1.1,1.1,0.9,0.7,0.2]), H298=(-96.446,'kcal/mol','+|-',0.1), S298=(26.324,'cal/(mol*K)','+|-',0.5), Cp0=(33.2579,'J/(mol*K)'), CpInf=(103.931,'J/(mol*K)'), label="""formic_acid""", comment="""Gas phase thermo for formic_acid from Thermo library: DFT_QCI_thermo. Adsorption correction: + Thermo group additivity estimation: adsorptionPt111((CR2NR)*) Binding energy corrected by LSR () from Pt111""").
+The thermo for this species is probably wrong! Setting CpInf = Cphigh for Entropy calculationat T = 1666.6666666666665 K...
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Found multiple binding energies for 'Cu'. Using 'Cu111'.
+Warning: Cphigh is above the theoretical CpInf value for ThermoData object
+ThermoData(Tdata=([300,400,500,600,800,1000,1500],'K'), Cpdata=([10.803,13.412,15.376,16.857,18.888,20.14,21.638],'cal/(mol*K)','+|-',[0.6,0.6,0.5,0.4,0.3,0.2,0.1]), H298=(-73.417,'kcal/mol','+|-',0.5), S298=(27.463,'cal/(mol*K)','+|-',0.6), Cp0=(33.2579,'J/(mol*K)'), CpInf=(78.9875,'J/(mol*K)'), label="""HOCOX""", comment="""Gas phase thermo for HOCO from Thermo library: DFT_QCI_thermo. Adsorption correction: + Thermo group additivity estimation: adsorptionPt111(C-*R3) Binding energy corrected by LSR (0.25C) from Pt111""").
+The thermo for this species is probably wrong! Setting CpInf = Cphigh for Entropy calculationat T = 2000.0 K...
+Warning: Cphigh is above the theoretical CpInf value for ThermoData object
+ThermoData(Tdata=([300,400,500,600,800,1000,1500],'K'), Cpdata=([10.099,11.555,12.626,13.454,14.619,15.398,16.432],'cal/(mol*K)','+|-',[0.3,0.3,0.4,0.3,0.3,0.3,0.2]), H298=(-87.655,'kcal/mol','+|-',0.1), S298=(28.462,'cal/(mol*K)','+|-',0.3), Cp0=(29.1007,'J/(mol*K)'), CpInf=(62.3585,'J/(mol*K)'), label="""CO2""", comment="""Gas phase thermo for CO2 from Thermo library: DFT_QCI_thermo. Adsorption correction: + Thermo group additivity estimation: adsorptionPt111(R*vdW) Binding energy corrected by LSR () from Pt111""").
+The thermo for this species is probably wrong! Setting CpInf = Cphigh for Entropy calculationat T = 2000.0 K...
+Warning: Cphigh is above the theoretical CpInf value for ThermoData object
+ThermoData(Tdata=([300,400,500,600,800,1000,1500],'K'), Cpdata=([10.803,13.412,15.376,16.857,18.888,20.14,21.638],'cal/(mol*K)','+|-',[0.6,0.6,0.5,0.4,0.3,0.2,0.1]), H298=(-73.417,'kcal/mol','+|-',0.5), S298=(27.463,'cal/(mol*K)','+|-',0.6), Cp0=(33.2579,'J/(mol*K)'), CpInf=(78.9875,'J/(mol*K)'), label="""HOCOX""", comment="""Gas phase thermo for HOCO from Thermo library: DFT_QCI_thermo. Adsorption correction: + Thermo group additivity estimation: adsorptionPt111(C-*R3) Binding energy corrected by LSR (0.25C) from Pt111""").
+The thermo for this species is probably wrong! Setting CpInf = Cphigh for Entropy calculationat T = 1666.6666666666665 K...
+Warning: Cphigh is above the theoretical CpInf value for ThermoData object
+ThermoData(Tdata=([300,400,500,600,800,1000,1500],'K'), Cpdata=([10.099,11.555,12.626,13.454,14.619,15.398,16.432],'cal/(mol*K)','+|-',[0.3,0.3,0.4,0.3,0.3,0.3,0.2]), H298=(-87.655,'kcal/mol','+|-',0.1), S298=(28.462,'cal/(mol*K)','+|-',0.3), Cp0=(29.1007,'J/(mol*K)'), CpInf=(62.3585,'J/(mol*K)'), label="""CO2""", comment="""Gas phase thermo for CO2 from Thermo library: DFT_QCI_thermo. Adsorption correction: + Thermo group additivity estimation: adsorptionPt111(R*vdW) Binding energy corrected by LSR () from Pt111""").
+The thermo for this species is probably wrong! Setting CpInf = Cphigh for Entropy calculationat T = 1666.6666666666665 K...
+Filling in rate rules in kinetics families by averaging...
+Adding reaction library Surface/Deutschmann_Ni to model edge...
+
+Summary of Model Enlargement
+---------------------------------
+Added 0 new core species
+Created 11 new edge species
+    HX(6)
+    O2(7)
+    OX(8)
+    CO(9)
+    OCX(10)
+    CX(11)
+    HOX(12)
+    CO2X(13)
+    CHX(14)
+    CXHO(15)
+    HOCXO(16)
+Added 0 new core reactions
+Created 8 new edge reactions
+    site(5) + site(5) + H2(4) <=> HX(6) + HX(6)
+    site(5) + site(5) + O2(7) <=> OX(8) + OX(8)
+    site(5) + CO(9) <=> OCX(10)
+    site(5) + OCX(10) <=> OX(8) + CX(11)
+    HOX(12) + CX(11) <=> HX(6) + OCX(10)
+    OCX(10) + OCX(10) <=> CX(11) + CO2X(13)
+    OX(8) + CHX(14) <=> site(5) + CXHO(15)
+    HOX(12) + CXHO(15) <=> HX(6) + HOCXO(16)
+
+After model enlargement:
+    The model core has 0 species and 0 reactions
+    The model edge has 16 species and 8 reactions
+
+NOT generating reactions for unreactive species Ar
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    Ar
+Created 0 new edge species
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 1 species and 0 reactions
+    The model edge has 16 species and 8 reactions
+
+
+NOT generating reactions for unreactive species He
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    He
+Created 0 new edge species
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 2 species and 0 reactions
+    The model edge has 16 species and 8 reactions
+
+
+NOT generating reactions for unreactive species Ne
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    Ne
+Created 0 new edge species
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 3 species and 0 reactions
+    The model edge has 16 species and 8 reactions
+
+
+NOT generating reactions for unreactive species N2
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    N2
+Created 0 new edge species
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 4 species and 0 reactions
+    The model edge has 16 species and 8 reactions
+
+
+Adding species CH4(1) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    CH4(1)
+Created 0 new edge species
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 5 species and 0 reactions
+    The model edge has 15 species and 8 reactions
+
+
+Adding species CO2(2) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    CO2(2)
+Created 0 new edge species
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 6 species and 0 reactions
+    The model edge has 14 species and 8 reactions
+
+
+Adding species H2O(3) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    H2O(3)
+Created 0 new edge species
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 7 species and 0 reactions
+    The model edge has 13 species and 8 reactions
+
+
+Adding species H2(4) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    H2(4)
+Created 0 new edge species
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 8 species and 0 reactions
+    The model edge has 12 species and 8 reactions
+
+
+Adding species site(5) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    site(5)
+Created 0 new edge species
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 9 species and 0 reactions
+    The model edge has 11 species and 8 reactions
+
+
+Initialization complete. Starting model generation.
+
+Generating initial reactions...
+For reaction generation 1 process is used.
+Generating thermo for new species...
+Generating kinetics for new reactions...
+For reaction site(5) + CO2(2) <=> CO2X(13), Ea raised from 0.0 to 26.4 kJ/mol to match endothermicity of reaction.
+
+Summary of Secondary Model Edge Enlargement
+---------------------------------
+Added 0 new core species
+Created 4 new edge species
+    C[Pt](17)
+    C.[Pt](18)
+    O.[Pt](19)
+    [H][H].[Pt](20)
+Added 0 new core reactions
+Created 7 new edge reactions
+    site(5) + site(5) + CH4(1) <=> HX(6) + C[Pt](17)
+    site(5) + CH4(1) <=> C.[Pt](18)
+    site(5) + site(5) + CO2(2) <=> OX(8) + OCX(10)
+    site(5) + CO2(2) <=> CO2X(13)
+    site(5) + site(5) + H2O(3) <=> HX(6) + HOX(12)
+    site(5) + H2O(3) <=> O.[Pt](19)
+    site(5) + H2(4) <=> [H][H].[Pt](20)
+
+After model enlargement:
+    The model core has 9 species and 0 reactions
+    The model edge has 15 species and 15 reactions
+
+
+Completed initial enlarge edge step.
+
+Adding reaction library Surface/Deutschmann_Ni to output file...
+Saving current model core to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 8 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 8 reactions.
+Saving current model core and edge to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 15 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 15 reactions.
+Saving current model core to HTML file...
+Saving current model edge to HTML file...
+Updating RMG execution statistics...
+    Execution time (DD:HH:MM:SS): 00:00:00:13
+    Memory used: 501.59 MB
+
+Beginning model generation stage 1...
+
+Conducting simulation of reaction system 1...
+At time 0.0000e+00 s, species [H][H].[Pt](20) was added to model core to avoid singularity
+
+
+Adding species [H][H].[Pt](20) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    [H][H].[Pt](20)
+Created 0 new edge species
+Moved 1 reactions from edge to core
+    site(5) + H2(4) <=> [H][H].[Pt](20)
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 10 species and 1 reactions
+    The model edge has 14 species and 14 reactions
+
+
+For reaction generation 1 process is used.
+
+Summary of Secondary Model Edge Enlargement
+---------------------------------
+Added 0 new core species
+Created 0 new edge species
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 10 species and 1 reactions
+    The model edge has 14 species and 14 reactions
+
+
+Adding reaction library Surface/Deutschmann_Ni to output file...
+Saving current model core to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 9 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 9 reactions.
+Saving current model core and edge to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 15 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 15 reactions.
+Saving current model core to HTML file...
+Saving current model edge to HTML file...
+Updating RMG execution statistics...
+    Execution time (DD:HH:MM:SS): 00:00:00:14
+    Memory used: 503.74 MB
+
+Conducting simulation of reaction system 1...
+At time 0.0000e+00 s, species HX(6) at 0.3695041722813604 exceeded the minimum rate for simulation interruption of 0.1
+Reached max number of objects...preparing to terminate
+At time 0.0000e+00 s, species HX(6) at rate ratio 0.3695041722813604 exceeded the minimum rate for moving to model core of 0.1
+terminating simulation due to interrupt...
+
+
+Adding species HX(6) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    HX(6)
+Created 0 new edge species
+Moved 1 reactions from edge to core
+    site(5) + site(5) + H2(4) <=> HX(6) + HX(6)
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 11 species and 2 reactions
+    The model edge has 13 species and 13 reactions
+
+
+For reaction generation 1 process is used.
+Generating thermo for new species...
+Species [H] renamed H based on thermo library name
+Species O=CO[Pt] renamed formyloxyX based on thermo library name
+Generating kinetics for new reactions...
+
+Summary of Secondary Model Edge Enlargement
+---------------------------------
+Added 0 new core species
+Created 2 new edge species
+    H(21)
+    formyloxyX(22)
+Added 0 new core reactions
+Created 3 new edge reactions
+    site(5) + H(21) <=> HX(6)
+    HX(6) + CO2(2) <=> formyloxyX(22)
+    HX(6) + CO2(2) <=> HOCXO(16)
+
+After model enlargement:
+    The model core has 11 species and 2 reactions
+    The model edge has 15 species and 16 reactions
+
+
+Adding reaction library Surface/Deutschmann_Ni to output file...
+Saving current model core to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 9 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 9 reactions.
+Saving current model core and edge to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 18 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 18 reactions.
+Saving current model core to HTML file...
+Saving current model edge to HTML file...
+Updating RMG execution statistics...
+    Execution time (DD:HH:MM:SS): 00:00:00:15
+    Memory used: 505.59 MB
+
+Conducting simulation of reaction system 1...
+At time 9.7540e-08 s, species OX(8) at 0.10468800068498113 exceeded the minimum rate for simulation interruption of 0.1
+At time 9.7540e-08 s, species OCX(10) at 0.10468800068498113 exceeded the minimum rate for simulation interruption of 0.1
+Exceeded max number of objects...removing excess objects
+Reached max number of objects...preparing to terminate
+At time 9.7540e-08 s, species OCX(10) at rate ratio 0.10468800068498113 exceeded the minimum rate for moving to model core of 0.1
+terminating simulation due to interrupt...
+
+
+Adding species OCX(10) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    OCX(10)
+Created 0 new edge species
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 12 species and 2 reactions
+    The model edge has 14 species and 16 reactions
+
+
+For reaction generation 1 process is used.
+Generating thermo for new species...
+Species O=C=C=O renamed OCCO(S) based on thermo library name
+Species O=C=C=O.[Pt] renamed OCCO(S) based on thermo library name
+Generating kinetics for new reactions...
+For reaction HX(6) + OCX(10) <=> site(5) + CXHO(15), Ea raised from 95.5 to 108.3 kJ/mol to match endothermicity of reaction.
+
+Summary of Secondary Model Edge Enlargement
+---------------------------------
+Added 0 new core species
+Created 3 new edge species
+    OC#[Pt](23)
+    OCCO(S)(24)
+    OCCO(S)(25)
+Added 0 new core reactions
+Created 5 new edge reactions
+    [H][H].[Pt](20) + OCX(10) <=> HX(6) + CXHO(15)
+    HX(6) + OCX(10) <=> site(5) + CXHO(15)
+    HX(6) + OCX(10) <=> site(5) + OC#[Pt](23)
+    site(5) + site(5) + OCCO(S)(24) <=> OCX(10) + OCX(10)
+    site(5) + OCCO(S)(25) <=> OCX(10) + OCX(10)
+
+After model enlargement:
+    The model core has 12 species and 2 reactions
+    The model edge has 17 species and 21 reactions
+
+
+Adding reaction library Surface/Deutschmann_Ni to output file...
+Saving current model core to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 9 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 9 reactions.
+Saving current model core and edge to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 23 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 23 reactions.
+Saving current model core to HTML file...
+Saving current model edge to HTML file...
+Updating RMG execution statistics...
+    Execution time (DD:HH:MM:SS): 00:00:00:16
+    Memory used: 512.02 MB
+
+Conducting simulation of reaction system 1...
+At time 9.7265e-08 s, species OX(8) at 0.10149149449901534 exceeded the minimum rate for simulation interruption of 0.1
+Reached max number of objects...preparing to terminate
+At time 9.7265e-08 s, species OX(8) at rate ratio 0.10149149449901534 exceeded the minimum rate for moving to model core of 0.1
+terminating simulation due to interrupt...
+
+
+Adding species OX(8) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    OX(8)
+Created 0 new edge species
+Moved 1 reactions from edge to core
+    site(5) + site(5) + CO2(2) <=> OX(8) + OCX(10)
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 13 species and 3 reactions
+    The model edge has 16 species and 20 reactions
+
+
+For reaction generation 1 process is used.
+Generating thermo for new species...
+Species O=O.[Pt] renamed O2(S) based on thermo library name
+Generating kinetics for new reactions...
+For reaction OX(8) + OCX(10) <=> site(5) + CO2X(13), Ea raised from 62.7 to 239.6 kJ/mol to match endothermicity of reaction.
+
+Summary of Secondary Model Edge Enlargement
+---------------------------------
+Added 0 new core species
+Created 1 new edge species
+    O2(S)(26)
+Added 0 new core reactions
+Created 4 new edge reactions
+    OX(8) + [H][H].[Pt](20) <=> HX(6) + HOX(12)
+    site(5) + HOX(12) <=> OX(8) + HX(6)
+    OX(8) + OCX(10) <=> site(5) + CO2X(13)
+    site(5) + O2(S)(26) <=> OX(8) + OX(8)
+
+After model enlargement:
+    The model core has 13 species and 3 reactions
+    The model edge has 17 species and 24 reactions
+
+
+Adding reaction library Surface/Deutschmann_Ni to output file...
+Saving current model core to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 10 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 10 reactions.
+Saving current model core and edge to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 27 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 27 reactions.
+Saving current model core to HTML file...
+Saving current model edge to HTML file...
+Updating RMG execution statistics...
+    Execution time (DD:HH:MM:SS): 00:00:00:17
+    Memory used: 513.15 MB
+
+Conducting simulation of reaction system 1...
+At time 2.8779e-05 s, species CXHO(15) at 0.10793165292551427 exceeded the minimum rate for simulation interruption of 0.1
+Reached max number of objects...preparing to terminate
+At time 2.8779e-05 s, species CXHO(15) at rate ratio 0.10793165292551427 exceeded the minimum rate for moving to model core of 0.1
+terminating simulation due to interrupt...
+
+
+Adding species CXHO(15) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    CXHO(15)
+Created 0 new edge species
+Moved 2 reactions from edge to core
+    [H][H].[Pt](20) + OCX(10) <=> HX(6) + CXHO(15)
+    HX(6) + OCX(10) <=> site(5) + CXHO(15)
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 14 species and 5 reactions
+    The model edge has 16 species and 22 reactions
+
+
+For reaction generation 1 process is used.
+Generating thermo for new species...
+Species [CH]=O renamed HCO based on thermo library name
+Species C=O renamed CH2O based on thermo library name
+Species O=CC(=O)[Pt] renamed OCHCOX based on thermo library name
+Species O=CC=O renamed glyoxal based on thermo library name
+Species O=CC=O.[Pt] renamed glyoxal based on thermo library name
+Generating kinetics for new reactions...
+For reaction CO2(2) + CXHO(15) <=> O=COC(=O)[Pt](29), Ea raised from 171.2 to 172.3 kJ/mol to match endothermicity of reaction.
+For reaction HX(6) + C=O.[Pt](30) <=> [H][H].[Pt](20) + CXHO(15) Ea raised from -22.7 to 0.0 kJ/mol.
+For reaction HX(6) + CXHO(15) <=> site(5) + C=O.[Pt](30), Ea raised from 45.3 to 112.9 kJ/mol to match endothermicity of reaction.
+
+Summary of Secondary Model Edge Enlargement
+---------------------------------
+Added 0 new core species
+Created 11 new edge species
+    HCO(27)
+    O=CC(=O)O[Pt](28)
+    O=COC(=O)[Pt](29)
+    C=O.[Pt](30)
+    CH2O(31)
+    OC=[Pt](32)
+    OCHCOX(33)
+    O=COC#[Pt](34)
+    glyoxal(35)
+    O=COC=[Pt](36)
+    glyoxal(37)
+Added 0 new core reactions
+Created 15 new edge reactions
+    site(5) + HCO(27) <=> CXHO(15)
+    CO2(2) + CXHO(15) <=> O=CC(=O)O[Pt](28)
+    CO2(2) + CXHO(15) <=> O=COC(=O)[Pt](29)
+    HX(6) + C=O.[Pt](30) <=> [H][H].[Pt](20) + CXHO(15)
+    site(5) + site(5) + CH2O(31) <=> HX(6) + CXHO(15)
+    HX(6) + CXHO(15) <=> site(5) + OC=[Pt](32)
+    HX(6) + CXHO(15) <=> site(5) + C=O.[Pt](30)
+    site(5) + OCHCOX(33) <=> OCX(10) + CXHO(15)
+    OCX(10) + CXHO(15) <=> site(5) + O=COC#[Pt](34)
+    OX(8) + CXHO(15) <=> HOX(12) + OCX(10)
+    site(5) + formyloxyX(22) <=> OX(8) + CXHO(15)
+    OCX(10) + C=O.[Pt](30) <=> CXHO(15) + CXHO(15)
+    site(5) + site(5) + glyoxal(35) <=> CXHO(15) + CXHO(15)
+    CXHO(15) + CXHO(15) <=> site(5) + O=COC=[Pt](36)
+    site(5) + glyoxal(37) <=> CXHO(15) + CXHO(15)
+
+After model enlargement:
+    The model core has 14 species and 5 reactions
+    The model edge has 27 species and 37 reactions
+
+
+Adding reaction library Surface/Deutschmann_Ni to output file...
+Saving current model core to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 12 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 12 reactions.
+Saving current model core and edge to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 42 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 42 reactions.
+Saving current model core to HTML file...
+Saving current model edge to HTML file...
+Updating RMG execution statistics...
+    Execution time (DD:HH:MM:SS): 00:00:00:18
+    Memory used: 518.61 MB
+
+Conducting simulation of reaction system 1...
+At time 3.9914e-05 s, species HOX(12) at 0.11021311799236637 exceeded the minimum rate for simulation interruption of 0.1
+Reached max number of objects...preparing to terminate
+At time 3.9914e-05 s, species HOX(12) at rate ratio 0.11021311799236637 exceeded the minimum rate for moving to model core of 0.1
+terminating simulation due to interrupt...
+
+
+Adding species HOX(12) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    HOX(12)
+Created 0 new edge species
+Moved 4 reactions from edge to core
+    site(5) + site(5) + H2O(3) <=> HX(6) + HOX(12)
+    OX(8) + [H][H].[Pt](20) <=> HX(6) + HOX(12)
+    site(5) + HOX(12) <=> OX(8) + HX(6)
+    OX(8) + CXHO(15) <=> HOX(12) + OCX(10)
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 15 species and 9 reactions
+    The model edge has 26 species and 33 reactions
+
+
+For reaction generation 1 process is used.
+Generating thermo for new species...
+Species [OH] renamed OH(D) based on thermo library name
+Species O=CO renamed formic_acid based on thermo library name
+Species O=CO.[Pt] renamed formic_acid based on thermo library name
+Species OO renamed HOOH based on thermo library name
+Generating kinetics for new reactions...
+For reaction HOX(12) + [H][H].[Pt](20) <=> HX(6) + O.[Pt](19) Ea raised from -29.6 to 0.0 kJ/mol.
+For reaction HOX(12) + OCX(10) <=> site(5) + HOCXO(16), Ea raised from 11.5 to 173.8 kJ/mol to match endothermicity of reaction.
+For reaction HOX(12) + OCX(10) <=> site(5) + OOC#[Pt](41), Ea raised from 326.7 to 327.2 kJ/mol to match endothermicity of reaction.
+
+Summary of Secondary Model Edge Enlargement
+---------------------------------
+Added 0 new core species
+Created 10 new edge species
+    OH(D)(38)
+    O=C(O)O[Pt](39)
+    O=C([Pt])OO(40)
+    OOC#[Pt](41)
+    OO[Pt](42)
+    formic_acid(43)
+    OOC=[Pt](44)
+    formic_acid(45)
+    HOOH(46)
+    OO.[Pt](47)
+Added 0 new core reactions
+Created 16 new edge reactions
+    site(5) + OH(D)(38) <=> HOX(12)
+    HOX(12) + CO2(2) <=> O=C(O)O[Pt](39)
+    HOX(12) + CO2(2) <=> O=C([Pt])OO(40)
+    HOX(12) + [H][H].[Pt](20) <=> HX(6) + O.[Pt](19)
+    site(5) + O.[Pt](19) <=> HX(6) + HOX(12)
+    HOX(12) + OCX(10) <=> site(5) + HOCXO(16)
+    HOX(12) + OCX(10) <=> site(5) + OOC#[Pt](41)
+    site(5) + OO[Pt](42) <=> OX(8) + HOX(12)
+    OX(8) + C=O.[Pt](30) <=> HOX(12) + CXHO(15)
+    HOX(12) + CXHO(15) <=> O.[Pt](19) + OCX(10)
+    site(5) + site(5) + formic_acid(43) <=> HOX(12) + CXHO(15)
+    HOX(12) + CXHO(15) <=> site(5) + OOC=[Pt](44)
+    site(5) + formic_acid(45) <=> HOX(12) + CXHO(15)
+    HOX(12) + HOX(12) <=> OX(8) + O.[Pt](19)
+    site(5) + site(5) + HOOH(46) <=> HOX(12) + HOX(12)
+    site(5) + OO.[Pt](47) <=> HOX(12) + HOX(12)
+
+After model enlargement:
+    The model core has 15 species and 9 reactions
+    The model edge has 36 species and 49 reactions
+
+
+Adding reaction library Surface/Deutschmann_Ni to output file...
+Saving current model core to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 16 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 16 reactions.
+Saving current model core and edge to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 58 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 58 reactions.
+Saving current model core to HTML file...
+Saving current model edge to HTML file...
+Updating RMG execution statistics...
+    Execution time (DD:HH:MM:SS): 00:00:00:19
+    Memory used: 522.45 MB
+
+Conducting simulation of reaction system 1...
+At time 2.2380e-05 s, species O.[Pt](19) at 0.10213895110462769 exceeded the minimum rate for simulation interruption of 0.1
+Reached max number of objects...preparing to terminate
+At time 2.2380e-05 s, species O.[Pt](19) at rate ratio 0.10213895110462769 exceeded the minimum rate for moving to model core of 0.1
+terminating simulation due to interrupt...
+
+
+Adding species O.[Pt](19) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    O.[Pt](19)
+Created 0 new edge species
+Moved 5 reactions from edge to core
+    site(5) + H2O(3) <=> O.[Pt](19)
+    HOX(12) + [H][H].[Pt](20) <=> HX(6) + O.[Pt](19)
+    site(5) + O.[Pt](19) <=> HX(6) + HOX(12)
+    HOX(12) + CXHO(15) <=> O.[Pt](19) + OCX(10)
+    HOX(12) + HOX(12) <=> OX(8) + O.[Pt](19)
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 16 species and 14 reactions
+    The model edge has 35 species and 44 reactions
+
+
+For reaction generation 1 process is used.
+Generating kinetics for new reactions...
+For reaction HOX(12) + C=O.[Pt](30) <=> O.[Pt](19) + CXHO(15) Ea raised from -52.2 to 0.0 kJ/mol.
+For reaction HX(6) + formic_acid(45) <=> O.[Pt](19) + CXHO(15) Ea raised from -30.8 to 0.0 kJ/mol.
+For reaction HX(6) + OO.[Pt](47) <=> HOX(12) + O.[Pt](19) Ea raised from -131.5 to 0.0 kJ/mol.
+
+Summary of Secondary Model Edge Enlargement
+---------------------------------
+Added 0 new core species
+Created 0 new edge species
+Added 0 new core reactions
+Created 5 new edge reactions
+    O.[Pt](19) + OCX(10) <=> HX(6) + HOCXO(16)
+    OX(8) + O.[Pt](19) <=> HX(6) + OO[Pt](42)
+    HOX(12) + C=O.[Pt](30) <=> O.[Pt](19) + CXHO(15)
+    HX(6) + formic_acid(45) <=> O.[Pt](19) + CXHO(15)
+    HX(6) + OO.[Pt](47) <=> HOX(12) + O.[Pt](19)
+
+After model enlargement:
+    The model core has 16 species and 14 reactions
+    The model edge has 35 species and 49 reactions
+
+
+Adding reaction library Surface/Deutschmann_Ni to output file...
+Saving current model core to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 21 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 21 reactions.
+Saving current model core and edge to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 63 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 63 reactions.
+Saving current model core to HTML file...
+Saving current model edge to HTML file...
+Updating RMG execution statistics...
+    Execution time (DD:HH:MM:SS): 00:00:00:21
+    Memory used: 524.82 MB
+
+Conducting simulation of reaction system 1...
+At time 4.6945e-05 s, species CX(11) at 0.10021556378418311 exceeded the minimum rate for simulation interruption of 0.1
+Reached max number of objects...preparing to terminate
+At time 4.6945e-05 s, species CX(11) at rate ratio 0.10021556378418311 exceeded the minimum rate for moving to model core of 0.1
+terminating simulation due to interrupt...
+
+
+Adding species CX(11) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    CX(11)
+Created 0 new edge species
+Moved 2 reactions from edge to core
+    site(5) + OCX(10) <=> OX(8) + CX(11)
+    HOX(12) + CX(11) <=> HX(6) + OCX(10)
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 17 species and 16 reactions
+    The model edge has 34 species and 47 reactions
+
+
+For reaction generation 1 process is used.
+Generating thermo for new species...
+Generating kinetics for new reactions...
+For reaction site(5) + O=CC#[Pt](48) <=> CX(11) + CXHO(15), Ea raised from 36.4 to 39.4 kJ/mol to match endothermicity of reaction.
+
+Summary of Secondary Model Edge Enlargement
+---------------------------------
+Added 0 new core species
+Created 1 new edge species
+    O=CC#[Pt](48)
+Added 0 new core reactions
+Created 8 new edge reactions
+    [H][H].[Pt](20) + CX(11) <=> HX(6) + CHX(14)
+    HX(6) + CX(11) <=> site(5) + CHX(14)
+    CX(11) + CXHO(15) <=> OCX(10) + CHX(14)
+    site(5) + O=CC#[Pt](48) <=> CX(11) + CXHO(15)
+    HOX(12) + CX(11) <=> OX(8) + CHX(14)
+    site(5) + OC#[Pt](23) <=> HOX(12) + CX(11)
+    O.[Pt](19) + CX(11) <=> HOX(12) + CHX(14)
+    O.[Pt](19) + CX(11) <=> HX(6) + OC#[Pt](23)
+
+After model enlargement:
+    The model core has 17 species and 16 reactions
+    The model edge has 35 species and 55 reactions
+
+
+Adding reaction library Surface/Deutschmann_Ni to output file...
+Saving current model core to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 21 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 21 reactions.
+Saving current model core and edge to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 71 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 71 reactions.
+Saving current model core to HTML file...
+Saving current model edge to HTML file...
+Updating RMG execution statistics...
+    Execution time (DD:HH:MM:SS): 00:00:00:22
+    Memory used: 528.55 MB
+
+Conducting simulation of reaction system 1...
+At time 2.3645e-05 s, species OC#[Pt](23) at 0.10141007946253086 exceeded the minimum rate for simulation interruption of 0.1
+Reached max number of objects...preparing to terminate
+At time 2.3645e-05 s, species OC#[Pt](23) at rate ratio 0.10141007946253086 exceeded the minimum rate for moving to model core of 0.1
+terminating simulation due to interrupt...
+
+
+Adding species OC#[Pt](23) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    OC#[Pt](23)
+Created 0 new edge species
+Moved 3 reactions from edge to core
+    HX(6) + OCX(10) <=> site(5) + OC#[Pt](23)
+    site(5) + OC#[Pt](23) <=> HOX(12) + CX(11)
+    O.[Pt](19) + CX(11) <=> HX(6) + OC#[Pt](23)
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 18 species and 19 reactions
+    The model edge has 34 species and 52 reactions
+
+
+For reaction generation 1 process is used.
+Generating thermo for new species...
+Generating kinetics for new reactions...
+
+Summary of Secondary Model Edge Enlargement
+---------------------------------
+Added 0 new core species
+Created 2 new edge species
+    O=CC(O)=[Pt](49)
+    OC(O)=[Pt](50)
+Added 0 new core reactions
+Created 13 new edge reactions
+    [H][H].[Pt](20) + OC#[Pt](23) <=> HX(6) + OC=[Pt](32)
+    site(5) + OC=[Pt](32) <=> HX(6) + OC#[Pt](23)
+    CX(11) + HOCXO(16) <=> OCX(10) + OC#[Pt](23)
+    OO[Pt](42) + CX(11) <=> OX(8) + OC#[Pt](23)
+    CXHO(15) + OC#[Pt](23) <=> OCX(10) + OC=[Pt](32)
+    CX(11) + formic_acid(45) <=> CXHO(15) + OC#[Pt](23)
+    site(5) + O=CC(O)=[Pt](49) <=> CXHO(15) + OC#[Pt](23)
+    HOX(12) + OC#[Pt](23) <=> OX(8) + OC=[Pt](32)
+    OO.[Pt](47) + CX(11) <=> HOX(12) + OC#[Pt](23)
+    site(5) + OC(O)=[Pt](50) <=> HOX(12) + OC#[Pt](23)
+    O.[Pt](19) + OC#[Pt](23) <=> HOX(12) + OC=[Pt](32)
+    O.[Pt](19) + OC#[Pt](23) <=> HX(6) + OC(O)=[Pt](50)
+    CX(11) + OC(O)=[Pt](50) <=> OC#[Pt](23) + OC#[Pt](23)
+
+After model enlargement:
+    The model core has 18 species and 19 reactions
+    The model edge has 36 species and 65 reactions
+
+
+Adding reaction library Surface/Deutschmann_Ni to output file...
+Saving current model core to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 24 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 24 reactions.
+Saving current model core and edge to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 84 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 84 reactions.
+Saving current model core to HTML file...
+Saving current model edge to HTML file...
+Updating RMG execution statistics...
+    Execution time (DD:HH:MM:SS): 00:00:00:23
+    Memory used: 534.21 MB
+
+Conducting simulation of reaction system 1...
+At time 5.1757e-05 s, species O=CC#[Pt](48) at 0.10069746181470042 exceeded the minimum rate for simulation interruption of 0.1
+Reached max number of objects...preparing to terminate
+At time 5.1757e-05 s, species O=CC#[Pt](48) at rate ratio 0.10069746181470042 exceeded the minimum rate for moving to model core of 0.1
+terminating simulation due to interrupt...
+
+
+Adding species O=CC#[Pt](48) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    O=CC#[Pt](48)
+Created 0 new edge species
+Moved 1 reactions from edge to core
+    site(5) + O=CC#[Pt](48) <=> CX(11) + CXHO(15)
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 19 species and 20 reactions
+    The model edge has 35 species and 64 reactions
+
+
+For reaction generation 1 process is used.
+Generating thermo for new species...
+Species O=C=C=[Pt] renamed C2O(T)X based on thermo library name
+Species O=CC=[Pt] renamed ketene(T)X based on thermo library name
+Generating kinetics for new reactions...
+For reaction O.[Pt](19) + O=CC#[Pt](48) <=> HX(6) + O=CC(O)=[Pt](49), Ea raised from 327.4 to 330.2 kJ/mol to match endothermicity of reaction.
+
+Summary of Secondary Model Edge Enlargement
+---------------------------------
+Added 0 new core species
+Created 3 new edge species
+    C2O(T)X(51)
+    ketene(T)X(52)
+    O=CC(=[Pt])C=O(53)
+Added 0 new core reactions
+Created 17 new edge reactions
+    HX(6) + C2O(T)X(51) <=> site(5) + O=CC#[Pt](48)
+    [H][H].[Pt](20) + O=CC#[Pt](48) <=> HX(6) + ketene(T)X(52)
+    CX(11) + C=O.[Pt](30) <=> HX(6) + O=CC#[Pt](48)
+    site(5) + ketene(T)X(52) <=> HX(6) + O=CC#[Pt](48)
+    CX(11) + OCHCOX(33) <=> OCX(10) + O=CC#[Pt](48)
+    CX(11) + formyloxyX(22) <=> OX(8) + O=CC#[Pt](48)
+    CXHO(15) + O=CC#[Pt](48) <=> OCX(10) + ketene(T)X(52)
+    CX(11) + glyoxal(37) <=> CXHO(15) + O=CC#[Pt](48)
+    site(5) + O=CC(=[Pt])C=O(53) <=> CXHO(15) + O=CC#[Pt](48)
+    HOX(12) + O=CC#[Pt](48) <=> OX(8) + ketene(T)X(52)
+    CX(11) + formic_acid(45) <=> HOX(12) + O=CC#[Pt](48)
+    site(5) + O=CC(O)=[Pt](49) <=> HOX(12) + O=CC#[Pt](48)
+    O.[Pt](19) + O=CC#[Pt](48) <=> HOX(12) + ketene(T)X(52)
+    O.[Pt](19) + O=CC#[Pt](48) <=> HX(6) + O=CC(O)=[Pt](49)
+    CX(11) + O=CC(O)=[Pt](49) <=> OC#[Pt](23) + O=CC#[Pt](48)
+    CX(11) + O=CC(O)=[Pt](49) <=> OC#[Pt](23) + O=CC#[Pt](48)
+    CX(11) + O=CC(=[Pt])C=O(53) <=> O=CC#[Pt](48) + O=CC#[Pt](48)
+
+After model enlargement:
+    The model core has 19 species and 20 reactions
+    The model edge has 38 species and 81 reactions
+
+
+Adding reaction library Surface/Deutschmann_Ni to output file...
+Saving current model core to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 25 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 25 reactions.
+Saving current model core and edge to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 101 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 101 reactions.
+Saving current model core to HTML file...
+Saving current model edge to HTML file...
+Updating RMG execution statistics...
+    Execution time (DD:HH:MM:SS): 00:00:00:25
+    Memory used: 538.19 MB
+
+Conducting simulation of reaction system 1...
+At time 7.5473e-05 s, species CHX(14) at 0.10022394878864453 exceeded the minimum rate for simulation interruption of 0.1
+Reached max number of objects...preparing to terminate
+At time 7.5473e-05 s, species CHX(14) at rate ratio 0.10022394878864453 exceeded the minimum rate for moving to model core of 0.1
+terminating simulation due to interrupt...
+
+
+Adding species CHX(14) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    CHX(14)
+Created 0 new edge species
+Moved 6 reactions from edge to core
+    OX(8) + CHX(14) <=> site(5) + CXHO(15)
+    [H][H].[Pt](20) + CX(11) <=> HX(6) + CHX(14)
+    HX(6) + CX(11) <=> site(5) + CHX(14)
+    CX(11) + CXHO(15) <=> OCX(10) + CHX(14)
+    HOX(12) + CX(11) <=> OX(8) + CHX(14)
+    O.[Pt](19) + CX(11) <=> HOX(12) + CHX(14)
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 20 species and 26 reactions
+    The model edge has 37 species and 75 reactions
+
+
+For reaction generation 1 process is used.
+Generating thermo for new species...
+Generating kinetics for new reactions...
+
+Summary of Secondary Model Edge Enlargement
+---------------------------------
+Added 0 new core species
+Created 1 new edge species
+    C=[Pt](54)
+Added 0 new core reactions
+Created 14 new edge reactions
+    [H][H].[Pt](20) + CHX(14) <=> HX(6) + C=[Pt](54)
+    HX(6) + CHX(14) <=> site(5) + C=[Pt](54)
+    CHX(14) + CXHO(15) <=> OCX(10) + C=[Pt](54)
+    CX(11) + C=O.[Pt](30) <=> CHX(14) + CXHO(15)
+    site(5) + ketene(T)X(52) <=> CHX(14) + CXHO(15)
+    HOX(12) + CHX(14) <=> OX(8) + C=[Pt](54)
+    site(5) + OC=[Pt](32) <=> HOX(12) + CHX(14)
+    O.[Pt](19) + CHX(14) <=> HOX(12) + C=[Pt](54)
+    O.[Pt](19) + CHX(14) <=> HX(6) + OC=[Pt](32)
+    CX(11) + OC=[Pt](32) <=> CHX(14) + OC#[Pt](23)
+    CX(11) + OC=[Pt](32) <=> CHX(14) + OC#[Pt](23)
+    CX(11) + ketene(T)X(52) <=> CHX(14) + O=CC#[Pt](48)
+    CX(11) + ketene(T)X(52) <=> CHX(14) + O=CC#[Pt](48)
+    CX(11) + C=[Pt](54) <=> CHX(14) + CHX(14)
+
+After model enlargement:
+    The model core has 20 species and 26 reactions
+    The model edge has 38 species and 89 reactions
+
+
+Adding reaction library Surface/Deutschmann_Ni to output file...
+Saving current model core to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 30 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 30 reactions.
+Saving current model core and edge to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 115 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 115 reactions.
+Saving current model core to HTML file...
+Saving current model edge to HTML file...
+Updating RMG execution statistics...
+    Execution time (DD:HH:MM:SS): 00:00:00:26
+    Memory used: 540.63 MB
+
+Conducting simulation of reaction system 1...
+At time 3.3536e-07 s, species C=[Pt](54) at 0.11006482437967623 exceeded the minimum rate for simulation interruption of 0.1
+Reached max number of objects...preparing to terminate
+At time 3.3536e-07 s, species C=[Pt](54) at rate ratio 0.11006482437967623 exceeded the minimum rate for moving to model core of 0.1
+terminating simulation due to interrupt...
+
+
+Adding species C=[Pt](54) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    C=[Pt](54)
+Created 0 new edge species
+Moved 6 reactions from edge to core
+    [H][H].[Pt](20) + CHX(14) <=> HX(6) + C=[Pt](54)
+    HX(6) + CHX(14) <=> site(5) + C=[Pt](54)
+    CHX(14) + CXHO(15) <=> OCX(10) + C=[Pt](54)
+    HOX(12) + CHX(14) <=> OX(8) + C=[Pt](54)
+    O.[Pt](19) + CHX(14) <=> HOX(12) + C=[Pt](54)
+    CX(11) + C=[Pt](54) <=> CHX(14) + CHX(14)
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 21 species and 32 reactions
+    The model edge has 37 species and 83 reactions
+
+
+For reaction generation 1 process is used.
+Generating thermo for new species...
+Species C=C=O renamed ketene based on thermo library name
+Species C=C=O.[Pt] renamed ketene based on thermo library name
+Species O=CC[Pt] renamed vinoxyX based on thermo library name
+Species C=C renamed C2H4 based on thermo library name
+Species C=C.[Pt] renamed C2H4 based on thermo library name
+Generating kinetics for new reactions...
+
+Summary of Secondary Model Edge Enlargement
+---------------------------------
+Added 0 new core species
+Created 6 new edge species
+    ketene(55)
+    ketene(56)
+    vinoxyX(57)
+    OC[Pt](58)
+    C2H4(59)
+    C2H4(60)
+Added 0 new core reactions
+Created 21 new edge reactions
+    [H][H].[Pt](20) + C=[Pt](54) <=> HX(6) + C[Pt](17)
+    HX(6) + C=[Pt](54) <=> site(5) + C[Pt](17)
+    site(5) + site(5) + ketene(55) <=> OCX(10) + C=[Pt](54)
+    site(5) + ketene(56) <=> OCX(10) + C=[Pt](54)
+    site(5) + site(5) + CH2O(31) <=> OX(8) + C=[Pt](54)
+    site(5) + C=O.[Pt](30) <=> OX(8) + C=[Pt](54)
+    CXHO(15) + C=[Pt](54) <=> OCX(10) + C[Pt](17)
+    CHX(14) + C=O.[Pt](30) <=> CXHO(15) + C=[Pt](54)
+    site(5) + vinoxyX(57) <=> CXHO(15) + C=[Pt](54)
+    HOX(12) + C=[Pt](54) <=> OX(8) + C[Pt](17)
+    site(5) + OC[Pt](58) <=> HOX(12) + C=[Pt](54)
+    O.[Pt](19) + C=[Pt](54) <=> HOX(12) + C[Pt](17)
+    O.[Pt](19) + C=[Pt](54) <=> HX(6) + OC[Pt](58)
+    CHX(14) + OC=[Pt](32) <=> OC#[Pt](23) + C=[Pt](54)
+    CX(11) + OC[Pt](58) <=> OC#[Pt](23) + C=[Pt](54)
+    CHX(14) + ketene(T)X(52) <=> C=[Pt](54) + O=CC#[Pt](48)
+    CX(11) + vinoxyX(57) <=> C=[Pt](54) + O=CC#[Pt](48)
+    CX(11) + C[Pt](17) <=> CHX(14) + C=[Pt](54)
+    C=[Pt](54) + C=[Pt](54) <=> CHX(14) + C[Pt](17)
+    site(5) + site(5) + C2H4(59) <=> C=[Pt](54) + C=[Pt](54)
+    site(5) + C2H4(60) <=> C=[Pt](54) + C=[Pt](54)
+
+After model enlargement:
+    The model core has 21 species and 32 reactions
+    The model edge has 43 species and 104 reactions
+
+
+Adding reaction library Surface/Deutschmann_Ni to output file...
+Saving current model core to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 36 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 36 reactions.
+Saving current model core and edge to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 136 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 136 reactions.
+Saving current model core to HTML file...
+Saving current model edge to HTML file...
+Updating RMG execution statistics...
+    Execution time (DD:HH:MM:SS): 00:00:00:28
+    Memory used: 545.93 MB
+
+Conducting simulation of reaction system 1...
+At time 3.1961e-04 s, species C[Pt](17) at 0.10008452644443358 exceeded the minimum rate for simulation interruption of 0.1
+Reached max number of objects...preparing to terminate
+At time 3.1961e-04 s, species C[Pt](17) at rate ratio 0.10008452644443358 exceeded the minimum rate for moving to model core of 0.1
+terminating simulation due to interrupt...
+
+
+Adding species C[Pt](17) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    C[Pt](17)
+Created 0 new edge species
+Moved 8 reactions from edge to core
+    site(5) + site(5) + CH4(1) <=> HX(6) + C[Pt](17)
+    [H][H].[Pt](20) + C=[Pt](54) <=> HX(6) + C[Pt](17)
+    HX(6) + C=[Pt](54) <=> site(5) + C[Pt](17)
+    CXHO(15) + C=[Pt](54) <=> OCX(10) + C[Pt](17)
+    HOX(12) + C=[Pt](54) <=> OX(8) + C[Pt](17)
+    O.[Pt](19) + C=[Pt](54) <=> HOX(12) + C[Pt](17)
+    CX(11) + C[Pt](17) <=> CHX(14) + C=[Pt](54)
+    C=[Pt](54) + C=[Pt](54) <=> CHX(14) + C[Pt](17)
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 22 species and 40 reactions
+    The model edge has 42 species and 96 reactions
+
+
+For reaction generation 1 process is used.
+Generating thermo for new species...
+Species [CH3] renamed CH3 based on thermo library name
+Species CC(=O)O[Pt] renamed acetyloxyX based on thermo library name
+Species COC(=O)[Pt] renamed CH3OCOX based on thermo library name
+Species CC(=O)[Pt] renamed acetylX based on thermo library name
+Species CC=O renamed CH3CHO based on thermo library name
+Species CC=O.[Pt] renamed CH3CHO based on thermo library name
+Species CO renamed CH3OH based on thermo library name
+Species CC renamed C2H6 based on thermo library name
+Generating kinetics for new reactions...
+For reaction CO2(2) + C[Pt](17) <=> CH3OCOX(63), Ea raised from 108.0 to 110.1 kJ/mol to match endothermicity of reaction.
+For reaction [H][H].[Pt](20) + C[Pt](17) <=> HX(6) + C.[Pt](18) Ea raised from -27.6 to 0.0 kJ/mol.
+For reaction O.[Pt](19) + C[Pt](17) <=> HOX(12) + C.[Pt](18), Ea raised from 2.0 to 3.1 kJ/mol to match endothermicity of reaction.
+For reaction HX(6) + CO.[Pt](71) <=> O.[Pt](19) + C[Pt](17) Ea raised from -20.0 to 0.0 kJ/mol.
+
+Summary of Secondary Model Edge Enlargement
+---------------------------------
+Added 0 new core species
+Created 18 new edge species
+    CH3(61)
+    acetyloxyX(62)
+    CH3OCOX(63)
+    acetylX(64)
+    COC#[Pt](65)
+    CO[Pt](66)
+    CH3CHO(67)
+    COC=[Pt](68)
+    CH3CHO(69)
+    CH3OH(70)
+    CO.[Pt](71)
+    CC#[Pt](72)
+    CC(O)=[Pt](73)
+    CC(=[Pt])C=O(74)
+    CC=[Pt](75)
+    CC[Pt](76)
+    C2H6(77)
+    CC.[Pt](78)
+Added 0 new core reactions
+Created 32 new edge reactions
+    site(5) + CH3(61) <=> C[Pt](17)
+    CO2(2) + C[Pt](17) <=> acetyloxyX(62)
+    CO2(2) + C[Pt](17) <=> CH3OCOX(63)
+    [H][H].[Pt](20) + C[Pt](17) <=> HX(6) + C.[Pt](18)
+    site(5) + C.[Pt](18) <=> HX(6) + C[Pt](17)
+    site(5) + acetylX(64) <=> OCX(10) + C[Pt](17)
+    OCX(10) + C[Pt](17) <=> site(5) + COC#[Pt](65)
+    site(5) + CO[Pt](66) <=> OX(8) + C[Pt](17)
+    C=[Pt](54) + C=O.[Pt](30) <=> CXHO(15) + C[Pt](17)
+    OCX(10) + C.[Pt](18) <=> CXHO(15) + C[Pt](17)
+    site(5) + site(5) + CH3CHO(67) <=> CXHO(15) + C[Pt](17)
+    CXHO(15) + C[Pt](17) <=> site(5) + COC=[Pt](68)
+    site(5) + CH3CHO(69) <=> CXHO(15) + C[Pt](17)
+    OX(8) + C.[Pt](18) <=> HOX(12) + C[Pt](17)
+    site(5) + site(5) + CH3OH(70) <=> HOX(12) + C[Pt](17)
+    site(5) + CO.[Pt](71) <=> HOX(12) + C[Pt](17)
+    O.[Pt](19) + C[Pt](17) <=> HOX(12) + C.[Pt](18)
+    HX(6) + CO.[Pt](71) <=> O.[Pt](19) + C[Pt](17)
+    site(5) + CC#[Pt](72) <=> CX(11) + C[Pt](17)
+    C=[Pt](54) + OC=[Pt](32) <=> OC#[Pt](23) + C[Pt](17)
+    CX(11) + CO.[Pt](71) <=> OC#[Pt](23) + C[Pt](17)
+    site(5) + CC(O)=[Pt](73) <=> OC#[Pt](23) + C[Pt](17)
+    C=[Pt](54) + ketene(T)X(52) <=> C[Pt](17) + O=CC#[Pt](48)
+    CX(11) + CH3CHO(69) <=> C[Pt](17) + O=CC#[Pt](48)
+    site(5) + CC(=[Pt])C=O(74) <=> C[Pt](17) + O=CC#[Pt](48)
+    CX(11) + C.[Pt](18) <=> CHX(14) + C[Pt](17)
+    site(5) + CC=[Pt](75) <=> CHX(14) + C[Pt](17)
+    CHX(14) + C.[Pt](18) <=> C=[Pt](54) + C[Pt](17)
+    site(5) + CC[Pt](76) <=> C=[Pt](54) + C[Pt](17)
+    C=[Pt](54) + C.[Pt](18) <=> C[Pt](17) + C[Pt](17)
+    site(5) + site(5) + C2H6(77) <=> C[Pt](17) + C[Pt](17)
+    site(5) + CC.[Pt](78) <=> C[Pt](17) + C[Pt](17)
+
+After model enlargement:
+    The model core has 22 species and 40 reactions
+    The model edge has 60 species and 128 reactions
+
+
+Adding reaction library Surface/Deutschmann_Ni to output file...
+Saving current model core to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 44 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 44 reactions.
+Saving current model core and edge to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 168 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 168 reactions.
+Saving current model core to HTML file...
+Saving current model edge to HTML file...
+Updating RMG execution statistics...
+    Execution time (DD:HH:MM:SS): 00:00:00:30
+    Memory used: 551.99 MB
+
+Conducting simulation of reaction system 1...
+At time 3.2175e-05 s, species C.[Pt](18) at 0.10049938294934778 exceeded the minimum rate for simulation interruption of 0.1
+Reached max number of objects...preparing to terminate
+At time 3.2175e-05 s, species C.[Pt](18) at rate ratio 0.10049938294934778 exceeded the minimum rate for moving to model core of 0.1
+terminating simulation due to interrupt...
+
+
+Adding species C.[Pt](18) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    C.[Pt](18)
+Created 0 new edge species
+Moved 9 reactions from edge to core
+    site(5) + CH4(1) <=> C.[Pt](18)
+    [H][H].[Pt](20) + C[Pt](17) <=> HX(6) + C.[Pt](18)
+    site(5) + C.[Pt](18) <=> HX(6) + C[Pt](17)
+    OCX(10) + C.[Pt](18) <=> CXHO(15) + C[Pt](17)
+    OX(8) + C.[Pt](18) <=> HOX(12) + C[Pt](17)
+    O.[Pt](19) + C[Pt](17) <=> HOX(12) + C.[Pt](18)
+    CX(11) + C.[Pt](18) <=> CHX(14) + C[Pt](17)
+    CHX(14) + C.[Pt](18) <=> C=[Pt](54) + C[Pt](17)
+    C=[Pt](54) + C.[Pt](18) <=> C[Pt](17) + C[Pt](17)
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 23 species and 49 reactions
+    The model edge has 59 species and 119 reactions
+
+
+For reaction generation 1 process is used.
+Generating kinetics for new reactions...
+For reaction C=O.[Pt](30) + C[Pt](17) <=> CXHO(15) + C.[Pt](18) Ea raised from -50.2 to 0.0 kJ/mol.
+For reaction HX(6) + CH3CHO(69) <=> CXHO(15) + C.[Pt](18) Ea raised from -55.1 to 0.0 kJ/mol.
+For reaction HX(6) + CO.[Pt](71) <=> HOX(12) + C.[Pt](18) Ea raised from -18.0 to 0.0 kJ/mol.
+For reaction C.[Pt](18) + O=CC#[Pt](48) <=> HX(6) + CC(=[Pt])C=O(74), Ea raised from 176.3 to 176.9 kJ/mol to match endothermicity of reaction.
+
+Summary of Secondary Model Edge Enlargement
+---------------------------------
+Added 0 new core species
+Created 0 new edge species
+Added 0 new core reactions
+Created 13 new edge reactions
+    OCX(10) + C.[Pt](18) <=> HX(6) + acetylX(64)
+    OX(8) + C.[Pt](18) <=> HX(6) + CO[Pt](66)
+    C=O.[Pt](30) + C[Pt](17) <=> CXHO(15) + C.[Pt](18)
+    HX(6) + CH3CHO(69) <=> CXHO(15) + C.[Pt](18)
+    HX(6) + CO.[Pt](71) <=> HOX(12) + C.[Pt](18)
+    CX(11) + C.[Pt](18) <=> HX(6) + CC#[Pt](72)
+    OC#[Pt](23) + C.[Pt](18) <=> OC=[Pt](32) + C[Pt](17)
+    OC#[Pt](23) + C.[Pt](18) <=> HX(6) + CC(O)=[Pt](73)
+    C.[Pt](18) + O=CC#[Pt](48) <=> C[Pt](17) + ketene(T)X(52)
+    C.[Pt](18) + O=CC#[Pt](48) <=> HX(6) + CC(=[Pt])C=O(74)
+    CHX(14) + C.[Pt](18) <=> HX(6) + CC=[Pt](75)
+    C=[Pt](54) + C.[Pt](18) <=> HX(6) + CC[Pt](76)
+    HX(6) + CC.[Pt](78) <=> C[Pt](17) + C.[Pt](18)
+
+After model enlargement:
+    The model core has 23 species and 49 reactions
+    The model edge has 59 species and 132 reactions
+
+
+Adding reaction library Surface/Deutschmann_Ni to output file...
+Saving current model core to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 53 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 53 reactions.
+Saving current model core and edge to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 181 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 181 reactions.
+Saving current model core to HTML file...
+Saving current model edge to HTML file...
+Updating RMG execution statistics...
+    Execution time (DD:HH:MM:SS): 00:00:00:32
+    Memory used: 553.45 MB
+
+Conducting simulation of reaction system 1...
+At time 1.2483e-04 s, species CC#[Pt](72) at 0.10021429074463878 exceeded the minimum rate for simulation interruption of 0.1
+Reached max number of objects...preparing to terminate
+At time 1.2483e-04 s, species CC#[Pt](72) at rate ratio 0.10021429074463878 exceeded the minimum rate for moving to model core of 0.1
+terminating simulation due to interrupt...
+
+
+Adding species CC#[Pt](72) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    CC#[Pt](72)
+Created 0 new edge species
+Moved 2 reactions from edge to core
+    site(5) + CC#[Pt](72) <=> CX(11) + C[Pt](17)
+    CX(11) + C.[Pt](18) <=> HX(6) + CC#[Pt](72)
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 24 species and 51 reactions
+    The model edge has 58 species and 130 reactions
+
+
+For reaction generation 1 process is used.
+Generating thermo for new species...
+Generating kinetics for new reactions...
+
+Summary of Secondary Model Edge Enlargement
+---------------------------------
+Added 0 new core species
+Created 2 new edge species
+    C=C=[Pt](79)
+    CC(C)=[Pt](80)
+Added 0 new core reactions
+Created 26 new edge reactions
+    HX(6) + C=C=[Pt](79) <=> site(5) + CC#[Pt](72)
+    [H][H].[Pt](20) + CC#[Pt](72) <=> HX(6) + CC=[Pt](75)
+    site(5) + CC=[Pt](75) <=> HX(6) + CC#[Pt](72)
+    CX(11) + acetylX(64) <=> OCX(10) + CC#[Pt](72)
+    CX(11) + CO[Pt](66) <=> OX(8) + CC#[Pt](72)
+    CXHO(15) + CC#[Pt](72) <=> OCX(10) + CC=[Pt](75)
+    CX(11) + CH3CHO(69) <=> CXHO(15) + CC#[Pt](72)
+    site(5) + CC(=[Pt])C=O(74) <=> CXHO(15) + CC#[Pt](72)
+    HOX(12) + CC#[Pt](72) <=> OX(8) + CC=[Pt](75)
+    CX(11) + CO.[Pt](71) <=> HOX(12) + CC#[Pt](72)
+    site(5) + CC(O)=[Pt](73) <=> HOX(12) + CC#[Pt](72)
+    O.[Pt](19) + CC#[Pt](72) <=> HOX(12) + CC=[Pt](75)
+    O.[Pt](19) + CC#[Pt](72) <=> HX(6) + CC(O)=[Pt](73)
+    CX(11) + CC(O)=[Pt](73) <=> OC#[Pt](23) + CC#[Pt](72)
+    CX(11) + CC(O)=[Pt](73) <=> OC#[Pt](23) + CC#[Pt](72)
+    CX(11) + CC(=[Pt])C=O(74) <=> O=CC#[Pt](48) + CC#[Pt](72)
+    CX(11) + CC=[Pt](75) <=> CHX(14) + CC#[Pt](72)
+    CX(11) + CC=[Pt](75) <=> CHX(14) + CC#[Pt](72)
+    CX(11) + CC[Pt](76) <=> C=[Pt](54) + CC#[Pt](72)
+    CHX(14) + CC=[Pt](75) <=> C=[Pt](54) + CC#[Pt](72)
+    C=[Pt](54) + CC=[Pt](75) <=> C[Pt](17) + CC#[Pt](72)
+    CX(11) + CC.[Pt](78) <=> C[Pt](17) + CC#[Pt](72)
+    site(5) + CC(C)=[Pt](80) <=> C[Pt](17) + CC#[Pt](72)
+    C.[Pt](18) + CC#[Pt](72) <=> C[Pt](17) + CC=[Pt](75)
+    C.[Pt](18) + CC#[Pt](72) <=> HX(6) + CC(C)=[Pt](80)
+    CX(11) + CC(C)=[Pt](80) <=> CC#[Pt](72) + CC#[Pt](72)
+
+After model enlargement:
+    The model core has 24 species and 51 reactions
+    The model edge has 60 species and 156 reactions
+
+
+Adding reaction library Surface/Deutschmann_Ni to output file...
+Saving current model core to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 55 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 55 reactions.
+Saving current model core and edge to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 207 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 207 reactions.
+Saving current model core to HTML file...
+Saving current model edge to HTML file...
+Updating RMG execution statistics...
+    Execution time (DD:HH:MM:SS): 00:00:00:35
+    Memory used: 560.18 MB
+
+Conducting simulation of reaction system 1...
+At time 6.9956e-03 s, species CO[Pt](66) at 0.10051703223977083 exceeded the minimum rate for simulation interruption of 0.1
+Reached max number of objects...preparing to terminate
+At time 6.9956e-03 s, species CO[Pt](66) at rate ratio 0.10051703223977083 exceeded the minimum rate for moving to model core of 0.1
+terminating simulation due to interrupt...
+
+
+Adding species CO[Pt](66) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    CO[Pt](66)
+Created 0 new edge species
+Moved 3 reactions from edge to core
+    site(5) + CO[Pt](66) <=> OX(8) + C[Pt](17)
+    OX(8) + C.[Pt](18) <=> HX(6) + CO[Pt](66)
+    CX(11) + CO[Pt](66) <=> OX(8) + CC#[Pt](72)
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 25 species and 54 reactions
+    The model edge has 59 species and 153 reactions
+
+
+For reaction generation 1 process is used.
+Generating thermo for new species...
+Species C[O] renamed CH3O based on thermo library name
+Species COO[Pt] renamed CH3OOX based on thermo library name
+Species COC=O renamed methyl_formate based on thermo library name
+Species COC=O.[Pt] renamed methyl_formate based on thermo library name
+Species COO renamed CH3OOH based on thermo library name
+Species COO.[Pt] renamed CH3OOH based on thermo library name
+Species COC[Pt] renamed CH3OCH2X based on thermo library name
+Species COC renamed DME based on thermo library name
+Species COC.[Pt] renamed DME based on thermo library name
+Species COOC renamed CH3OOCH3 based on thermo library name
+Species COOC.[Pt] renamed CH3OOCH3 based on thermo library name
+Generating kinetics for new reactions...
+For reaction CO2(2) + CO[Pt](66) <=> COOC(=O)[Pt](83), Ea raised from 266.8 to 268.6 kJ/mol to match endothermicity of reaction.
+For reaction [H][H].[Pt](20) + CO[Pt](66) <=> HX(6) + CO.[Pt](71) Ea raised from -19.4 to 0.0 kJ/mol.
+For reaction HOX(12) + CO.[Pt](71) <=> O.[Pt](19) + CO[Pt](66) Ea raised from -10.1 to 0.0 kJ/mol.
+For reaction HX(6) + CH3OOH(90) <=> O.[Pt](19) + CO[Pt](66) Ea raised from -163.3 to 0.0 kJ/mol.
+For reaction C[Pt](17) + CO.[Pt](71) <=> CO[Pt](66) + C.[Pt](18) Ea raised from -8.1 to 0.0 kJ/mol.
+For reaction HX(6) + DME(95) <=> CO[Pt](66) + C.[Pt](18) Ea raised from -59.2 to 0.0 kJ/mol.
+
+Summary of Secondary Model Edge Enlargement
+---------------------------------
+Added 0 new core species
+Created 18 new edge species
+    CH3O(81)
+    COC(=O)O[Pt](82)
+    COOC(=O)[Pt](83)
+    COOC#[Pt](84)
+    CH3OOX(85)
+    methyl_formate(86)
+    COOC=[Pt](87)
+    methyl_formate(88)
+    CH3OOH(89)
+    CH3OOH(90)
+    COC(O)=[Pt](91)
+    COC(=[Pt])C=O(92)
+    CH3OCH2X(93)
+    DME(94)
+    DME(95)
+    COC(C)=[Pt](96)
+    CH3OOCH3(97)
+    CH3OOCH3(98)
+Added 0 new core reactions
+Created 62 new edge reactions
+    site(5) + CH3O(81) <=> CO[Pt](66)
+    HX(6) + CH2O(31) <=> CO[Pt](66)
+    CO[Pt](66) <=> OC[Pt](58)
+    CO2(2) + CO[Pt](66) <=> COC(=O)O[Pt](82)
+    CO2(2) + CO[Pt](66) <=> COOC(=O)[Pt](83)
+    HX(6) + C=O.[Pt](30) <=> site(5) + CO[Pt](66)
+    [H][H].[Pt](20) + CO[Pt](66) <=> HX(6) + CO.[Pt](71)
+    site(5) + site(5) + CH3OH(70) <=> HX(6) + CO[Pt](66)
+    HX(6) + CO[Pt](66) <=> site(5) + CO.[Pt](71)
+    [H][H].[Pt](20) + C=O.[Pt](30) <=> HX(6) + CO[Pt](66)
+    OX(8) + acetylX(64) <=> OCX(10) + CO[Pt](66)
+    CXHO(15) + C=O.[Pt](30) <=> OCX(10) + CO[Pt](66)
+    site(5) + CH3OCOX(63) <=> OCX(10) + CO[Pt](66)
+    OCX(10) + CO[Pt](66) <=> site(5) + COOC#[Pt](84)
+    HOX(12) + C=O.[Pt](30) <=> OX(8) + CO[Pt](66)
+    site(5) + CH3OOX(85) <=> OX(8) + CO[Pt](66)
+    OX(8) + CH3CHO(69) <=> CXHO(15) + CO[Pt](66)
+    CXHO(15) + CO[Pt](66) <=> OCX(10) + CO.[Pt](71)
+    site(5) + site(5) + methyl_formate(86) <=> CXHO(15) + CO[Pt](66)
+    CXHO(15) + CO[Pt](66) <=> site(5) + COOC=[Pt](87)
+    site(5) + methyl_formate(88) <=> CXHO(15) + CO[Pt](66)
+    C=O.[Pt](30) + C=O.[Pt](30) <=> CXHO(15) + CO[Pt](66)
+    OX(8) + CO.[Pt](71) <=> HOX(12) + CO[Pt](66)
+    OX(8) + CO.[Pt](71) <=> HOX(12) + CO[Pt](66)
+    site(5) + site(5) + CH3OOH(89) <=> HOX(12) + CO[Pt](66)
+    site(5) + CH3OOH(90) <=> HOX(12) + CO[Pt](66)
+    O.[Pt](19) + C=O.[Pt](30) <=> HOX(12) + CO[Pt](66)
+    HOX(12) + CO.[Pt](71) <=> O.[Pt](19) + CO[Pt](66)
+    HX(6) + CH3OOH(90) <=> O.[Pt](19) + CO[Pt](66)
+    CHX(14) + C=O.[Pt](30) <=> CX(11) + CO[Pt](66)
+    site(5) + COC#[Pt](65) <=> CX(11) + CO[Pt](66)
+    OX(8) + CC(O)=[Pt](73) <=> OC#[Pt](23) + CO[Pt](66)
+    CX(11) + CH3OOH(90) <=> OC#[Pt](23) + CO[Pt](66)
+    C=O.[Pt](30) + OC=[Pt](32) <=> OC#[Pt](23) + CO[Pt](66)
+    site(5) + COC(O)=[Pt](91) <=> OC#[Pt](23) + CO[Pt](66)
+    OX(8) + CC(=[Pt])C=O(74) <=> CO[Pt](66) + O=CC#[Pt](48)
+    CX(11) + methyl_formate(88) <=> CO[Pt](66) + O=CC#[Pt](48)
+    C=O.[Pt](30) + ketene(T)X(52) <=> CO[Pt](66) + O=CC#[Pt](48)
+    site(5) + COC(=[Pt])C=O(92) <=> CO[Pt](66) + O=CC#[Pt](48)
+    CHX(14) + CO[Pt](66) <=> OX(8) + CC=[Pt](75)
+    CX(11) + CO.[Pt](71) <=> CHX(14) + CO[Pt](66)
+    C=[Pt](54) + C=O.[Pt](30) <=> CHX(14) + CO[Pt](66)
+    site(5) + COC=[Pt](68) <=> CHX(14) + CO[Pt](66)
+    C=[Pt](54) + CO[Pt](66) <=> OX(8) + CC[Pt](76)
+    CHX(14) + CO.[Pt](71) <=> C=[Pt](54) + CO[Pt](66)
+    C=O.[Pt](30) + C[Pt](17) <=> C=[Pt](54) + CO[Pt](66)
+    site(5) + CH3OCH2X(93) <=> C=[Pt](54) + CO[Pt](66)
+    OX(8) + CC.[Pt](78) <=> C[Pt](17) + CO[Pt](66)
+    C=[Pt](54) + CO.[Pt](71) <=> C[Pt](17) + CO[Pt](66)
+    site(5) + site(5) + DME(94) <=> C[Pt](17) + CO[Pt](66)
+    site(5) + DME(95) <=> C[Pt](17) + CO[Pt](66)
+    C=O.[Pt](30) + C.[Pt](18) <=> C[Pt](17) + CO[Pt](66)
+    C[Pt](17) + CO.[Pt](71) <=> CO[Pt](66) + C.[Pt](18)
+    HX(6) + DME(95) <=> CO[Pt](66) + C.[Pt](18)
+    OX(8) + CC(C)=[Pt](80) <=> CO[Pt](66) + CC#[Pt](72)
+    CX(11) + DME(95) <=> CO[Pt](66) + CC#[Pt](72)
+    C=O.[Pt](30) + CC=[Pt](75) <=> CO[Pt](66) + CC#[Pt](72)
+    site(5) + COC(C)=[Pt](96) <=> CO[Pt](66) + CC#[Pt](72)
+    OX(8) + DME(95) <=> CO[Pt](66) + CO[Pt](66)
+    site(5) + site(5) + CH3OOCH3(97) <=> CO[Pt](66) + CO[Pt](66)
+    site(5) + CH3OOCH3(98) <=> CO[Pt](66) + CO[Pt](66)
+    C=O.[Pt](30) + CO.[Pt](71) <=> CO[Pt](66) + CO[Pt](66)
+
+After model enlargement:
+    The model core has 25 species and 54 reactions
+    The model edge has 77 species and 215 reactions
+
+
+Adding reaction library Surface/Deutschmann_Ni to output file...
+Saving current model core to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 58 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 58 reactions.
+Saving current model core and edge to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 269 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 269 reactions.
+Saving current model core to HTML file...
+Saving current model edge to HTML file...
+Updating RMG execution statistics...
+    Execution time (DD:HH:MM:SS): 00:00:00:39
+    Memory used: 568.76 MB
+
+Conducting simulation of reaction system 1...
+At time 3.0441e-02 s, species OC=[Pt](32) at 0.10012995504990768 exceeded the minimum rate for simulation interruption of 0.1
+Reached max number of objects...preparing to terminate
+At time 3.0441e-02 s, species OC=[Pt](32) at rate ratio 0.10012995504990768 exceeded the minimum rate for moving to model core of 0.1
+terminating simulation due to interrupt...
+
+
+Adding species OC=[Pt](32) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    OC=[Pt](32)
+Created 0 new edge species
+Moved 13 reactions from edge to core
+    HX(6) + CXHO(15) <=> site(5) + OC=[Pt](32)
+    [H][H].[Pt](20) + OC#[Pt](23) <=> HX(6) + OC=[Pt](32)
+    site(5) + OC=[Pt](32) <=> HX(6) + OC#[Pt](23)
+    CXHO(15) + OC#[Pt](23) <=> OCX(10) + OC=[Pt](32)
+    HOX(12) + OC#[Pt](23) <=> OX(8) + OC=[Pt](32)
+    O.[Pt](19) + OC#[Pt](23) <=> HOX(12) + OC=[Pt](32)
+    site(5) + OC=[Pt](32) <=> HOX(12) + CHX(14)
+    O.[Pt](19) + CHX(14) <=> HX(6) + OC=[Pt](32)
+    CX(11) + OC=[Pt](32) <=> CHX(14) + OC#[Pt](23)
+    CX(11) + OC=[Pt](32) <=> CHX(14) + OC#[Pt](23)
+    CHX(14) + OC=[Pt](32) <=> OC#[Pt](23) + C=[Pt](54)
+    C=[Pt](54) + OC=[Pt](32) <=> OC#[Pt](23) + C[Pt](17)
+    OC#[Pt](23) + C.[Pt](18) <=> OC=[Pt](32) + C[Pt](17)
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 26 species and 67 reactions
+    The model edge has 76 species and 202 reactions
+
+
+For reaction generation 1 process is used.
+Generating thermo for new species...
+Species O=C=CO renamed hydroxyketene based on thermo library name
+Species O=C=CO.[Pt] renamed hydroxyketene based on thermo library name
+Species C=CO renamed ethenol based on thermo library name
+Species C=CO.[Pt] renamed ethenol based on thermo library name
+Species CC(O)[Pt] renamed CH3CHOHX based on thermo library name
+Species COC(O)[Pt] renamed CH3OCHOHX based on thermo library name
+Species OC=CO renamed HOCHCHOH based on thermo library name
+Species OC=CO.[Pt] renamed HOCHCHOH based on thermo library name
+Generating kinetics for new reactions...
+For reaction OX(8) + OC[Pt](58) <=> HOX(12) + OC=[Pt](32), Ea raised from 0.0 to 122.9 kJ/mol to match endothermicity of reaction.
+
+Summary of Secondary Model Edge Enlargement
+---------------------------------
+Added 0 new core species
+Created 10 new edge species
+    hydroxyketene(99)
+    hydroxyketene(100)
+    O=CC(O)[Pt](101)
+    OC(O)[Pt](102)
+    ethenol(103)
+    ethenol(104)
+    CH3CHOHX(105)
+    CH3OCHOHX(106)
+    HOCHCHOH(107)
+    HOCHCHOH(108)
+Added 2 new core reactions
+    CX(11) + OC=[Pt](32) <=> CHX(14) + OC#[Pt](23)
+    CX(11) + OC=[Pt](32) <=> CHX(14) + OC#[Pt](23)
+Created 44 new edge reactions
+    [H][H].[Pt](20) + OC=[Pt](32) <=> HX(6) + OC[Pt](58)
+    HX(6) + OC=[Pt](32) <=> site(5) + OC[Pt](58)
+    CHX(14) + HOCXO(16) <=> OCX(10) + OC=[Pt](32)
+    site(5) + site(5) + hydroxyketene(99) <=> OCX(10) + OC=[Pt](32)
+    site(5) + hydroxyketene(100) <=> OCX(10) + OC=[Pt](32)
+    OO[Pt](42) + CHX(14) <=> OX(8) + OC=[Pt](32)
+    site(5) + site(5) + formic_acid(43) <=> OX(8) + OC=[Pt](32)
+    site(5) + formic_acid(45) <=> OX(8) + OC=[Pt](32)
+    CXHO(15) + OC=[Pt](32) <=> OCX(10) + OC[Pt](58)
+    CHX(14) + formic_acid(45) <=> CXHO(15) + OC=[Pt](32)
+    OC#[Pt](23) + C=O.[Pt](30) <=> CXHO(15) + OC=[Pt](32)
+    site(5) + O=CC(O)[Pt](101) <=> CXHO(15) + OC=[Pt](32)
+    OX(8) + OC[Pt](58) <=> HOX(12) + OC=[Pt](32)
+    OO.[Pt](47) + CHX(14) <=> HOX(12) + OC=[Pt](32)
+    site(5) + OC(O)[Pt](102) <=> HOX(12) + OC=[Pt](32)
+    O.[Pt](19) + OC=[Pt](32) <=> HOX(12) + OC[Pt](58)
+    O.[Pt](19) + OC=[Pt](32) <=> HX(6) + OC(O)[Pt](102)
+    CHX(14) + OC(O)=[Pt](50) <=> OC#[Pt](23) + OC=[Pt](32)
+    CX(11) + OC(O)[Pt](102) <=> OC#[Pt](23) + OC=[Pt](32)
+    CHX(14) + O=CC(O)=[Pt](49) <=> OC=[Pt](32) + O=CC#[Pt](48)
+    OC#[Pt](23) + ketene(T)X(52) <=> OC=[Pt](32) + O=CC#[Pt](48)
+    CX(11) + O=CC(O)[Pt](101) <=> OC=[Pt](32) + O=CC#[Pt](48)
+    CX(11) + OC[Pt](58) <=> CHX(14) + OC=[Pt](32)
+    C=[Pt](54) + OC=[Pt](32) <=> CHX(14) + OC[Pt](58)
+    C=[Pt](54) + OC=[Pt](32) <=> CHX(14) + OC[Pt](58)
+    site(5) + site(5) + ethenol(103) <=> C=[Pt](54) + OC=[Pt](32)
+    site(5) + ethenol(104) <=> C=[Pt](54) + OC=[Pt](32)
+    OC=[Pt](32) + C[Pt](17) <=> C=[Pt](54) + OC[Pt](58)
+    CHX(14) + CO.[Pt](71) <=> OC=[Pt](32) + C[Pt](17)
+    site(5) + CH3CHOHX(105) <=> OC=[Pt](32) + C[Pt](17)
+    OC=[Pt](32) + C.[Pt](18) <=> C[Pt](17) + OC[Pt](58)
+    OC=[Pt](32) + C.[Pt](18) <=> HX(6) + CH3CHOHX(105)
+    CHX(14) + CC(O)=[Pt](73) <=> OC=[Pt](32) + CC#[Pt](72)
+    OC#[Pt](23) + CC=[Pt](75) <=> OC=[Pt](32) + CC#[Pt](72)
+    CX(11) + CH3CHOHX(105) <=> OC=[Pt](32) + CC#[Pt](72)
+    OC=[Pt](32) + CO[Pt](66) <=> OX(8) + CH3CHOHX(105)
+    CHX(14) + CH3OOH(90) <=> OC=[Pt](32) + CO[Pt](66)
+    OC#[Pt](23) + CO.[Pt](71) <=> OC=[Pt](32) + CO[Pt](66)
+    C=O.[Pt](30) + OC[Pt](58) <=> OC=[Pt](32) + CO[Pt](66)
+    site(5) + CH3OCHOHX(106) <=> OC=[Pt](32) + CO[Pt](66)
+    CHX(14) + OC(O)[Pt](102) <=> OC=[Pt](32) + OC=[Pt](32)
+    OC=[Pt](32) + OC=[Pt](32) <=> OC#[Pt](23) + OC[Pt](58)
+    site(5) + site(5) + HOCHCHOH(107) <=> OC=[Pt](32) + OC=[Pt](32)
+    site(5) + HOCHCHOH(108) <=> OC=[Pt](32) + OC=[Pt](32)
+
+After model enlargement:
+    The model core has 26 species and 69 reactions
+    The model edge has 86 species and 246 reactions
+
+
+Adding reaction library Surface/Deutschmann_Ni to output file...
+Saving current model core to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 73 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 73 reactions.
+Saving current model core and edge to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 315 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 315 reactions.
+Saving current model core to HTML file...
+Saving current model edge to HTML file...
+Updating RMG execution statistics...
+    Execution time (DD:HH:MM:SS): 00:00:00:43
+    Memory used: 576.07 MB
+
+Conducting simulation of reaction system 1...
+At time 3.4133e-02 s, species CC=[Pt](75) at 0.10012000158264525 exceeded the minimum rate for simulation interruption of 0.1
+Reached max number of objects...preparing to terminate
+At time 3.4133e-02 s, species CC=[Pt](75) at rate ratio 0.10012000158264525 exceeded the minimum rate for moving to model core of 0.1
+terminating simulation due to interrupt...
+
+
+Adding species CC=[Pt](75) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    CC=[Pt](75)
+Created 0 new edge species
+Moved 14 reactions from edge to core
+    site(5) + CC=[Pt](75) <=> CHX(14) + C[Pt](17)
+    CHX(14) + C.[Pt](18) <=> HX(6) + CC=[Pt](75)
+    [H][H].[Pt](20) + CC#[Pt](72) <=> HX(6) + CC=[Pt](75)
+    site(5) + CC=[Pt](75) <=> HX(6) + CC#[Pt](72)
+    CXHO(15) + CC#[Pt](72) <=> OCX(10) + CC=[Pt](75)
+    HOX(12) + CC#[Pt](72) <=> OX(8) + CC=[Pt](75)
+    O.[Pt](19) + CC#[Pt](72) <=> HOX(12) + CC=[Pt](75)
+    CX(11) + CC=[Pt](75) <=> CHX(14) + CC#[Pt](72)
+    CX(11) + CC=[Pt](75) <=> CHX(14) + CC#[Pt](72)
+    CHX(14) + CC=[Pt](75) <=> C=[Pt](54) + CC#[Pt](72)
+    C=[Pt](54) + CC=[Pt](75) <=> C[Pt](17) + CC#[Pt](72)
+    C.[Pt](18) + CC#[Pt](72) <=> C[Pt](17) + CC=[Pt](75)
+    CHX(14) + CO[Pt](66) <=> OX(8) + CC=[Pt](75)
+    OC#[Pt](23) + CC=[Pt](75) <=> OC=[Pt](32) + CC#[Pt](72)
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 27 species and 83 reactions
+    The model edge has 85 species and 232 reactions
+
+
+For reaction generation 1 process is used.
+Generating thermo for new species...
+Species C=C[Pt] renamed C2H3X based on thermo library name
+Species CC=C=O renamed methylketene based on thermo library name
+Species CC=C=O.[Pt] renamed methylketene based on thermo library name
+Species CC([Pt])C=O renamed CH3CHCHOX based on thermo library name
+Species C=CC renamed C3H6 based on thermo library name
+Species C=CC.[Pt] renamed C3H6 based on thermo library name
+Species CC(C)[Pt] renamed ipropylX based on thermo library name
+Species COC(C)[Pt] renamed CH3CHOCH3X based on thermo library name
+Species CC=CO renamed propen1ol based on thermo library name
+Species CC=CO.[Pt] renamed propen1ol based on thermo library name
+Species CC=CC renamed butene2t based on thermo library name
+Species CC=CC.[Pt] renamed butene2t based on thermo library name
+Generating kinetics for new reactions...
+For reaction OX(8) + CC[Pt](76) <=> HOX(12) + CC=[Pt](75), Ea raised from 0.0 to 86.2 kJ/mol to match endothermicity of reaction.
+
+Summary of Secondary Model Edge Enlargement
+---------------------------------
+Added 0 new core species
+Created 12 new edge species
+    C2H3X(109)
+    methylketene(110)
+    methylketene(111)
+    CH3CHCHOX(112)
+    C3H6(113)
+    C3H6(114)
+    ipropylX(115)
+    CH3CHOCH3X(116)
+    propen1ol(117)
+    propen1ol(118)
+    butene2t(119)
+    butene2t(120)
+Added 2 new core reactions
+    CX(11) + CC=[Pt](75) <=> CHX(14) + CC#[Pt](72)
+    CX(11) + CC=[Pt](75) <=> CHX(14) + CC#[Pt](72)
+Created 49 new edge reactions
+    HX(6) + C2H3X(109) <=> site(5) + CC=[Pt](75)
+    [H][H].[Pt](20) + CC=[Pt](75) <=> HX(6) + CC[Pt](76)
+    site(5) + CC[Pt](76) <=> HX(6) + CC=[Pt](75)
+    CHX(14) + acetylX(64) <=> OCX(10) + CC=[Pt](75)
+    site(5) + site(5) + methylketene(110) <=> OCX(10) + CC=[Pt](75)
+    site(5) + methylketene(111) <=> OCX(10) + CC=[Pt](75)
+    site(5) + site(5) + CH3CHO(67) <=> OX(8) + CC=[Pt](75)
+    site(5) + CH3CHO(69) <=> OX(8) + CC=[Pt](75)
+    CXHO(15) + CC=[Pt](75) <=> OCX(10) + CC[Pt](76)
+    CHX(14) + CH3CHO(69) <=> CXHO(15) + CC=[Pt](75)
+    C=O.[Pt](30) + CC#[Pt](72) <=> CXHO(15) + CC=[Pt](75)
+    site(5) + CH3CHCHOX(112) <=> CXHO(15) + CC=[Pt](75)
+    OX(8) + CC[Pt](76) <=> HOX(12) + CC=[Pt](75)
+    CHX(14) + CO.[Pt](71) <=> HOX(12) + CC=[Pt](75)
+    site(5) + CH3CHOHX(105) <=> HOX(12) + CC=[Pt](75)
+    O.[Pt](19) + CC=[Pt](75) <=> HOX(12) + CC[Pt](76)
+    O.[Pt](19) + CC=[Pt](75) <=> HX(6) + CH3CHOHX(105)
+    CHX(14) + CC(O)=[Pt](73) <=> OC#[Pt](23) + CC=[Pt](75)
+    CX(11) + CH3CHOHX(105) <=> OC#[Pt](23) + CC=[Pt](75)
+    CHX(14) + CC(=[Pt])C=O(74) <=> O=CC#[Pt](48) + CC=[Pt](75)
+    O=CC#[Pt](48) + CC=[Pt](75) <=> ketene(T)X(52) + CC#[Pt](72)
+    CX(11) + CH3CHCHOX(112) <=> O=CC#[Pt](48) + CC=[Pt](75)
+    CX(11) + CC[Pt](76) <=> CHX(14) + CC=[Pt](75)
+    C=[Pt](54) + CC=[Pt](75) <=> CHX(14) + CC[Pt](76)
+    C=[Pt](54) + CC=[Pt](75) <=> CHX(14) + CC[Pt](76)
+    site(5) + site(5) + C3H6(113) <=> C=[Pt](54) + CC=[Pt](75)
+    site(5) + C3H6(114) <=> C=[Pt](54) + CC=[Pt](75)
+    C=[Pt](54) + CC[Pt](76) <=> C[Pt](17) + CC=[Pt](75)
+    CHX(14) + CC.[Pt](78) <=> C[Pt](17) + CC=[Pt](75)
+    site(5) + ipropylX(115) <=> C[Pt](17) + CC=[Pt](75)
+    C.[Pt](18) + CC=[Pt](75) <=> C[Pt](17) + CC[Pt](76)
+    C.[Pt](18) + CC=[Pt](75) <=> HX(6) + ipropylX(115)
+    CHX(14) + CC(C)=[Pt](80) <=> CC#[Pt](72) + CC=[Pt](75)
+    CX(11) + ipropylX(115) <=> CC#[Pt](72) + CC=[Pt](75)
+    CO[Pt](66) + CC=[Pt](75) <=> OX(8) + ipropylX(115)
+    CHX(14) + DME(95) <=> CO[Pt](66) + CC=[Pt](75)
+    CO.[Pt](71) + CC#[Pt](72) <=> CO[Pt](66) + CC=[Pt](75)
+    C=O.[Pt](30) + CC[Pt](76) <=> CO[Pt](66) + CC=[Pt](75)
+    site(5) + CH3CHOCH3X(116) <=> CO[Pt](66) + CC=[Pt](75)
+    OC=[Pt](32) + CC=[Pt](75) <=> CHX(14) + CH3CHOHX(105)
+    OC=[Pt](32) + CC=[Pt](75) <=> OC[Pt](58) + CC#[Pt](72)
+    OC=[Pt](32) + CC=[Pt](75) <=> CHX(14) + CH3CHOHX(105)
+    OC=[Pt](32) + CC=[Pt](75) <=> OC#[Pt](23) + CC[Pt](76)
+    site(5) + site(5) + propen1ol(117) <=> OC=[Pt](32) + CC=[Pt](75)
+    site(5) + propen1ol(118) <=> OC=[Pt](32) + CC=[Pt](75)
+    CC=[Pt](75) + CC=[Pt](75) <=> CHX(14) + ipropylX(115)
+    CC=[Pt](75) + CC=[Pt](75) <=> CC#[Pt](72) + CC[Pt](76)
+    site(5) + site(5) + butene2t(119) <=> CC=[Pt](75) + CC=[Pt](75)
+    site(5) + butene2t(120) <=> CC=[Pt](75) + CC=[Pt](75)
+
+After model enlargement:
+    The model core has 27 species and 85 reactions
+    The model edge has 97 species and 281 reactions
+
+
+Adding reaction library Surface/Deutschmann_Ni to output file...
+Saving current model core to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 89 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 89 reactions.
+Saving current model core and edge to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 366 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 366 reactions.
+Saving current model core to HTML file...
+Saving current model edge to HTML file...
+Updating RMG execution statistics...
+    Execution time (DD:HH:MM:SS): 00:00:00:47
+    Memory used: 578.76 MB
+
+Conducting simulation of reaction system 1...
+At time 3.5262e-02 s, species CO(9) at 0.10041316267517919 exceeded the minimum rate for simulation interruption of 0.1
+Reached max number of objects...preparing to terminate
+At time 3.5262e-02 s, species CO(9) at rate ratio 0.10041316267517919 exceeded the minimum rate for moving to model core of 0.1
+terminating simulation due to interrupt...
+
+
+Adding species CO(9) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    CO(9)
+Created 0 new edge species
+Moved 1 reactions from edge to core
+    site(5) + CO(9) <=> OCX(10)
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 28 species and 86 reactions
+    The model edge has 96 species and 280 reactions
+
+
+For reaction generation 1 process is used.
+
+Summary of Secondary Model Edge Enlargement
+---------------------------------
+Added 0 new core species
+Created 0 new edge species
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 28 species and 86 reactions
+    The model edge has 96 species and 280 reactions
+
+
+Adding reaction library Surface/Deutschmann_Ni to output file...
+Saving current model core to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 89 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 89 reactions.
+Saving current model core and edge to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 366 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 366 reactions.
+Saving current model core to HTML file...
+Saving current model edge to HTML file...
+Updating RMG execution statistics...
+    Execution time (DD:HH:MM:SS): 00:00:00:51
+    Memory used: 578.49 MB
+
+Conducting simulation of reaction system 1...
+At time 5.7494e-02 s, species CC[Pt](76) at 0.1000464148715493 exceeded the minimum rate for simulation interruption of 0.1
+Reached max number of objects...preparing to terminate
+At time 5.7494e-02 s, species CC[Pt](76) at rate ratio 0.1000464148715493 exceeded the minimum rate for moving to model core of 0.1
+terminating simulation due to interrupt...
+
+
+Adding species CC[Pt](76) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    CC[Pt](76)
+Created 0 new edge species
+Moved 16 reactions from edge to core
+    site(5) + CC[Pt](76) <=> C=[Pt](54) + C[Pt](17)
+    C=[Pt](54) + C.[Pt](18) <=> HX(6) + CC[Pt](76)
+    CX(11) + CC[Pt](76) <=> C=[Pt](54) + CC#[Pt](72)
+    C=[Pt](54) + CO[Pt](66) <=> OX(8) + CC[Pt](76)
+    [H][H].[Pt](20) + CC=[Pt](75) <=> HX(6) + CC[Pt](76)
+    site(5) + CC[Pt](76) <=> HX(6) + CC=[Pt](75)
+    CXHO(15) + CC=[Pt](75) <=> OCX(10) + CC[Pt](76)
+    OX(8) + CC[Pt](76) <=> HOX(12) + CC=[Pt](75)
+    O.[Pt](19) + CC=[Pt](75) <=> HOX(12) + CC[Pt](76)
+    CX(11) + CC[Pt](76) <=> CHX(14) + CC=[Pt](75)
+    C=[Pt](54) + CC=[Pt](75) <=> CHX(14) + CC[Pt](76)
+    C=[Pt](54) + CC=[Pt](75) <=> CHX(14) + CC[Pt](76)
+    C=[Pt](54) + CC[Pt](76) <=> C[Pt](17) + CC=[Pt](75)
+    C.[Pt](18) + CC=[Pt](75) <=> C[Pt](17) + CC[Pt](76)
+    OC=[Pt](32) + CC=[Pt](75) <=> OC#[Pt](23) + CC[Pt](76)
+    CC=[Pt](75) + CC=[Pt](75) <=> CC#[Pt](72) + CC[Pt](76)
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 29 species and 102 reactions
+    The model edge has 95 species and 264 reactions
+
+
+For reaction generation 1 process is used.
+Generating thermo for new species...
+Species C[CH2] renamed C2H5 based on thermo library name
+Species CCC(=O)[Pt] renamed CH3CH2COX based on thermo library name
+Species CCO[Pt] renamed CH3CH2OX based on thermo library name
+Species CCC=O renamed propanal based on thermo library name
+Species CCC=O.[Pt] renamed propanal based on thermo library name
+Species CCO renamed ethanol based on thermo library name
+Species CCO.[Pt] renamed ethanol based on thermo library name
+Species CCC[Pt] renamed npropylX based on thermo library name
+Species CCC renamed C3H8 based on thermo library name
+Species CCC.[Pt] renamed C3H8 based on thermo library name
+Species CCOC renamed EME based on thermo library name
+Species CCOC.[Pt] renamed EME based on thermo library name
+Species CCC(O)[Pt] renamed CH3CH2CHOHX based on thermo library name
+Species CCC(C)[Pt] renamed butyl_2X based on thermo library name
+Species CCCC renamed nbutane based on thermo library name
+Species CCCC.[Pt] renamed nbutane based on thermo library name
+Generating kinetics for new reactions...
+For reaction CO2(2) + CC[Pt](76) <=> CCOC(=O)[Pt](123), Ea raised from 103.3 to 104.6 kJ/mol to match endothermicity of reaction.
+For reaction [H][H].[Pt](20) + CC[Pt](76) <=> HX(6) + CC.[Pt](78) Ea raised from -24.6 to 0.0 kJ/mol.
+For reaction HOX(12) + CC.[Pt](78) <=> O.[Pt](19) + CC[Pt](76) Ea raised from -5.0 to 0.0 kJ/mol.
+For reaction HX(6) + ethanol(131) <=> O.[Pt](19) + CC[Pt](76) Ea raised from -48.6 to 0.0 kJ/mol.
+For reaction C[Pt](17) + CC.[Pt](78) <=> C.[Pt](18) + CC[Pt](76) Ea raised from -2.9 to 0.0 kJ/mol.
+For reaction HX(6) + C3H8(138) <=> C.[Pt](18) + CC[Pt](76) Ea raised from -6.6 to 0.0 kJ/mol.
+For reaction OX(8) + C3H8(138) <=> CO[Pt](66) + CC[Pt](76), Ea raised from 94.9 to 98.2 kJ/mol to match endothermicity of reaction.
+
+Summary of Secondary Model Edge Enlargement
+---------------------------------
+Added 0 new core species
+Created 25 new edge species
+    C2H5(121)
+    CCC(=O)O[Pt](122)
+    CCOC(=O)[Pt](123)
+    CH3CH2COX(124)
+    CCOC#[Pt](125)
+    CH3CH2OX(126)
+    propanal(127)
+    CCOC=[Pt](128)
+    propanal(129)
+    ethanol(130)
+    ethanol(131)
+    CCC#[Pt](132)
+    CCC(O)=[Pt](133)
+    CCC(=[Pt])C=O(134)
+    CCC=[Pt](135)
+    npropylX(136)
+    C3H8(137)
+    C3H8(138)
+    CCC(C)=[Pt](139)
+    EME(140)
+    EME(141)
+    CH3CH2CHOHX(142)
+    butyl_2X(143)
+    nbutane(144)
+    nbutane(145)
+Added 2 new core reactions
+    C=[Pt](54) + CC=[Pt](75) <=> CHX(14) + CC[Pt](76)
+    C=[Pt](54) + CC=[Pt](75) <=> CHX(14) + CC[Pt](76)
+Created 80 new edge reactions
+    site(5) + C2H5(121) <=> CC[Pt](76)
+    HX(6) + C2H4(59) <=> CC[Pt](76)
+    CO2(2) + CC[Pt](76) <=> CCC(=O)O[Pt](122)
+    CO2(2) + CC[Pt](76) <=> CCOC(=O)[Pt](123)
+    HX(6) + C2H4(60) <=> site(5) + CC[Pt](76)
+    [H][H].[Pt](20) + CC[Pt](76) <=> HX(6) + CC.[Pt](78)
+    site(5) + site(5) + C2H6(77) <=> HX(6) + CC[Pt](76)
+    site(5) + CC.[Pt](78) <=> HX(6) + CC[Pt](76)
+    [H][H].[Pt](20) + C2H4(60) <=> HX(6) + CC[Pt](76)
+    C=[Pt](54) + acetylX(64) <=> OCX(10) + CC[Pt](76)
+    CXHO(15) + C2H4(60) <=> OCX(10) + CC[Pt](76)
+    site(5) + CH3CH2COX(124) <=> OCX(10) + CC[Pt](76)
+    OCX(10) + CC[Pt](76) <=> site(5) + CCOC#[Pt](125)
+    HOX(12) + C2H4(60) <=> OX(8) + CC[Pt](76)
+    site(5) + CH3CH2OX(126) <=> OX(8) + CC[Pt](76)
+    C=[Pt](54) + CH3CHO(69) <=> CXHO(15) + CC[Pt](76)
+    C=O.[Pt](30) + CC=[Pt](75) <=> CXHO(15) + CC[Pt](76)
+    OCX(10) + CC.[Pt](78) <=> CXHO(15) + CC[Pt](76)
+    site(5) + site(5) + propanal(127) <=> CXHO(15) + CC[Pt](76)
+    CXHO(15) + CC[Pt](76) <=> site(5) + CCOC=[Pt](128)
+    site(5) + propanal(129) <=> CXHO(15) + CC[Pt](76)
+    C=O.[Pt](30) + C2H4(60) <=> CXHO(15) + CC[Pt](76)
+    C=[Pt](54) + CO.[Pt](71) <=> HOX(12) + CC[Pt](76)
+    OX(8) + CC.[Pt](78) <=> HOX(12) + CC[Pt](76)
+    site(5) + site(5) + ethanol(130) <=> HOX(12) + CC[Pt](76)
+    site(5) + ethanol(131) <=> HOX(12) + CC[Pt](76)
+    O.[Pt](19) + C2H4(60) <=> HOX(12) + CC[Pt](76)
+    HOX(12) + CC.[Pt](78) <=> O.[Pt](19) + CC[Pt](76)
+    HX(6) + ethanol(131) <=> O.[Pt](19) + CC[Pt](76)
+    CHX(14) + C2H4(60) <=> CX(11) + CC[Pt](76)
+    site(5) + CCC#[Pt](132) <=> CX(11) + CC[Pt](76)
+    C=[Pt](54) + CC(O)=[Pt](73) <=> OC#[Pt](23) + CC[Pt](76)
+    CX(11) + ethanol(131) <=> OC#[Pt](23) + CC[Pt](76)
+    OC=[Pt](32) + C2H4(60) <=> OC#[Pt](23) + CC[Pt](76)
+    site(5) + CCC(O)=[Pt](133) <=> OC#[Pt](23) + CC[Pt](76)
+    C=[Pt](54) + CC(=[Pt])C=O(74) <=> O=CC#[Pt](48) + CC[Pt](76)
+    ketene(T)X(52) + CC=[Pt](75) <=> O=CC#[Pt](48) + CC[Pt](76)
+    CX(11) + propanal(129) <=> O=CC#[Pt](48) + CC[Pt](76)
+    ketene(T)X(52) + C2H4(60) <=> O=CC#[Pt](48) + CC[Pt](76)
+    site(5) + CCC(=[Pt])C=O(134) <=> O=CC#[Pt](48) + CC[Pt](76)
+    CX(11) + CC.[Pt](78) <=> CHX(14) + CC[Pt](76)
+    C=[Pt](54) + C2H4(60) <=> CHX(14) + CC[Pt](76)
+    site(5) + CCC=[Pt](135) <=> CHX(14) + CC[Pt](76)
+    CHX(14) + CC.[Pt](78) <=> C=[Pt](54) + CC[Pt](76)
+    C[Pt](17) + C2H4(60) <=> C=[Pt](54) + CC[Pt](76)
+    site(5) + npropylX(136) <=> C=[Pt](54) + CC[Pt](76)
+    C=[Pt](54) + CC.[Pt](78) <=> C[Pt](17) + CC[Pt](76)
+    C=[Pt](54) + CC.[Pt](78) <=> C[Pt](17) + CC[Pt](76)
+    site(5) + site(5) + C3H8(137) <=> C[Pt](17) + CC[Pt](76)
+    site(5) + C3H8(138) <=> C[Pt](17) + CC[Pt](76)
+    C.[Pt](18) + C2H4(60) <=> C[Pt](17) + CC[Pt](76)
+    C[Pt](17) + CC.[Pt](78) <=> C.[Pt](18) + CC[Pt](76)
+    HX(6) + C3H8(138) <=> C.[Pt](18) + CC[Pt](76)
+    C=[Pt](54) + CC(C)=[Pt](80) <=> CC#[Pt](72) + CC[Pt](76)
+    CX(11) + C3H8(138) <=> CC#[Pt](72) + CC[Pt](76)
+    C2H4(60) + CC=[Pt](75) <=> CC#[Pt](72) + CC[Pt](76)
+    site(5) + CCC(C)=[Pt](139) <=> CC#[Pt](72) + CC[Pt](76)
+    C=[Pt](54) + DME(95) <=> CO[Pt](66) + CC[Pt](76)
+    CO.[Pt](71) + CC=[Pt](75) <=> CO[Pt](66) + CC[Pt](76)
+    OX(8) + C3H8(138) <=> CO[Pt](66) + CC[Pt](76)
+    site(5) + site(5) + EME(140) <=> CO[Pt](66) + CC[Pt](76)
+    site(5) + EME(141) <=> CO[Pt](66) + CC[Pt](76)
+    C=O.[Pt](30) + CC.[Pt](78) <=> CO[Pt](66) + CC[Pt](76)
+    CO.[Pt](71) + C2H4(60) <=> CO[Pt](66) + CC[Pt](76)
+    C=[Pt](54) + CH3CHOHX(105) <=> OC=[Pt](32) + CC[Pt](76)
+    OC=[Pt](32) + CC[Pt](76) <=> OC[Pt](58) + CC=[Pt](75)
+    CHX(14) + ethanol(131) <=> OC=[Pt](32) + CC[Pt](76)
+    OC#[Pt](23) + CC.[Pt](78) <=> OC=[Pt](32) + CC[Pt](76)
+    OC[Pt](58) + C2H4(60) <=> OC=[Pt](32) + CC[Pt](76)
+    site(5) + CH3CH2CHOHX(142) <=> OC=[Pt](32) + CC[Pt](76)
+    C=[Pt](54) + ipropylX(115) <=> CC=[Pt](75) + CC[Pt](76)
+    CHX(14) + C3H8(138) <=> CC=[Pt](75) + CC[Pt](76)
+    CC#[Pt](72) + CC.[Pt](78) <=> CC=[Pt](75) + CC[Pt](76)
+    C2H4(60) + CC[Pt](76) <=> CC=[Pt](75) + CC[Pt](76)
+    site(5) + butyl_2X(143) <=> CC=[Pt](75) + CC[Pt](76)
+    C=[Pt](54) + C3H8(138) <=> CC[Pt](76) + CC[Pt](76)
+    CC=[Pt](75) + CC.[Pt](78) <=> CC[Pt](76) + CC[Pt](76)
+    site(5) + site(5) + nbutane(144) <=> CC[Pt](76) + CC[Pt](76)
+    site(5) + nbutane(145) <=> CC[Pt](76) + CC[Pt](76)
+    C2H4(60) + CC.[Pt](78) <=> CC[Pt](76) + CC[Pt](76)
+
+After model enlargement:
+    The model core has 29 species and 104 reactions
+    The model edge has 120 species and 344 reactions
+
+
+Adding reaction library Surface/Deutschmann_Ni to output file...
+Saving current model core to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 107 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 107 reactions.
+Saving current model core and edge to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 448 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 448 reactions.
+Saving current model core to HTML file...
+Saving current model edge to HTML file...
+Updating RMG execution statistics...
+    Execution time (DD:HH:MM:SS): 00:00:00:58
+    Memory used: 579.02 MB
+
+Conducting simulation of reaction system 1...
+At time 2.5132e-01 s, species OC[Pt](58) at 0.10002635509129576 exceeded the minimum rate for simulation interruption of 0.1
+Reached max number of objects...preparing to terminate
+At time 2.5132e-01 s, species OC[Pt](58) at rate ratio 0.10002635509129576 exceeded the minimum rate for moving to model core of 0.1
+terminating simulation due to interrupt...
+
+
+Adding species OC[Pt](58) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    OC[Pt](58)
+Created 0 new edge species
+Moved 17 reactions from edge to core
+    site(5) + OC[Pt](58) <=> HOX(12) + C=[Pt](54)
+    O.[Pt](19) + C=[Pt](54) <=> HX(6) + OC[Pt](58)
+    CX(11) + OC[Pt](58) <=> OC#[Pt](23) + C=[Pt](54)
+    CO[Pt](66) <=> OC[Pt](58)
+    [H][H].[Pt](20) + OC=[Pt](32) <=> HX(6) + OC[Pt](58)
+    HX(6) + OC=[Pt](32) <=> site(5) + OC[Pt](58)
+    CXHO(15) + OC=[Pt](32) <=> OCX(10) + OC[Pt](58)
+    OX(8) + OC[Pt](58) <=> HOX(12) + OC=[Pt](32)
+    O.[Pt](19) + OC=[Pt](32) <=> HOX(12) + OC[Pt](58)
+    CX(11) + OC[Pt](58) <=> CHX(14) + OC=[Pt](32)
+    C=[Pt](54) + OC=[Pt](32) <=> CHX(14) + OC[Pt](58)
+    C=[Pt](54) + OC=[Pt](32) <=> CHX(14) + OC[Pt](58)
+    OC=[Pt](32) + C[Pt](17) <=> C=[Pt](54) + OC[Pt](58)
+    OC=[Pt](32) + C.[Pt](18) <=> C[Pt](17) + OC[Pt](58)
+    OC=[Pt](32) + OC=[Pt](32) <=> OC#[Pt](23) + OC[Pt](58)
+    OC=[Pt](32) + CC=[Pt](75) <=> OC[Pt](58) + CC#[Pt](72)
+    OC=[Pt](32) + CC[Pt](76) <=> OC[Pt](58) + CC=[Pt](75)
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 30 species and 121 reactions
+    The model edge has 119 species and 327 reactions
+
+
+For reaction generation 1 process is used.
+Generating thermo for new species...
+Species [CH2]O renamed CH2OH based on thermo library name
+Species OCO[Pt] renamed HOCH2OX based on thermo library name
+Species O=CCO renamed HOCH2CHO based on thermo library name
+Species O=CCO.[Pt] renamed HOCH2CHO based on thermo library name
+Species OCO renamed methanediol based on thermo library name
+Species OCC[Pt] renamed CH2CH2OHX based on thermo library name
+Species OCC(O)[Pt] renamed HOCH2CHOHX based on thermo library name
+Species CC([Pt])CO renamed CH3CHCH2OHX based on thermo library name
+Species CCCO renamed npropanol based on thermo library name
+Species CCCO.[Pt] renamed npropanol based on thermo library name
+Generating kinetics for new reactions...
+For reaction CO2(2) + OC[Pt](58) <=> O=C(CO)O[Pt](147), Ea raised from 120.9 to 121.5 kJ/mol to match endothermicity of reaction.
+For reaction CO2(2) + OC[Pt](58) <=> O=C([Pt])OCO(148), Ea raised from 155.5 to 157.2 kJ/mol to match endothermicity of reaction.
+For reaction HX(6) + CO.[Pt](71) <=> [H][H].[Pt](20) + OC[Pt](58) Ea raised from -11.0 to 0.0 kJ/mol.
+For reaction HOX(12) + CO.[Pt](71) <=> O.[Pt](19) + OC[Pt](58) Ea raised from -40.6 to 0.0 kJ/mol.
+For reaction HX(6) + OCO.[Pt](156) <=> O.[Pt](19) + OC[Pt](58) Ea raised from -64.5 to 0.0 kJ/mol.
+For reaction C[Pt](17) + CO.[Pt](71) <=> OC[Pt](58) + C.[Pt](18) Ea raised from -38.6 to 0.0 kJ/mol.
+For reaction HX(6) + ethanol(131) <=> OC[Pt](58) + C.[Pt](18) Ea raised from -63.5 to 0.0 kJ/mol.
+
+Summary of Secondary Model Edge Enlargement
+---------------------------------
+Added 0 new core species
+Created 25 new edge species
+    CH2OH(146)
+    O=C(CO)O[Pt](147)
+    O=C([Pt])OCO(148)
+    O=C([Pt])CO(149)
+    OCOC#[Pt](150)
+    HOCH2OX(151)
+    HOCH2CHO(152)
+    OCOC=[Pt](153)
+    HOCH2CHO(154)
+    methanediol(155)
+    OCO.[Pt](156)
+    OCC#[Pt](157)
+    OCC(O)=[Pt](158)
+    O=CC(=[Pt])CO(159)
+    OCC=[Pt](160)
+    CH2CH2OHX(161)
+    CC(=[Pt])CO(162)
+    COCO(163)
+    COCO.[Pt](164)
+    HOCH2CHOHX(165)
+    CH3CHCH2OHX(166)
+    npropanol(167)
+    npropanol(168)
+    OCCO(169)
+    OCCO.[Pt](170)
+Added 2 new core reactions
+    C=[Pt](54) + OC=[Pt](32) <=> CHX(14) + OC[Pt](58)
+    C=[Pt](54) + OC=[Pt](32) <=> CHX(14) + OC[Pt](58)
+Created 88 new edge reactions
+    site(5) + CH2OH(146) <=> OC[Pt](58)
+    HX(6) + CH2O(31) <=> OC[Pt](58)
+    CO2(2) + OC[Pt](58) <=> O=C(CO)O[Pt](147)
+    CO2(2) + OC[Pt](58) <=> O=C([Pt])OCO(148)
+    HX(6) + C=O.[Pt](30) <=> site(5) + OC[Pt](58)
+    HX(6) + CO.[Pt](71) <=> [H][H].[Pt](20) + OC[Pt](58)
+    site(5) + site(5) + CH3OH(70) <=> HX(6) + OC[Pt](58)
+    HX(6) + OC[Pt](58) <=> site(5) + CO.[Pt](71)
+    [H][H].[Pt](20) + C=O.[Pt](30) <=> HX(6) + OC[Pt](58)
+    HOCXO(16) + C=[Pt](54) <=> OCX(10) + OC[Pt](58)
+    CXHO(15) + C=O.[Pt](30) <=> OCX(10) + OC[Pt](58)
+    site(5) + O=C([Pt])CO(149) <=> OCX(10) + OC[Pt](58)
+    OCX(10) + OC[Pt](58) <=> site(5) + OCOC#[Pt](150)
+    OO[Pt](42) + C=[Pt](54) <=> OX(8) + OC[Pt](58)
+    HOX(12) + C=O.[Pt](30) <=> OX(8) + OC[Pt](58)
+    site(5) + HOCH2OX(151) <=> OX(8) + OC[Pt](58)
+    C=[Pt](54) + formic_acid(45) <=> CXHO(15) + OC[Pt](58)
+    C=O.[Pt](30) + OC=[Pt](32) <=> CXHO(15) + OC[Pt](58)
+    OCX(10) + CO.[Pt](71) <=> CXHO(15) + OC[Pt](58)
+    site(5) + site(5) + HOCH2CHO(152) <=> CXHO(15) + OC[Pt](58)
+    CXHO(15) + OC[Pt](58) <=> site(5) + OCOC=[Pt](153)
+    site(5) + HOCH2CHO(154) <=> CXHO(15) + OC[Pt](58)
+    C=O.[Pt](30) + C=O.[Pt](30) <=> CXHO(15) + OC[Pt](58)
+    OO.[Pt](47) + C=[Pt](54) <=> HOX(12) + OC[Pt](58)
+    OX(8) + CO.[Pt](71) <=> HOX(12) + OC[Pt](58)
+    site(5) + site(5) + methanediol(155) <=> HOX(12) + OC[Pt](58)
+    site(5) + OCO.[Pt](156) <=> HOX(12) + OC[Pt](58)
+    O.[Pt](19) + C=O.[Pt](30) <=> HOX(12) + OC[Pt](58)
+    HOX(12) + CO.[Pt](71) <=> O.[Pt](19) + OC[Pt](58)
+    HX(6) + OCO.[Pt](156) <=> O.[Pt](19) + OC[Pt](58)
+    CHX(14) + C=O.[Pt](30) <=> CX(11) + OC[Pt](58)
+    site(5) + OCC#[Pt](157) <=> CX(11) + OC[Pt](58)
+    C=[Pt](54) + OC(O)=[Pt](50) <=> OC#[Pt](23) + OC[Pt](58)
+    CX(11) + OCO.[Pt](156) <=> OC#[Pt](23) + OC[Pt](58)
+    C=O.[Pt](30) + OC=[Pt](32) <=> OC#[Pt](23) + OC[Pt](58)
+    site(5) + OCC(O)=[Pt](158) <=> OC#[Pt](23) + OC[Pt](58)
+    C=[Pt](54) + O=CC(O)=[Pt](49) <=> OC[Pt](58) + O=CC#[Pt](48)
+    OC=[Pt](32) + ketene(T)X(52) <=> OC[Pt](58) + O=CC#[Pt](48)
+    CX(11) + HOCH2CHO(154) <=> OC[Pt](58) + O=CC#[Pt](48)
+    C=O.[Pt](30) + ketene(T)X(52) <=> OC[Pt](58) + O=CC#[Pt](48)
+    site(5) + O=CC(=[Pt])CO(159) <=> OC[Pt](58) + O=CC#[Pt](48)
+    CX(11) + CO.[Pt](71) <=> CHX(14) + OC[Pt](58)
+    C=[Pt](54) + C=O.[Pt](30) <=> CHX(14) + OC[Pt](58)
+    site(5) + OCC=[Pt](160) <=> CHX(14) + OC[Pt](58)
+    CHX(14) + CO.[Pt](71) <=> C=[Pt](54) + OC[Pt](58)
+    C=O.[Pt](30) + C[Pt](17) <=> C=[Pt](54) + OC[Pt](58)
+    site(5) + CH2CH2OHX(161) <=> C=[Pt](54) + OC[Pt](58)
+    C=[Pt](54) + CO.[Pt](71) <=> C[Pt](17) + OC[Pt](58)
+    C=[Pt](54) + CO.[Pt](71) <=> C[Pt](17) + OC[Pt](58)
+    site(5) + site(5) + ethanol(130) <=> C[Pt](17) + OC[Pt](58)
+    site(5) + ethanol(131) <=> C[Pt](17) + OC[Pt](58)
+    C=O.[Pt](30) + C.[Pt](18) <=> C[Pt](17) + OC[Pt](58)
+    C[Pt](17) + CO.[Pt](71) <=> OC[Pt](58) + C.[Pt](18)
+    HX(6) + ethanol(131) <=> OC[Pt](58) + C.[Pt](18)
+    C=[Pt](54) + CC(O)=[Pt](73) <=> OC[Pt](58) + CC#[Pt](72)
+    CX(11) + ethanol(131) <=> OC[Pt](58) + CC#[Pt](72)
+    C=O.[Pt](30) + CC=[Pt](75) <=> OC[Pt](58) + CC#[Pt](72)
+    site(5) + CC(=[Pt])CO(162) <=> OC[Pt](58) + CC#[Pt](72)
+    C=[Pt](54) + CH3OOH(90) <=> CO[Pt](66) + OC[Pt](58)
+    OC=[Pt](32) + CO.[Pt](71) <=> CO[Pt](66) + OC[Pt](58)
+    OX(8) + ethanol(131) <=> CO[Pt](66) + OC[Pt](58)
+    site(5) + site(5) + COCO(163) <=> CO[Pt](66) + OC[Pt](58)
+    site(5) + COCO.[Pt](164) <=> CO[Pt](66) + OC[Pt](58)
+    C=O.[Pt](30) + CO.[Pt](71) <=> CO[Pt](66) + OC[Pt](58)
+    C=O.[Pt](30) + CO.[Pt](71) <=> CO[Pt](66) + OC[Pt](58)
+    C=[Pt](54) + OC(O)[Pt](102) <=> OC=[Pt](32) + OC[Pt](58)
+    CHX(14) + OCO.[Pt](156) <=> OC=[Pt](32) + OC[Pt](58)
+    OC#[Pt](23) + CO.[Pt](71) <=> OC=[Pt](32) + OC[Pt](58)
+    C=O.[Pt](30) + OC[Pt](58) <=> OC=[Pt](32) + OC[Pt](58)
+    site(5) + HOCH2CHOHX(165) <=> OC=[Pt](32) + OC[Pt](58)
+    C=[Pt](54) + CH3CHOHX(105) <=> OC[Pt](58) + CC=[Pt](75)
+    CHX(14) + ethanol(131) <=> OC[Pt](58) + CC=[Pt](75)
+    CO.[Pt](71) + CC#[Pt](72) <=> OC[Pt](58) + CC=[Pt](75)
+    C=O.[Pt](30) + CC[Pt](76) <=> OC[Pt](58) + CC=[Pt](75)
+    site(5) + CH3CHCH2OHX(166) <=> OC[Pt](58) + CC=[Pt](75)
+    C=[Pt](54) + ethanol(131) <=> OC[Pt](58) + CC[Pt](76)
+    OC=[Pt](32) + CC.[Pt](78) <=> OC[Pt](58) + CC[Pt](76)
+    C=[Pt](54) + ethanol(131) <=> OC[Pt](58) + CC[Pt](76)
+    CO.[Pt](71) + CC=[Pt](75) <=> OC[Pt](58) + CC[Pt](76)
+    site(5) + site(5) + npropanol(167) <=> OC[Pt](58) + CC[Pt](76)
+    site(5) + npropanol(168) <=> OC[Pt](58) + CC[Pt](76)
+    CO.[Pt](71) + C2H4(60) <=> OC[Pt](58) + CC[Pt](76)
+    C=O.[Pt](30) + CC.[Pt](78) <=> OC[Pt](58) + CC[Pt](76)
+    C=[Pt](54) + OCO.[Pt](156) <=> OC[Pt](58) + OC[Pt](58)
+    OC=[Pt](32) + CO.[Pt](71) <=> OC[Pt](58) + OC[Pt](58)
+    site(5) + site(5) + OCCO(169) <=> OC[Pt](58) + OC[Pt](58)
+    site(5) + OCCO.[Pt](170) <=> OC[Pt](58) + OC[Pt](58)
+    C=O.[Pt](30) + CO.[Pt](71) <=> OC[Pt](58) + OC[Pt](58)
+
+After model enlargement:
+    The model core has 30 species and 123 reactions
+    The model edge has 144 species and 415 reactions
+
+
+Adding reaction library Surface/Deutschmann_Ni to output file...
+Saving current model core to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 126 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 126 reactions.
+Saving current model core and edge to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 538 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 538 reactions.
+Saving current model core to HTML file...
+Saving current model edge to HTML file...
+Updating RMG execution statistics...
+    Execution time (DD:HH:MM:SS): 00:00:01:05
+    Memory used: 579.29 MB
+
+Conducting simulation of reaction system 1...
+At time 2.6565e+00 s, species HOCXO(16) at 0.1000487352785096 exceeded the minimum rate for simulation interruption of 0.1
+Reached max number of objects...preparing to terminate
+At time 2.6565e+00 s, species HOCXO(16) at rate ratio 0.1000487352785096 exceeded the minimum rate for moving to model core of 0.1
+terminating simulation due to interrupt...
+
+
+Adding species HOCXO(16) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    HOCXO(16)
+Created 0 new edge species
+Moved 7 reactions from edge to core
+    HOX(12) + CXHO(15) <=> HX(6) + HOCXO(16)
+    HX(6) + CO2(2) <=> HOCXO(16)
+    HOX(12) + OCX(10) <=> site(5) + HOCXO(16)
+    O.[Pt](19) + OCX(10) <=> HX(6) + HOCXO(16)
+    CX(11) + HOCXO(16) <=> OCX(10) + OC#[Pt](23)
+    CHX(14) + HOCXO(16) <=> OCX(10) + OC=[Pt](32)
+    HOCXO(16) + C=[Pt](54) <=> OCX(10) + OC[Pt](58)
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 31 species and 130 reactions
+    The model edge has 143 species and 408 reactions
+
+
+For reaction generation 1 process is used.
+Generating thermo for new species...
+Species O=[C]O renamed HOCO based on thermo library name
+Species O=C(O)C[Pt] renamed CH2COOHX based on thermo library name
+Species CC(=O)O renamed acetic_acid based on thermo library name
+Species CC(=O)O.[Pt] renamed acetic_acid based on thermo library name
+Generating kinetics for new reactions...
+For reaction CO2(2) + HOCXO(16) <=> O=C(O)C(=O)O[Pt](172), Ea raised from 78.5 to 80.2 kJ/mol to match endothermicity of reaction.
+For reaction [H][H].[Pt](20) + HOCXO(16) <=> HX(6) + formic_acid(45) Ea raised from -31.6 to 0.0 kJ/mol.
+For reaction CXHO(15) + HOCXO(16) <=> site(5) + O=C(O)OC=[Pt](177), Ea raised from 211.0 to 211.2 kJ/mol to match endothermicity of reaction.
+For reaction CXHO(15) + HOCXO(16) <=> site(5) + O=COC(O)=[Pt](178), Ea raised from 138.1 to 141.1 kJ/mol to match endothermicity of reaction.
+For reaction site(5) + site(5) + O=C(O)O(180) <=> HOX(12) + HOCXO(16), Ea raised from 0.0 to 3.5 kJ/mol to match endothermicity of reaction.
+For reaction HOX(12) + HOCXO(16) <=> site(5) + OOC(O)=[Pt](181), Ea raised from 366.4 to 367.3 kJ/mol to match endothermicity of reaction.
+For reaction HOX(12) + formic_acid(45) <=> O.[Pt](19) + HOCXO(16), Ea raised from 2.1 to 3.9 kJ/mol to match endothermicity of reaction.
+For reaction O.[Pt](19) + HOCXO(16) <=> HX(6) + O=C(O)O.[Pt](182) Ea raised from -19.5 to 0.0 kJ/mol.
+For reaction CO2X(13) + CHX(14) <=> CX(11) + HOCXO(16), Ea raised from 61.2 to 61.6 kJ/mol to match endothermicity of reaction.
+For reaction site(5) + O=C(O)C#[Pt](183) <=> CX(11) + HOCXO(16), Ea raised from 100.0 to 101.1 kJ/mol to match endothermicity of reaction.
+For reaction HOCXO(16) + C[Pt](17) <=> site(5) + COC(O)=[Pt](91), Ea raised from 132.1 to 133.6 kJ/mol to match endothermicity of reaction.
+For reaction formic_acid(45) + C[Pt](17) <=> HOCXO(16) + C.[Pt](18), Ea raised from 4.1 to 7.0 kJ/mol to match endothermicity of reaction.
+For reaction HOCXO(16) + C.[Pt](18) <=> HX(6) + acetic_acid(189) Ea raised from -11.7 to 0.0 kJ/mol.
+For reaction HOCXO(16) + CO[Pt](66) <=> site(5) + COOC(O)=[Pt](192), Ea raised from 364.1 to 365.1 kJ/mol to match endothermicity of reaction.
+For reaction CO2X(13) + OC[Pt](58) <=> HOCXO(16) + OC=[Pt](32), Ea raised from 56.3 to 57.0 kJ/mol to match endothermicity of reaction.
+For reaction HOCXO(16) + CC[Pt](76) <=> site(5) + CCOC(O)=[Pt](197), Ea raised from 128.6 to 129.3 kJ/mol to match endothermicity of reaction.
+For reaction HOCXO(16) + OC[Pt](58) <=> site(5) + OCOC(O)=[Pt](200), Ea raised from 181.9 to 183.1 kJ/mol to match endothermicity of reaction.
+
+Summary of Secondary Model Edge Enlargement
+---------------------------------
+Added 0 new core species
+Created 34 new edge species
+    HOCO(171)
+    O=C(O)C(=O)O[Pt](172)
+    O=C(O)OC(=O)[Pt](173)
+    O=C(O)C(=O)[Pt](174)
+    O=C(O)OC#[Pt](175)
+    O=CC(=O)O(176)
+    O=C(O)OC=[Pt](177)
+    O=COC(O)=[Pt](178)
+    O=CC(=O)O.[Pt](179)
+    O=C(O)O(180)
+    OOC(O)=[Pt](181)
+    O=C(O)O.[Pt](182)
+    O=C(O)C#[Pt](183)
+    O=C(O)C(O)=[Pt](184)
+    O=CC(=[Pt])C(=O)O(185)
+    O=C(O)C=[Pt](186)
+    CH2COOHX(187)
+    acetic_acid(188)
+    acetic_acid(189)
+    CC(=[Pt])C(=O)O(190)
+    COC(=O)O(191)
+    COOC(O)=[Pt](192)
+    COC(=O)O.[Pt](193)
+    O=C(O)C(O)[Pt](194)
+    CC([Pt])C(=O)O(195)
+    CCC(=O)O(196)
+    CCOC(O)=[Pt](197)
+    CCC(=O)O.[Pt](198)
+    O=C(O)CO(199)
+    OCOC(O)=[Pt](200)
+    O=C(O)CO.[Pt](201)
+    O=C(O)C(=O)O(202)
+    O=C(O)OC(O)=[Pt](203)
+    O=C(O)C(=O)O.[Pt](204)
+Added 0 new core reactions
+Created 97 new edge reactions
+    site(5) + HOCO(171) <=> HOCXO(16)
+    HOCXO(16) <=> formyloxyX(22)
+    CO2(2) + HOCXO(16) <=> O=C(O)C(=O)O[Pt](172)
+    CO2(2) + HOCXO(16) <=> O=C(O)OC(=O)[Pt](173)
+    site(5) + HOCXO(16) <=> HX(6) + CO2X(13)
+    [H][H].[Pt](20) + HOCXO(16) <=> HX(6) + formic_acid(45)
+    site(5) + site(5) + formic_acid(43) <=> HX(6) + HOCXO(16)
+    HX(6) + HOCXO(16) <=> site(5) + OC(O)=[Pt](50)
+    HX(6) + HOCXO(16) <=> site(5) + formic_acid(45)
+    [H][H].[Pt](20) + CO2X(13) <=> HX(6) + HOCXO(16)
+    CO2X(13) + CXHO(15) <=> OCX(10) + HOCXO(16)
+    site(5) + O=C(O)C(=O)[Pt](174) <=> OCX(10) + HOCXO(16)
+    OCX(10) + HOCXO(16) <=> site(5) + O=C(O)OC#[Pt](175)
+    OO[Pt](42) + OCX(10) <=> OX(8) + HOCXO(16)
+    HOX(12) + CO2X(13) <=> OX(8) + HOCXO(16)
+    site(5) + O=C(O)O[Pt](39) <=> OX(8) + HOCXO(16)
+    OCX(10) + formic_acid(45) <=> CXHO(15) + HOCXO(16)
+    OCX(10) + formic_acid(45) <=> CXHO(15) + HOCXO(16)
+    site(5) + site(5) + O=CC(=O)O(176) <=> CXHO(15) + HOCXO(16)
+    CXHO(15) + HOCXO(16) <=> site(5) + O=C(O)OC=[Pt](177)
+    CXHO(15) + HOCXO(16) <=> site(5) + O=COC(O)=[Pt](178)
+    site(5) + O=CC(=O)O.[Pt](179) <=> CXHO(15) + HOCXO(16)
+    CO2X(13) + C=O.[Pt](30) <=> CXHO(15) + HOCXO(16)
+    OO.[Pt](47) + OCX(10) <=> HOX(12) + HOCXO(16)
+    OX(8) + formic_acid(45) <=> HOX(12) + HOCXO(16)
+    site(5) + site(5) + O=C(O)O(180) <=> HOX(12) + HOCXO(16)
+    HOX(12) + HOCXO(16) <=> site(5) + OOC(O)=[Pt](181)
+    site(5) + O=C(O)O.[Pt](182) <=> HOX(12) + HOCXO(16)
+    HOX(12) + HOCXO(16) <=> O.[Pt](19) + CO2X(13)
+    HOX(12) + formic_acid(45) <=> O.[Pt](19) + HOCXO(16)
+    O.[Pt](19) + HOCXO(16) <=> HX(6) + O=C(O)O.[Pt](182)
+    CO2X(13) + CHX(14) <=> CX(11) + HOCXO(16)
+    site(5) + O=C(O)C#[Pt](183) <=> CX(11) + HOCXO(16)
+    OCX(10) + OC(O)=[Pt](50) <=> OC#[Pt](23) + HOCXO(16)
+    CX(11) + O=C(O)O.[Pt](182) <=> OC#[Pt](23) + HOCXO(16)
+    CO2X(13) + OC=[Pt](32) <=> OC#[Pt](23) + HOCXO(16)
+    site(5) + O=C(O)C(O)=[Pt](184) <=> OC#[Pt](23) + HOCXO(16)
+    OCX(10) + O=CC(O)=[Pt](49) <=> HOCXO(16) + O=CC#[Pt](48)
+    CX(11) + O=CC(=O)O.[Pt](179) <=> HOCXO(16) + O=CC#[Pt](48)
+    CO2X(13) + ketene(T)X(52) <=> HOCXO(16) + O=CC#[Pt](48)
+    site(5) + O=CC(=[Pt])C(=O)O(185) <=> HOCXO(16) + O=CC#[Pt](48)
+    CX(11) + formic_acid(45) <=> CHX(14) + HOCXO(16)
+    CO2X(13) + C=[Pt](54) <=> CHX(14) + HOCXO(16)
+    site(5) + O=C(O)C=[Pt](186) <=> CHX(14) + HOCXO(16)
+    CHX(14) + formic_acid(45) <=> HOCXO(16) + C=[Pt](54)
+    CO2X(13) + C[Pt](17) <=> HOCXO(16) + C=[Pt](54)
+    site(5) + CH2COOHX(187) <=> HOCXO(16) + C=[Pt](54)
+    OCX(10) + CO.[Pt](71) <=> HOCXO(16) + C[Pt](17)
+    C=[Pt](54) + formic_acid(45) <=> HOCXO(16) + C[Pt](17)
+    site(5) + site(5) + acetic_acid(188) <=> HOCXO(16) + C[Pt](17)
+    HOCXO(16) + C[Pt](17) <=> site(5) + COC(O)=[Pt](91)
+    site(5) + acetic_acid(189) <=> HOCXO(16) + C[Pt](17)
+    CO2X(13) + C.[Pt](18) <=> HOCXO(16) + C[Pt](17)
+    formic_acid(45) + C[Pt](17) <=> HOCXO(16) + C.[Pt](18)
+    HOCXO(16) + C.[Pt](18) <=> HX(6) + acetic_acid(189)
+    OCX(10) + CC(O)=[Pt](73) <=> HOCXO(16) + CC#[Pt](72)
+    CX(11) + acetic_acid(189) <=> HOCXO(16) + CC#[Pt](72)
+    CO2X(13) + CC=[Pt](75) <=> HOCXO(16) + CC#[Pt](72)
+    site(5) + CC(=[Pt])C(=O)O(190) <=> HOCXO(16) + CC#[Pt](72)
+    OCX(10) + CH3OOH(90) <=> HOCXO(16) + CO[Pt](66)
+    OX(8) + acetic_acid(189) <=> HOCXO(16) + CO[Pt](66)
+    site(5) + site(5) + COC(=O)O(191) <=> HOCXO(16) + CO[Pt](66)
+    HOCXO(16) + CO[Pt](66) <=> site(5) + COOC(O)=[Pt](192)
+    site(5) + COC(=O)O.[Pt](193) <=> HOCXO(16) + CO[Pt](66)
+    C=O.[Pt](30) + formic_acid(45) <=> HOCXO(16) + CO[Pt](66)
+    CO2X(13) + CO.[Pt](71) <=> HOCXO(16) + CO[Pt](66)
+    HOCXO(16) + OC=[Pt](32) <=> OCX(10) + OC(O)[Pt](102)
+    CHX(14) + O=C(O)O.[Pt](182) <=> HOCXO(16) + OC=[Pt](32)
+    OC#[Pt](23) + formic_acid(45) <=> HOCXO(16) + OC=[Pt](32)
+    CO2X(13) + OC[Pt](58) <=> HOCXO(16) + OC=[Pt](32)
+    site(5) + O=C(O)C(O)[Pt](194) <=> HOCXO(16) + OC=[Pt](32)
+    HOCXO(16) + CC=[Pt](75) <=> OCX(10) + CH3CHOHX(105)
+    CHX(14) + acetic_acid(189) <=> HOCXO(16) + CC=[Pt](75)
+    formic_acid(45) + CC#[Pt](72) <=> HOCXO(16) + CC=[Pt](75)
+    CO2X(13) + CC[Pt](76) <=> HOCXO(16) + CC=[Pt](75)
+    site(5) + CC([Pt])C(=O)O(195) <=> HOCXO(16) + CC=[Pt](75)
+    OCX(10) + ethanol(131) <=> HOCXO(16) + CC[Pt](76)
+    C=[Pt](54) + acetic_acid(189) <=> HOCXO(16) + CC[Pt](76)
+    formic_acid(45) + CC=[Pt](75) <=> HOCXO(16) + CC[Pt](76)
+    site(5) + site(5) + CCC(=O)O(196) <=> HOCXO(16) + CC[Pt](76)
+    HOCXO(16) + CC[Pt](76) <=> site(5) + CCOC(O)=[Pt](197)
+    site(5) + CCC(=O)O.[Pt](198) <=> HOCXO(16) + CC[Pt](76)
+    formic_acid(45) + C2H4(60) <=> HOCXO(16) + CC[Pt](76)
+    CO2X(13) + CC.[Pt](78) <=> HOCXO(16) + CC[Pt](76)
+    OCX(10) + OCO.[Pt](156) <=> HOCXO(16) + OC[Pt](58)
+    C=[Pt](54) + O=C(O)O.[Pt](182) <=> HOCXO(16) + OC[Pt](58)
+    OC=[Pt](32) + formic_acid(45) <=> HOCXO(16) + OC[Pt](58)
+    site(5) + site(5) + O=C(O)CO(199) <=> HOCXO(16) + OC[Pt](58)
+    HOCXO(16) + OC[Pt](58) <=> site(5) + OCOC(O)=[Pt](200)
+    site(5) + O=C(O)CO.[Pt](201) <=> HOCXO(16) + OC[Pt](58)
+    C=O.[Pt](30) + formic_acid(45) <=> HOCXO(16) + OC[Pt](58)
+    CO2X(13) + CO.[Pt](71) <=> HOCXO(16) + OC[Pt](58)
+    OCX(10) + O=C(O)O.[Pt](182) <=> HOCXO(16) + HOCXO(16)
+    site(5) + site(5) + O=C(O)C(=O)O(202) <=> HOCXO(16) + HOCXO(16)
+    HOCXO(16) + HOCXO(16) <=> site(5) + O=C(O)OC(O)=[Pt](203)
+    site(5) + O=C(O)C(=O)O.[Pt](204) <=> HOCXO(16) + HOCXO(16)
+    CO2X(13) + formic_acid(45) <=> HOCXO(16) + HOCXO(16)
+
+After model enlargement:
+    The model core has 31 species and 130 reactions
+    The model edge has 177 species and 505 reactions
+
+
+Adding reaction library Surface/Deutschmann_Ni to output file...
+Saving current model core to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 132 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 132 reactions.
+Saving current model core and edge to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 635 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 635 reactions.
+Saving current model core to HTML file...
+Saving current model edge to HTML file...
+Updating RMG execution statistics...
+    Execution time (DD:HH:MM:SS): 00:00:01:15
+    Memory used: 580.17 MB
+
+Conducting simulation of reaction system 1...
+At time 3.0733e+00 s, species ketene(T)X(52) at 0.1004522098575723 exceeded the minimum rate for simulation interruption of 0.1
+Reached max number of objects...preparing to terminate
+At time 3.0733e+00 s, species ketene(T)X(52) at rate ratio 0.1004522098575723 exceeded the minimum rate for moving to model core of 0.1
+terminating simulation due to interrupt...
+
+
+Adding species ketene(T)X(52) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    ketene(T)X(52)
+Created 0 new edge species
+Moved 15 reactions from edge to core
+    [H][H].[Pt](20) + O=CC#[Pt](48) <=> HX(6) + ketene(T)X(52)
+    site(5) + ketene(T)X(52) <=> HX(6) + O=CC#[Pt](48)
+    CXHO(15) + O=CC#[Pt](48) <=> OCX(10) + ketene(T)X(52)
+    HOX(12) + O=CC#[Pt](48) <=> OX(8) + ketene(T)X(52)
+    O.[Pt](19) + O=CC#[Pt](48) <=> HOX(12) + ketene(T)X(52)
+    site(5) + ketene(T)X(52) <=> CHX(14) + CXHO(15)
+    CX(11) + ketene(T)X(52) <=> CHX(14) + O=CC#[Pt](48)
+    CX(11) + ketene(T)X(52) <=> CHX(14) + O=CC#[Pt](48)
+    CHX(14) + ketene(T)X(52) <=> C=[Pt](54) + O=CC#[Pt](48)
+    C=[Pt](54) + ketene(T)X(52) <=> C[Pt](17) + O=CC#[Pt](48)
+    C.[Pt](18) + O=CC#[Pt](48) <=> C[Pt](17) + ketene(T)X(52)
+    OC#[Pt](23) + ketene(T)X(52) <=> OC=[Pt](32) + O=CC#[Pt](48)
+    O=CC#[Pt](48) + CC=[Pt](75) <=> ketene(T)X(52) + CC#[Pt](72)
+    ketene(T)X(52) + CC=[Pt](75) <=> O=CC#[Pt](48) + CC[Pt](76)
+    OC=[Pt](32) + ketene(T)X(52) <=> OC[Pt](58) + O=CC#[Pt](48)
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 32 species and 145 reactions
+    The model edge has 176 species and 490 reactions
+
+
+For reaction generation 1 process is used.
+Generating thermo for new species...
+Species O=C=C[Pt] renamed HCCOX based on thermo library name
+Species C=CC=O renamed acrolein based on thermo library name
+Species C=CC=O.[Pt] renamed acrolein based on thermo library name
+Generating kinetics for new reactions...
+For reaction OX(8) + vinoxyX(57) <=> HOX(12) + ketene(T)X(52), Ea raised from 0.0 to 9.0 kJ/mol to match endothermicity of reaction.
+Warning: Marked reaction site(5) + ketene(T)X(52) <=> HX(6) + O=CC#[Pt](48) as duplicate of site(5) + ketene(T)X(52) <=> HX(6) + O=CC#[Pt](48) for saving to Chemkin file.
+
+Summary of Secondary Model Edge Enlargement
+---------------------------------
+Added 0 new core species
+Created 16 new edge species
+    HCCOX(205)
+    O=C=CC=O(206)
+    O=C=CC=O.[Pt](207)
+    O=CC([Pt])C=O(208)
+    acrolein(209)
+    acrolein(210)
+    COC([Pt])C=O(211)
+    O=CC=CO(212)
+    O=CC=CO.[Pt](213)
+    CC=CC=O(214)
+    CC=CC=O.[Pt](215)
+    CCC([Pt])C=O(216)
+    O=CC([Pt])CO(217)
+    O=CC([Pt])C(=O)O(218)
+    O=CC=CC=O(219)
+    O=CC=CC=O.[Pt](220)
+Added 3 new core reactions
+    site(5) + ketene(T)X(52) <=> HX(6) + O=CC#[Pt](48)
+    CX(11) + ketene(T)X(52) <=> CHX(14) + O=CC#[Pt](48)
+    CX(11) + ketene(T)X(52) <=> CHX(14) + O=CC#[Pt](48)
+Created 70 new edge reactions
+    HX(6) + HCCOX(205) <=> site(5) + ketene(T)X(52)
+    [H][H].[Pt](20) + ketene(T)X(52) <=> HX(6) + vinoxyX(57)
+    CHX(14) + C=O.[Pt](30) <=> HX(6) + ketene(T)X(52)
+    site(5) + vinoxyX(57) <=> HX(6) + ketene(T)X(52)
+    CHX(14) + OCHCOX(33) <=> OCX(10) + ketene(T)X(52)
+    site(5) + site(5) + O=C=CC=O(206) <=> OCX(10) + ketene(T)X(52)
+    site(5) + O=C=CC=O.[Pt](207) <=> OCX(10) + ketene(T)X(52)
+    CHX(14) + formyloxyX(22) <=> OX(8) + ketene(T)X(52)
+    site(5) + site(5) + glyoxal(35) <=> OX(8) + ketene(T)X(52)
+    site(5) + glyoxal(37) <=> OX(8) + ketene(T)X(52)
+    CXHO(15) + ketene(T)X(52) <=> OCX(10) + vinoxyX(57)
+    CHX(14) + glyoxal(37) <=> CXHO(15) + ketene(T)X(52)
+    C=O.[Pt](30) + O=CC#[Pt](48) <=> CXHO(15) + ketene(T)X(52)
+    site(5) + O=CC([Pt])C=O(208) <=> CXHO(15) + ketene(T)X(52)
+    OX(8) + vinoxyX(57) <=> HOX(12) + ketene(T)X(52)
+    CHX(14) + formic_acid(45) <=> HOX(12) + ketene(T)X(52)
+    site(5) + O=CC(O)[Pt](101) <=> HOX(12) + ketene(T)X(52)
+    O.[Pt](19) + ketene(T)X(52) <=> HOX(12) + vinoxyX(57)
+    O.[Pt](19) + ketene(T)X(52) <=> HX(6) + O=CC(O)[Pt](101)
+    CHX(14) + O=CC(O)=[Pt](49) <=> OC#[Pt](23) + ketene(T)X(52)
+    CX(11) + O=CC(O)[Pt](101) <=> OC#[Pt](23) + ketene(T)X(52)
+    CHX(14) + O=CC(=[Pt])C=O(53) <=> O=CC#[Pt](48) + ketene(T)X(52)
+    CX(11) + O=CC([Pt])C=O(208) <=> O=CC#[Pt](48) + ketene(T)X(52)
+    CX(11) + vinoxyX(57) <=> CHX(14) + ketene(T)X(52)
+    CHX(14) + vinoxyX(57) <=> C=[Pt](54) + ketene(T)X(52)
+    CHX(14) + vinoxyX(57) <=> C=[Pt](54) + ketene(T)X(52)
+    site(5) + site(5) + acrolein(209) <=> C=[Pt](54) + ketene(T)X(52)
+    site(5) + acrolein(210) <=> C=[Pt](54) + ketene(T)X(52)
+    C=[Pt](54) + vinoxyX(57) <=> C[Pt](17) + ketene(T)X(52)
+    CHX(14) + CH3CHO(69) <=> C[Pt](17) + ketene(T)X(52)
+    site(5) + CH3CHCHOX(112) <=> C[Pt](17) + ketene(T)X(52)
+    C.[Pt](18) + ketene(T)X(52) <=> C[Pt](17) + vinoxyX(57)
+    C.[Pt](18) + ketene(T)X(52) <=> HX(6) + CH3CHCHOX(112)
+    CHX(14) + CC(=[Pt])C=O(74) <=> ketene(T)X(52) + CC#[Pt](72)
+    CX(11) + CH3CHCHOX(112) <=> ketene(T)X(52) + CC#[Pt](72)
+    CO[Pt](66) + ketene(T)X(52) <=> OX(8) + CH3CHCHOX(112)
+    CHX(14) + methyl_formate(88) <=> CO[Pt](66) + ketene(T)X(52)
+    CO.[Pt](71) + O=CC#[Pt](48) <=> CO[Pt](66) + ketene(T)X(52)
+    C=O.[Pt](30) + vinoxyX(57) <=> CO[Pt](66) + ketene(T)X(52)
+    site(5) + COC([Pt])C=O(211) <=> CO[Pt](66) + ketene(T)X(52)
+    CHX(14) + O=CC(O)[Pt](101) <=> OC=[Pt](32) + ketene(T)X(52)
+    CHX(14) + O=CC(O)[Pt](101) <=> OC=[Pt](32) + ketene(T)X(52)
+    OC=[Pt](32) + ketene(T)X(52) <=> OC#[Pt](23) + vinoxyX(57)
+    site(5) + site(5) + O=CC=CO(212) <=> OC=[Pt](32) + ketene(T)X(52)
+    site(5) + O=CC=CO.[Pt](213) <=> OC=[Pt](32) + ketene(T)X(52)
+    CHX(14) + CH3CHCHOX(112) <=> ketene(T)X(52) + CC=[Pt](75)
+    ketene(T)X(52) + CC=[Pt](75) <=> CC#[Pt](72) + vinoxyX(57)
+    site(5) + site(5) + CC=CC=O(214) <=> ketene(T)X(52) + CC=[Pt](75)
+    site(5) + CC=CC=O.[Pt](215) <=> ketene(T)X(52) + CC=[Pt](75)
+    C=[Pt](54) + CH3CHCHOX(112) <=> ketene(T)X(52) + CC[Pt](76)
+    vinoxyX(57) + CC=[Pt](75) <=> ketene(T)X(52) + CC[Pt](76)
+    CHX(14) + propanal(129) <=> ketene(T)X(52) + CC[Pt](76)
+    O=CC#[Pt](48) + CC.[Pt](78) <=> ketene(T)X(52) + CC[Pt](76)
+    vinoxyX(57) + C2H4(60) <=> ketene(T)X(52) + CC[Pt](76)
+    site(5) + CCC([Pt])C=O(216) <=> ketene(T)X(52) + CC[Pt](76)
+    C=[Pt](54) + O=CC(O)[Pt](101) <=> OC[Pt](58) + ketene(T)X(52)
+    OC=[Pt](32) + vinoxyX(57) <=> OC[Pt](58) + ketene(T)X(52)
+    CHX(14) + HOCH2CHO(154) <=> OC[Pt](58) + ketene(T)X(52)
+    CO.[Pt](71) + O=CC#[Pt](48) <=> OC[Pt](58) + ketene(T)X(52)
+    C=O.[Pt](30) + vinoxyX(57) <=> OC[Pt](58) + ketene(T)X(52)
+    site(5) + O=CC([Pt])CO(217) <=> OC[Pt](58) + ketene(T)X(52)
+    HOCXO(16) + ketene(T)X(52) <=> OCX(10) + O=CC(O)[Pt](101)
+    CHX(14) + O=CC(=O)O.[Pt](179) <=> HOCXO(16) + ketene(T)X(52)
+    formic_acid(45) + O=CC#[Pt](48) <=> HOCXO(16) + ketene(T)X(52)
+    CO2X(13) + vinoxyX(57) <=> HOCXO(16) + ketene(T)X(52)
+    site(5) + O=CC([Pt])C(=O)O(218) <=> HOCXO(16) + ketene(T)X(52)
+    CHX(14) + O=CC([Pt])C=O(208) <=> ketene(T)X(52) + ketene(T)X(52)
+    ketene(T)X(52) + ketene(T)X(52) <=> O=CC#[Pt](48) + vinoxyX(57)
+    site(5) + site(5) + O=CC=CC=O(219) <=> ketene(T)X(52) + ketene(T)X(52)
+    site(5) + O=CC=CC=O.[Pt](220) <=> ketene(T)X(52) + ketene(T)X(52)
+
+After model enlargement:
+    The model core has 32 species and 148 reactions
+    The model edge has 192 species and 560 reactions
+
+
+Adding reaction library Surface/Deutschmann_Ni to output file...
+Saving current model core to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 150 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 150 reactions.
+Saving current model core and edge to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 708 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 708 reactions.
+Saving current model core to HTML file...
+Saving current model edge to HTML file...
+Updating RMG execution statistics...
+    Execution time (DD:HH:MM:SS): 00:00:01:23
+    Memory used: 582.07 MB
+
+Conducting simulation of reaction system 1...
+At time 1.0789e+01 s, species CO2X(13) at 0.10003490686416303 exceeded the minimum rate for simulation interruption of 0.1
+Reached max number of objects...preparing to terminate
+At time 1.0789e+01 s, species CO2X(13) at rate ratio 0.10003490686416303 exceeded the minimum rate for moving to model core of 0.1
+terminating simulation due to interrupt...
+
+
+Adding species CO2X(13) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    CO2X(13)
+Created 0 new edge species
+Moved 17 reactions from edge to core
+    OCX(10) + OCX(10) <=> CX(11) + CO2X(13)
+    site(5) + CO2(2) <=> CO2X(13)
+    OX(8) + OCX(10) <=> site(5) + CO2X(13)
+    site(5) + HOCXO(16) <=> HX(6) + CO2X(13)
+    [H][H].[Pt](20) + CO2X(13) <=> HX(6) + HOCXO(16)
+    CO2X(13) + CXHO(15) <=> OCX(10) + HOCXO(16)
+    HOX(12) + CO2X(13) <=> OX(8) + HOCXO(16)
+    HOX(12) + HOCXO(16) <=> O.[Pt](19) + CO2X(13)
+    CO2X(13) + CHX(14) <=> CX(11) + HOCXO(16)
+    CO2X(13) + OC=[Pt](32) <=> OC#[Pt](23) + HOCXO(16)
+    CO2X(13) + ketene(T)X(52) <=> HOCXO(16) + O=CC#[Pt](48)
+    CO2X(13) + C=[Pt](54) <=> CHX(14) + HOCXO(16)
+    CO2X(13) + C[Pt](17) <=> HOCXO(16) + C=[Pt](54)
+    CO2X(13) + C.[Pt](18) <=> HOCXO(16) + C[Pt](17)
+    CO2X(13) + CC=[Pt](75) <=> HOCXO(16) + CC#[Pt](72)
+    CO2X(13) + OC[Pt](58) <=> HOCXO(16) + OC=[Pt](32)
+    CO2X(13) + CC[Pt](76) <=> HOCXO(16) + CC=[Pt](75)
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 33 species and 165 reactions
+    The model edge has 191 species and 543 reactions
+
+
+For reaction generation 1 process is used.
+Generating kinetics for new reactions...
+For reaction CO2X(13) + CXHO(15) <=> site(5) + O=CC(=O)O[Pt](28), Ea raised from 175.4 to 175.8 kJ/mol to match endothermicity of reaction.
+For reaction HOX(12) + CO2X(13) <=> site(5) + O=C([Pt])OO(40), Ea raised from 321.8 to 322.1 kJ/mol to match endothermicity of reaction.
+For reaction CO2X(13) + OC#[Pt](23) <=> CX(11) + O=C(O)O[Pt](39), Ea raised from 62.4 to 64.2 kJ/mol to match endothermicity of reaction.
+For reaction CO2X(13) + O=CC#[Pt](48) <=> CX(11) + O=CC(=O)O[Pt](28), Ea raised from 211.8 to 215.2 kJ/mol to match endothermicity of reaction.
+For reaction CO2X(13) + O=CC#[Pt](48) <=> CX(11) + O=COC(=O)[Pt](29), Ea raised from 180.5 to 185.3 kJ/mol to match endothermicity of reaction.
+For reaction CO2X(13) + CC#[Pt](72) <=> CX(11) + acetyloxyX(62), Ea raised from 79.7 to 81.2 kJ/mol to match endothermicity of reaction.
+For reaction CO2X(13) + CC#[Pt](72) <=> CX(11) + CH3OCOX(63), Ea raised from 146.9 to 149.0 kJ/mol to match endothermicity of reaction.
+For reaction CO2X(13) + CO[Pt](66) <=> site(5) + COOC(=O)[Pt](83), Ea raised from 239.7 to 242.1 kJ/mol to match endothermicity of reaction.
+For reaction CO2X(13) + CC[Pt](76) <=> C=[Pt](54) + CH3OCOX(63), Ea raised from 84.6 to 86.0 kJ/mol to match endothermicity of reaction.
+For reaction CO2X(13) + OC[Pt](58) <=> site(5) + O=C(CO)O[Pt](147), Ea raised from 93.8 to 95.1 kJ/mol to match endothermicity of reaction.
+For reaction CO2X(13) + OC[Pt](58) <=> O=C(O)O[Pt](39) + C=[Pt](54), Ea raised from 45.2 to 46.0 kJ/mol to match endothermicity of reaction.
+For reaction CO2X(13) + ketene(T)X(52) <=> CHX(14) + O=CC(=O)O[Pt](28), Ea raised from 92.6 to 94.7 kJ/mol to match endothermicity of reaction.
+For reaction CO2X(13) + ketene(T)X(52) <=> CHX(14) + O=COC(=O)[Pt](29), Ea raised from 61.3 to 64.8 kJ/mol to match endothermicity of reaction.
+
+Summary of Secondary Model Edge Enlargement
+---------------------------------
+Added 0 new core species
+Created 0 new edge species
+Added 0 new core reactions
+Created 52 new edge reactions
+    [H][H].[Pt](20) + CO2X(13) <=> HX(6) + formyloxyX(22)
+    HX(6) + CO2X(13) <=> site(5) + formyloxyX(22)
+    CO2X(13) + CXHO(15) <=> site(5) + O=CC(=O)O[Pt](28)
+    CO2X(13) + CXHO(15) <=> site(5) + O=COC(=O)[Pt](29)
+    CO2X(13) + CXHO(15) <=> OCX(10) + formyloxyX(22)
+    HOX(12) + CO2X(13) <=> site(5) + O=C(O)O[Pt](39)
+    HOX(12) + CO2X(13) <=> site(5) + O=C([Pt])OO(40)
+    HOX(12) + CO2X(13) <=> OX(8) + formyloxyX(22)
+    O.[Pt](19) + CO2X(13) <=> HOX(12) + formyloxyX(22)
+    O.[Pt](19) + CO2X(13) <=> HX(6) + O=C(O)O[Pt](39)
+    O.[Pt](19) + CO2X(13) <=> HX(6) + O=C([Pt])OO(40)
+    CO2X(13) + OC#[Pt](23) <=> CX(11) + O=C(O)O[Pt](39)
+    CO2X(13) + OC#[Pt](23) <=> CX(11) + O=C([Pt])OO(40)
+    CO2X(13) + O=CC#[Pt](48) <=> CX(11) + O=CC(=O)O[Pt](28)
+    CO2X(13) + O=CC#[Pt](48) <=> CX(11) + O=COC(=O)[Pt](29)
+    CO2X(13) + CHX(14) <=> CX(11) + formyloxyX(22)
+    CO2X(13) + C=[Pt](54) <=> CHX(14) + formyloxyX(22)
+    CO2X(13) + C[Pt](17) <=> site(5) + acetyloxyX(62)
+    CO2X(13) + C[Pt](17) <=> site(5) + CH3OCOX(63)
+    CO2X(13) + C[Pt](17) <=> formyloxyX(22) + C=[Pt](54)
+    CO2X(13) + C.[Pt](18) <=> formyloxyX(22) + C[Pt](17)
+    CO2X(13) + C.[Pt](18) <=> HX(6) + acetyloxyX(62)
+    CO2X(13) + C.[Pt](18) <=> HX(6) + CH3OCOX(63)
+    CO2X(13) + CC#[Pt](72) <=> CX(11) + acetyloxyX(62)
+    CO2X(13) + CC#[Pt](72) <=> CX(11) + CH3OCOX(63)
+    CO2X(13) + CO[Pt](66) <=> site(5) + COC(=O)O[Pt](82)
+    CO2X(13) + CO[Pt](66) <=> site(5) + COOC(=O)[Pt](83)
+    CO2X(13) + CO[Pt](66) <=> OX(8) + acetyloxyX(62)
+    CO2X(13) + CO[Pt](66) <=> OX(8) + CH3OCOX(63)
+    CO2X(13) + OC=[Pt](32) <=> CHX(14) + O=C(O)O[Pt](39)
+    CO2X(13) + OC=[Pt](32) <=> CHX(14) + O=C([Pt])OO(40)
+    CO2X(13) + OC=[Pt](32) <=> OC#[Pt](23) + formyloxyX(22)
+    CO2X(13) + CC=[Pt](75) <=> CHX(14) + acetyloxyX(62)
+    CO2X(13) + CC=[Pt](75) <=> CHX(14) + CH3OCOX(63)
+    CO2X(13) + CC=[Pt](75) <=> formyloxyX(22) + CC#[Pt](72)
+    CO2X(13) + CC[Pt](76) <=> site(5) + CCC(=O)O[Pt](122)
+    CO2X(13) + CC[Pt](76) <=> site(5) + CCOC(=O)[Pt](123)
+    CO2X(13) + CC[Pt](76) <=> C=[Pt](54) + acetyloxyX(62)
+    CO2X(13) + CC[Pt](76) <=> C=[Pt](54) + CH3OCOX(63)
+    CO2X(13) + CC[Pt](76) <=> formyloxyX(22) + CC=[Pt](75)
+    CO2X(13) + OC[Pt](58) <=> site(5) + O=C(CO)O[Pt](147)
+    CO2X(13) + OC[Pt](58) <=> site(5) + O=C([Pt])OCO(148)
+    CO2X(13) + OC[Pt](58) <=> O=C(O)O[Pt](39) + C=[Pt](54)
+    CO2X(13) + OC[Pt](58) <=> O=C([Pt])OO(40) + C=[Pt](54)
+    CO2X(13) + OC[Pt](58) <=> formyloxyX(22) + OC=[Pt](32)
+    CO2X(13) + HOCXO(16) <=> site(5) + O=C(O)C(=O)O[Pt](172)
+    CO2X(13) + HOCXO(16) <=> site(5) + O=C(O)OC(=O)[Pt](173)
+    CO2X(13) + HOCXO(16) <=> OCX(10) + O=C(O)O[Pt](39)
+    CO2X(13) + HOCXO(16) <=> OCX(10) + O=C([Pt])OO(40)
+    CO2X(13) + ketene(T)X(52) <=> CHX(14) + O=CC(=O)O[Pt](28)
+    CO2X(13) + ketene(T)X(52) <=> CHX(14) + O=COC(=O)[Pt](29)
+    CO2X(13) + ketene(T)X(52) <=> formyloxyX(22) + O=CC#[Pt](48)
+
+After model enlargement:
+    The model core has 33 species and 165 reactions
+    The model edge has 191 species and 595 reactions
+
+
+Adding reaction library Surface/Deutschmann_Ni to output file...
+Saving current model core to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 166 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 166 reactions.
+Saving current model core and edge to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 760 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 760 reactions.
+Saving current model core to HTML file...
+Saving current model edge to HTML file...
+Updating RMG execution statistics...
+    Execution time (DD:HH:MM:SS): 00:00:01:31
+    Memory used: 582.55 MB
+
+Conducting simulation of reaction system 1...
+At time 1.2117e+01 s, species CC.[Pt](78) at 0.10006212273311497 exceeded the minimum rate for simulation interruption of 0.1
+Reached max number of objects...preparing to terminate
+At time 1.2117e+01 s, species CC.[Pt](78) at rate ratio 0.10006212273311497 exceeded the minimum rate for moving to model core of 0.1
+terminating simulation due to interrupt...
+
+
+Adding species CC.[Pt](78) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    CC.[Pt](78)
+Created 0 new edge species
+Moved 21 reactions from edge to core
+    site(5) + CC.[Pt](78) <=> C[Pt](17) + C[Pt](17)
+    HX(6) + CC.[Pt](78) <=> C[Pt](17) + C.[Pt](18)
+    CX(11) + CC.[Pt](78) <=> C[Pt](17) + CC#[Pt](72)
+    OX(8) + CC.[Pt](78) <=> C[Pt](17) + CO[Pt](66)
+    CHX(14) + CC.[Pt](78) <=> C[Pt](17) + CC=[Pt](75)
+    [H][H].[Pt](20) + CC[Pt](76) <=> HX(6) + CC.[Pt](78)
+    site(5) + CC.[Pt](78) <=> HX(6) + CC[Pt](76)
+    OCX(10) + CC.[Pt](78) <=> CXHO(15) + CC[Pt](76)
+    OX(8) + CC.[Pt](78) <=> HOX(12) + CC[Pt](76)
+    HOX(12) + CC.[Pt](78) <=> O.[Pt](19) + CC[Pt](76)
+    CX(11) + CC.[Pt](78) <=> CHX(14) + CC[Pt](76)
+    CHX(14) + CC.[Pt](78) <=> C=[Pt](54) + CC[Pt](76)
+    C=[Pt](54) + CC.[Pt](78) <=> C[Pt](17) + CC[Pt](76)
+    C=[Pt](54) + CC.[Pt](78) <=> C[Pt](17) + CC[Pt](76)
+    C[Pt](17) + CC.[Pt](78) <=> C.[Pt](18) + CC[Pt](76)
+    OC#[Pt](23) + CC.[Pt](78) <=> OC=[Pt](32) + CC[Pt](76)
+    CC#[Pt](72) + CC.[Pt](78) <=> CC=[Pt](75) + CC[Pt](76)
+    CC=[Pt](75) + CC.[Pt](78) <=> CC[Pt](76) + CC[Pt](76)
+    OC=[Pt](32) + CC.[Pt](78) <=> OC[Pt](58) + CC[Pt](76)
+    CO2X(13) + CC.[Pt](78) <=> HOCXO(16) + CC[Pt](76)
+    O=CC#[Pt](48) + CC.[Pt](78) <=> ketene(T)X(52) + CC[Pt](76)
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 34 species and 186 reactions
+    The model edge has 190 species and 574 reactions
+
+
+For reaction generation 1 process is used.
+Generating kinetics for new reactions...
+For reaction C[Pt](17) + CH3CHO(69) <=> CXHO(15) + CC.[Pt](78) Ea raised from -55.9 to 0.0 kJ/mol.
+For reaction C=O.[Pt](30) + CC[Pt](76) <=> CXHO(15) + CC.[Pt](78) Ea raised from -47.3 to 0.0 kJ/mol.
+For reaction HX(6) + propanal(129) <=> CXHO(15) + CC.[Pt](78) Ea raised from -51.4 to 0.0 kJ/mol.
+For reaction C[Pt](17) + CO.[Pt](71) <=> HOX(12) + CC.[Pt](78) Ea raised from -18.8 to 0.0 kJ/mol.
+For reaction HX(6) + ethanol(131) <=> HOX(12) + CC.[Pt](78) Ea raised from -43.7 to 0.0 kJ/mol.
+For reaction O=CC#[Pt](48) + CC.[Pt](78) <=> HX(6) + CCC(=[Pt])C=O(134), Ea raised from 144.7 to 144.9 kJ/mol to match endothermicity of reaction.
+For reaction HX(6) + C3H8(138) <=> C[Pt](17) + CC.[Pt](78) Ea raised from -3.6 to 0.0 kJ/mol.
+For reaction C[Pt](17) + DME(95) <=> CO[Pt](66) + CC.[Pt](78) Ea raised from -60.0 to 0.0 kJ/mol.
+For reaction CO.[Pt](71) + CC[Pt](76) <=> CO[Pt](66) + CC.[Pt](78) Ea raised from -5.2 to 0.0 kJ/mol.
+For reaction HX(6) + EME(141) <=> CO[Pt](66) + CC.[Pt](78) Ea raised from -54.8 to 0.0 kJ/mol.
+For reaction C[Pt](17) + C3H8(138) <=> CC[Pt](76) + CC.[Pt](78) Ea raised from -7.3 to 0.0 kJ/mol.
+For reaction HX(6) + nbutane(145) <=> CC[Pt](76) + CC.[Pt](78) Ea raised from -8.8 to 0.0 kJ/mol.
+For reaction C[Pt](17) + ethanol(131) <=> OC[Pt](58) + CC.[Pt](78) Ea raised from -64.3 to 0.0 kJ/mol.
+For reaction CO.[Pt](71) + CC[Pt](76) <=> OC[Pt](58) + CC.[Pt](78) Ea raised from -35.7 to 0.0 kJ/mol.
+For reaction HX(6) + npropanol(168) <=> OC[Pt](58) + CC.[Pt](78) Ea raised from -47.9 to 0.0 kJ/mol.
+For reaction HOCXO(16) + CC.[Pt](78) <=> C[Pt](17) + acetic_acid(189) Ea raised from -11.0 to 0.0 kJ/mol.
+For reaction formic_acid(45) + CC[Pt](76) <=> HOCXO(16) + CC.[Pt](78), Ea raised from 7.0 to 13.9 kJ/mol to match endothermicity of reaction.
+For reaction HOCXO(16) + CC.[Pt](78) <=> HX(6) + CCC(=O)O.[Pt](198) Ea raised from -13.8 to 0.0 kJ/mol.
+
+Summary of Secondary Model Edge Enlargement
+---------------------------------
+Added 0 new core species
+Created 0 new edge species
+Added 2 new core reactions
+    C=[Pt](54) + CC.[Pt](78) <=> C[Pt](17) + CC[Pt](76)
+    C=[Pt](54) + CC.[Pt](78) <=> C[Pt](17) + CC[Pt](76)
+Created 42 new edge reactions
+    site(5) + C2H6(77) <=> CC.[Pt](78)
+    OCX(10) + CC.[Pt](78) <=> C[Pt](17) + acetylX(64)
+    OCX(10) + CC.[Pt](78) <=> HX(6) + CH3CH2COX(124)
+    OX(8) + CC.[Pt](78) <=> HX(6) + CH3CH2OX(126)
+    C[Pt](17) + CH3CHO(69) <=> CXHO(15) + CC.[Pt](78)
+    C=O.[Pt](30) + CC[Pt](76) <=> CXHO(15) + CC.[Pt](78)
+    HX(6) + propanal(129) <=> CXHO(15) + CC.[Pt](78)
+    C[Pt](17) + CO.[Pt](71) <=> HOX(12) + CC.[Pt](78)
+    HX(6) + ethanol(131) <=> HOX(12) + CC.[Pt](78)
+    CX(11) + CC.[Pt](78) <=> HX(6) + CCC#[Pt](132)
+    OC#[Pt](23) + CC.[Pt](78) <=> C[Pt](17) + CC(O)=[Pt](73)
+    OC#[Pt](23) + CC.[Pt](78) <=> HX(6) + CCC(O)=[Pt](133)
+    O=CC#[Pt](48) + CC.[Pt](78) <=> C[Pt](17) + CC(=[Pt])C=O(74)
+    O=CC#[Pt](48) + CC.[Pt](78) <=> HX(6) + CCC(=[Pt])C=O(134)
+    CHX(14) + CC.[Pt](78) <=> HX(6) + CCC=[Pt](135)
+    C=[Pt](54) + CC.[Pt](78) <=> HX(6) + npropylX(136)
+    HX(6) + C3H8(138) <=> C[Pt](17) + CC.[Pt](78)
+    CC#[Pt](72) + CC.[Pt](78) <=> C[Pt](17) + CC(C)=[Pt](80)
+    CC#[Pt](72) + CC.[Pt](78) <=> HX(6) + CCC(C)=[Pt](139)
+    C[Pt](17) + DME(95) <=> CO[Pt](66) + CC.[Pt](78)
+    CO.[Pt](71) + CC[Pt](76) <=> CO[Pt](66) + CC.[Pt](78)
+    HX(6) + EME(141) <=> CO[Pt](66) + CC.[Pt](78)
+    OC=[Pt](32) + CC.[Pt](78) <=> C[Pt](17) + CH3CHOHX(105)
+    OC=[Pt](32) + CC.[Pt](78) <=> HX(6) + CH3CH2CHOHX(142)
+    CC=[Pt](75) + CC.[Pt](78) <=> C[Pt](17) + ipropylX(115)
+    CC=[Pt](75) + CC.[Pt](78) <=> HX(6) + butyl_2X(143)
+    C[Pt](17) + C3H8(138) <=> CC[Pt](76) + CC.[Pt](78)
+    HX(6) + nbutane(145) <=> CC[Pt](76) + CC.[Pt](78)
+    C[Pt](17) + ethanol(131) <=> OC[Pt](58) + CC.[Pt](78)
+    CO.[Pt](71) + CC[Pt](76) <=> OC[Pt](58) + CC.[Pt](78)
+    HX(6) + npropanol(168) <=> OC[Pt](58) + CC.[Pt](78)
+    HOCXO(16) + CC.[Pt](78) <=> C[Pt](17) + acetic_acid(189)
+    formic_acid(45) + CC[Pt](76) <=> HOCXO(16) + CC.[Pt](78)
+    HOCXO(16) + CC.[Pt](78) <=> HX(6) + CCC(=O)O.[Pt](198)
+    ketene(T)X(52) + CC.[Pt](78) <=> C[Pt](17) + CH3CHCHOX(112)
+    ketene(T)X(52) + CC.[Pt](78) <=> vinoxyX(57) + CC[Pt](76)
+    ketene(T)X(52) + CC.[Pt](78) <=> HX(6) + CCC([Pt])C=O(216)
+    CO2X(13) + CC.[Pt](78) <=> C[Pt](17) + acetyloxyX(62)
+    CO2X(13) + CC.[Pt](78) <=> formyloxyX(22) + CC[Pt](76)
+    CO2X(13) + CC.[Pt](78) <=> HX(6) + CCC(=O)O[Pt](122)
+    CO2X(13) + CC.[Pt](78) <=> C[Pt](17) + CH3OCOX(63)
+    CO2X(13) + CC.[Pt](78) <=> HX(6) + CCOC(=O)[Pt](123)
+
+After model enlargement:
+    The model core has 34 species and 188 reactions
+    The model edge has 190 species and 616 reactions
+
+
+Adding reaction library Surface/Deutschmann_Ni to output file...
+Saving current model core to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 189 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 189 reactions.
+Saving current model core and edge to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 804 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 804 reactions.
+Saving current model core to HTML file...
+Saving current model edge to HTML file...
+Updating RMG execution statistics...
+    Execution time (DD:HH:MM:SS): 00:00:01:39
+    Memory used: 582.43 MB
+
+Conducting simulation of reaction system 1...
+At time 2.0437e+01 s, species C2H6(77) at 0.10022738561548829 exceeded the minimum rate for simulation interruption of 0.1
+Reached max number of objects...preparing to terminate
+At time 2.0437e+01 s, species C2H6(77) at rate ratio 0.10022738561548829 exceeded the minimum rate for moving to model core of 0.1
+terminating simulation due to interrupt...
+
+
+Adding species C2H6(77) to model core
+
+Summary of Model Enlargement
+---------------------------------
+Added 1 new core species
+    C2H6(77)
+Created 0 new edge species
+Moved 3 reactions from edge to core
+    site(5) + site(5) + C2H6(77) <=> C[Pt](17) + C[Pt](17)
+    site(5) + site(5) + C2H6(77) <=> HX(6) + CC[Pt](76)
+    site(5) + C2H6(77) <=> CC.[Pt](78)
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 35 species and 191 reactions
+    The model edge has 189 species and 613 reactions
+
+
+For reaction generation 1 process is used.
+
+Summary of Secondary Model Edge Enlargement
+---------------------------------
+Added 0 new core species
+Created 0 new edge species
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 35 species and 191 reactions
+    The model edge has 189 species and 613 reactions
+
+
+Adding reaction library Surface/Deutschmann_Ni to output file...
+Saving current model core to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 192 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 192 reactions.
+Saving current model core and edge to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 804 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 804 reactions.
+Saving current model core to HTML file...
+Saving current model edge to HTML file...
+Updating RMG execution statistics...
+    Execution time (DD:HH:MM:SS): 00:00:01:47
+    Memory used: 583.14 MB
+
+Conducting simulation of reaction system 1...
+At time 1.7015e+02 s, reached target termination conversion: 0.900000 of CO2(2)
+    CO2(2) conversion: 0.9001    
+
+
+For reaction generation 1 process is used.
+
+Summary of Secondary Model Edge Enlargement
+---------------------------------
+Added 0 new core species
+Created 0 new edge species
+Added 0 new core reactions
+Created 0 new edge reactions
+
+After model enlargement:
+    The model core has 35 species and 191 reactions
+    The model edge has 189 species and 613 reactions
+
+
+Adding reaction library Surface/Deutschmann_Ni to output file...
+Saving current model core to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 192 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 192 reactions.
+Saving current model core and edge to Chemkin file...
+Chemkin file contains 0 reactions.
+Chemkin file contains 804 reactions.
+Saving annotated version of Chemkin files...
+Chemkin file contains 0 reactions.
+Chemkin file contains 804 reactions.
+Saving current model core to HTML file...
+Saving current model edge to HTML file...
+Updating RMG execution statistics...
+    Execution time (DD:HH:MM:SS): 00:00:01:54
+    Memory used: 583.71 MB
+
+Making seed mechanism...
+Performing final model checks...
+No collision rate violators found in the model's core.
+
+MODEL GENERATION COMPLETED
+
+The final model core has 35 species and 191 reactions
+The final model edge has 189 species and 613 reactions
+
+RMG execution terminated at Mon Aug  8 18:04:12 2022
