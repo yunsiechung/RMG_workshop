@@ -21,21 +21,9 @@ catalystProperties(
 # List of species
 
 species(
-    label='CH4',
-    reactive=True,
-    structure=SMILES("[CH4]"),
-)
-
-species(
     label='CO2',
     reactive=True,
     structure=SMILES("O=C=O"),
-)
-
-species(
-    label='H2O',
-    reactive=True,
-    structure=SMILES("O"),
 )
 
 species(
@@ -58,9 +46,7 @@ surfaceReactor(
     temperature=(673,'K'),
     initialPressure=(1.0, 'bar'),
     initialGasMoleFractions={
-        "CH4": 0.0,
         "CO2": 1.0,
-        "H2O": 0.0,
         "H2": 4.0,
     },
     initialSurfaceCoverages={
