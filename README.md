@@ -29,6 +29,8 @@ Unzip the downloaded file and remember where the files are.
 
 The resources from previous workshops and relevant publications are listed [here](https://rmg.mit.edu/resources) on the RMG-website.
 
+The ACS Fall 2022 workshop slides can be found under `slides`.
+
 ## Source Code Repository
 - [RMG Github Repository](https://github.com/ReactionMechanismGenerator/RMG-Py): contains the latest source code for RMG
 - [RMG-database Github Repository](https://github.com/ReactionMechanismGenerator/RMG-database): contains source code for the latest version of the database
